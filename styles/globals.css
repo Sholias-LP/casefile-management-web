@@ -1,0 +1,173 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: #efefef;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+thead {
+  border-radius: 20px;
+  width: 100%;
+  background: #fffaeb;
+  text-align: left;
+}
+
+tbody > tr {
+  background: #ffffff;
+  margin-top: 0px;
+}
+
+th,
+td {
+  padding: 15px 20px;
+}
+
+th:first-child,
+td:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+th:last-child,
+td:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+tbody {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.table-responsive {
+  overflow-y: visible;
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: none;
+  }
+
+  tbody > tr {
+    margin-top: 15px;
+    border-radius: 4px;
+  }
+
+  tbody {
+    height: auto;
+  }
+
+  td:first-child {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  td {
+    /* Behave like a "row" */
+    border: none;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 15px;
+  }
+
+  thead {
+    display: none;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 15px;
+    width: 45%;
+    white-space: nowrap;
+  }
+
+  /*
+Label the data
+*/
+  td:before {
+    font-size: 12px;
+  }
+  td:nth-of-type(2):before {
+    content: 'AMOUNT';
+  }
+  td:nth-of-type(3):before {
+    content: 'CATEGORY';
+  }
+  td:nth-of-type(4):before {
+    content: 'OWNER';
+  }
+  td:nth-of-type(5):before {
+    content: 'UPDATE TIME';
+  }
+  td:nth-of-type(6):before {
+    content: 'STATUS';
+  }
+  td:nth-of-type(7):before {
+    content: 'ACTION';
+  }
+}
+
+.fit-content {
+  width: 100% !important;
+}
+
+.text-danger {
+  color: red;
+  font-size: 8px;
+}
+
+.emptystateIcon svg path {
+  fill: #ffc20e;
+}
+
+.select {
+  height: 45px;
+  border-radius: 4px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.select option {
+  padding: 10px 5px;
+}
+
+.rounded {
+  border-radius: 10px;
+}
+
