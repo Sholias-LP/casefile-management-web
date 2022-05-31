@@ -1,13 +1,15 @@
-import React, { FC } from 'react'
-import { Paragraph, Menu } from 'truparse-lodre'
-import { ICasefiles } from '../interfaces/casefiles'
+import Link from "next/link";
+import React, { FC } from "react";
+import { Paragraph } from "truparse-lodre";
+import { ICasefiles } from "../interfaces/casefiles";
+import Menu from "./menu";
 
 interface tableProps {
-  item: ICasefiles
+  item: ICasefiles;
 }
 
 const CaseFilesTable: FC<tableProps> = ({ item }) => {
-  const { client, gender, occupation, caseType, caseId } = item
+  const { client, gender, occupation, caseType, caseId, _id } = item;
   return (
     <tr>
       <td>
@@ -29,13 +31,20 @@ const CaseFilesTable: FC<tableProps> = ({ item }) => {
         <Menu>
           <ul>
             <li>
-              View
+              <Link
+                href={{
+                  pathname: "/main/casefiles/casefileDetails",
+                  query: { id: _id },
+                }}
+              >
+                <a>View</a>
+              </Link>
             </li>
           </ul>
         </Menu>
       </td>
     </tr>
-  )
-}
+  );
+};
 
-export default CaseFilesTable
+export default CaseFilesTable;

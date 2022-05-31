@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Flex, Input, Button } from "truparse-lodre";
+import { Flex, Input, Button, Paragraph, Radio, Checkbox } from "truparse-lodre";
 import SvgEyeClose from "truparse-lodre/lib/icons/EyeClose";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
 
   const passwordVisibility = () => {
     setShowPassword(!showPassword);
@@ -49,6 +50,12 @@ const Register = () => {
             )
           }
         />
+
+        <Paragraph className="mb-10" weight="w500">Select Role</Paragraph>
+        <Flex>
+          <Checkbox label="Associate" />
+          <Checkbox label="Partner" />
+        </Flex>
 
         <Button fluid variant="block" className="mt-40 mb-20">
           {"Register"}

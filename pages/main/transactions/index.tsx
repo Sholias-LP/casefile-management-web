@@ -1,13 +1,13 @@
 import React from "react";
-import { Card, CardBody, Paragraph, SmallText } from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
-import CaseFilesTable from "../../components/casefileTable";
-import { ICasefiles } from "../../interfaces/casefiles";
+import { Paragraph, SmallText } from "truparse-lodre";
+import AppLayout from "../../../components/appLayout";
+import TransactionTable from "../../../components/transactionTable";
+import { ITransactions } from "../../../interfaces/transactions";
 
-const CaseFiles = () => {
+const Transactions = () => {
   return (
     <AppLayout>
-      <Paragraph weight="w600">Casefiles</Paragraph>
+      <Paragraph weight="w600">Transactions</Paragraph>
 
       <div className="table-responsive mt-20">
         <table>
@@ -26,7 +26,7 @@ const CaseFiles = () => {
                 <SmallText weight="w700">Occupation</SmallText>
               </th>
               <th>
-                <SmallText weight="w700">Case Type</SmallText>
+                <SmallText weight="w700">Transaction Type</SmallText>
               </th>
               <th>
                 <SmallText weight="w700">Action</SmallText>
@@ -35,8 +35,8 @@ const CaseFiles = () => {
           </thead>
 
           <tbody>
-            {Array(6).fill(0).map((item: ICasefiles, index: number) => (
-              <CaseFilesTable item={item} />
+            {Array(6).fill(0).map((item: ITransactions, index: number) => (
+              <TransactionTable item={item} key={index} />
             ))}
 
           </tbody>
@@ -47,4 +47,4 @@ const CaseFiles = () => {
   );
 };
 
-export default CaseFiles;
+export default Transactions;

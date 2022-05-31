@@ -6,4 +6,5 @@ export interface ITransactions {
   gender: string;
   transactionSummary: string;
   serviceCharge: string;
+  _id: string;
 }

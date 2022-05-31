@@ -10,4 +10,5 @@ export interface ICasefiles {
   deposit: string;
   expenses: string;
   court_sitting: string;
+  _id: string;
 }
