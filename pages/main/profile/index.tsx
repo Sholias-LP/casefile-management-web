@@ -1,8 +1,8 @@
-import React from 'react'
-import { Grid, Card, CardBody, Tabs, Tab } from 'truparse-lodre'
-import AppLayout from '../../../components/appLayout'
-import ChangePassword from './changePassword'
-import UserProfile from './user'
+import React from "react";
+import { Grid, Card, CardBody, Tabs, Tab } from "truparse-lodre";
+import AppLayout from "../../../components/appLayout";
+import ChangePassword from "./changePassword";
+import UserProfile from "./user";
 
 const Profile = () => {
   return (
@@ -30,8 +30,7 @@ const Profile = () => {
         </Card>
       </Grid>
     </AppLayout>
+  );
+};
 
-  )
-}
-
-export default Profile
+export default Profile;

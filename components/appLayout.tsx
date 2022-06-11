@@ -48,10 +48,15 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
     icon: <Home />,
   },
   {
+    name: "Notifications",
+    pathName: "/main/notifications",
+    icon: <Home />,
+  },
+  {
     name: "Profile",
     pathName: "/main/profile",
-    icon: <Home />
-  }
+    icon: <Home />,
+  },
 ];
 
 const NavItems = () => {
@@ -60,7 +65,6 @@ const NavItems = () => {
     <Card>
       <div>
         {AppLayoutNavigation.map((item: IAppLayoutProps, index: number) => (
-
           <Link href={item.pathName} key={index}>
             <a href={item.pathName}>
               <ProfileNavItem
@@ -71,13 +75,10 @@ const NavItems = () => {
               </ProfileNavItem>
             </a>
           </Link>
-
         ))}
         <Link href="">
           <a>
-            <ProfileNavItem>
-              Logout
-            </ProfileNavItem>
+            <ProfileNavItem>Logout</ProfileNavItem>
           </a>
         </Link>
       </div>
@@ -116,7 +117,6 @@ const Nav = () => {
                     </Button>
                   </Link>
                 </Flex>
-
               </Dropdown>
             </Col>
           )}
@@ -139,7 +139,7 @@ const AppLayout: FC<IProps> = ({ children }) => {
     <MerchantNavbar
       logo={<ImageComponent />}
       nav={<Nav />}
-      sideNavSize={query.asPath.includes('/auth') ? 0 : 250}
+      sideNavSize={query.asPath.includes("/auth") ? 0 : 250}
       navChildren={<NavItems />}
     >
       <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
