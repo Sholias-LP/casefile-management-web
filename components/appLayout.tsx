@@ -18,6 +18,7 @@ import {
 import { Home, Logo } from "truparse-lodre/lib/icons";
 import SvgHelp from "truparse-lodre/lib/icons/Help";
 import SvgUser from "truparse-lodre/lib/icons/User";
+import { setLogout } from "../context/user";
 import ImageComponent from "../pages/main/image";
 import SholiasLogo from "../public/logoo.png";
 
@@ -53,14 +54,22 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
     icon: <Home />,
   },
   {
-    name: "Profile",
-    pathName: "/main/profile",
+    name: "Profile Details",
+    pathName: "/main/userProfile",
+    icon: <Home />,
+  },
+  {
+    name: "Change Password",
+    pathName: "/main/changePassword",
     icon: <Home />,
   },
 ];
 
 const NavItems = () => {
   const query = useRouter();
+  const handleLogOut = () => {
+    setLogout("/auth");
+  };
   return (
     <Card>
       <div>
@@ -76,8 +85,8 @@ const NavItems = () => {
             </a>
           </Link>
         ))}
-        <Link href="">
-          <a>
+        <Link href="/auth">
+          <a onClick={handleLogOut}>
             <ProfileNavItem>Logout</ProfileNavItem>
           </a>
         </Link>

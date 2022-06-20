@@ -1,6 +1,6 @@
 import axios from "axios";
 import getConfig from "next/config";
-import { getDefaultAuth } from "../../utils/storage";
+import { getDefaultAuth } from "../../../utils/storage";
 const { publicRuntimeConfig } = getConfig();
 
 const Axios = axios.create({
