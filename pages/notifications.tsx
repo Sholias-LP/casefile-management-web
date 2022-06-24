@@ -1,6 +1,7 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
 import { Card, CardBody } from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
+import AppLayout from "../components/appLayout";
 
 const notifications = () => {
   return (

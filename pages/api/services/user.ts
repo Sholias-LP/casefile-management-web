@@ -1,6 +1,11 @@
 import { AxiosResponse } from "axios";
 import { IResponse } from "../../../interfaces/response";
-import { ILogin, IRegister, IUser } from "../../../interfaces/user";
+import {
+  ILogin,
+  IRegister,
+  IResetpassword,
+  IUser,
+} from "../../../interfaces/user";
 import Axios from "./axios";
 
 const SignUp = async (payload: IRegister) => {
@@ -19,4 +24,17 @@ const Login = async (payload: ILogin) => {
   return res;
 };
 
-export { SignUp, Login };
+const ResetPassword = async (payload: IResetpassword) => {
+  const res: AxiosResponse<IResponse<any>> = await Axios.put(
+    "/auth/resetpassword",
+    payload
+  );
+  return res;
+};
+
+const GetUsers = async () => {
+  const res: AxiosResponse<IResponse<any>> = await Axios.get("/users");
+  return res;
+};
+
+export { SignUp, Login, ResetPassword, GetUsers };

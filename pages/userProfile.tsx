@@ -1,4 +1,5 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useContext, useEffect } from "react";
 import {
   Button,
   Card,
@@ -12,9 +13,13 @@ import {
   ProfilePicture,
   SmallText,
 } from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
+import AppLayout from "../components/appLayout";
+import AuthContext from "../context/user";
 
 const UserProfile = () => {
+  const { currentUser } = useContext(AuthContext);
+  const userName = `${currentUser.first_name} ${currentUser.last_name}`;
+
   return (
     <AppLayout>
       <Card>
@@ -24,18 +29,18 @@ const UserProfile = () => {
           </Heading>
           <Grid md="1fr 1fr" alignItems="center">
             <form>
-              <Flex alignItems="center" className="mb-30">
+              {/* <Flex alignItems="center" className="mb-30">
                 <ProfilePicture
                   size={70}
-                  source={"/Profile_avatar_placeholder_large.png"}
-                  state="border"
+                  source={currentUser.avatar}
+                  state="light"
                   altText="profile-avatar"
                 />
 
                 <Col>
-                  <Paragraph weight="w600">John Doe</Paragraph>
+                  <Paragraph weight="w600">{userName.toUpperCase()}</Paragraph>
                 </Col>
-              </Flex>
+              </Flex> */}
               <Input type="text" placeholder="First name" name="firstName" />
               <Input type="text" placeholder="Last name" name="lastName" />
               <Input type="email" name="email" placeholder="Email" disabled />

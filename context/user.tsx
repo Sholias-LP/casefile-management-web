@@ -10,6 +10,7 @@ interface IAuthContext {
   currentUser: IUser;
   updateCurrentUser: (value?: IUser) => void;
   setLogout: (route?: string) => void;
+  initializing: boolean;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -38,6 +39,7 @@ interface Props {
 export const AuthProviderContainer: FC<Props> = ({ children }) => {
   const [auth, setAuth] = useState<string>();
   const [currentUser, setCurrentUser] = useState<IUser>({} as IUser);
+  const [initializing, setInitializing] = useState<boolean>(true);
 
   useEffect(() => {
     let storedUser = secureStorage.getItem(Constants.currentUser);
@@ -67,6 +69,7 @@ export const AuthProviderContainer: FC<Props> = ({ children }) => {
     const currentUser = secureStorage.getItem(Constants.currentUser);
     if (token) setAuthAndCache(token);
     if (currentUser) updateCurrentUser(JSON.parse(currentUser));
+    setInitializing(false);
   }, []);
 
   return (
@@ -77,6 +80,7 @@ export const AuthProviderContainer: FC<Props> = ({ children }) => {
         setLogout,
         currentUser,
         updateCurrentUser,
+        initializing,
       }}
     >
       {children}

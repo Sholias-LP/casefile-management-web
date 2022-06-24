@@ -1,31 +1,25 @@
 import Link from "next/link";
 import React, { FC } from "react";
 import { Paragraph } from "truparse-lodre";
-import { ICasefiles } from "../interfaces/casefiles";
+import { ICasefilesResponse } from "../interfaces/casefiles";
 import Menu from "./menu";
 
 interface tableProps {
-  item: ICasefiles;
+  item: ICasefilesResponse;
 }
 
 const CaseFilesTable: FC<tableProps> = ({ item }) => {
-  const { client, gender, occupation, caseType, caseId, _id } = item;
+  const { client, occupation, case_type, _id } = item;
   return (
     <tr>
       <td>
-        <Paragraph>{caseId}</Paragraph>
-      </td>
-      <td>
         <Paragraph>{client}</Paragraph>
-      </td>
-      <td>
-        <Paragraph>{gender}</Paragraph>
       </td>
       <td>
         <Paragraph>{occupation}</Paragraph>
       </td>
       <td>
-        <Paragraph>{caseType}</Paragraph>
+        <Paragraph>{case_type}</Paragraph>
       </td>
       <td>
         <Menu>
@@ -33,11 +27,11 @@ const CaseFilesTable: FC<tableProps> = ({ item }) => {
             <li>
               <Link
                 href={{
-                  pathname: "/main/casefiles/casefileDetails",
+                  pathname: "/casefiles/[id]",
                   query: { id: _id },
                 }}
               >
-                <a>View</a>
+                <a>Details</a>
               </Link>
             </li>
           </ul>
