@@ -1,12 +1,11 @@
-import React from "react";
-import { Grid, Card, CardBody, Tabs, Tab } from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
+import { Card, CardBody, Grid, Tab, Tabs } from "truparse-lodre";
+import AuthLayout from "../../components/authLayout";
 import Login from "./login";
 import Register from "./register";
 
 const AuthView = () => {
   return (
-    <AppLayout>
+    <AuthLayout>
       <Grid
         xl="400px"
         lg="400px"
@@ -29,7 +28,7 @@ const AuthView = () => {
           </CardBody>
         </Card>
       </Grid>
-    </AppLayout>
+    </AuthLayout>
   );
 };
 

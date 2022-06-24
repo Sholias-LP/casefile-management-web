@@ -1,8 +1,10 @@
 import { useMutation } from "react-query";
-import { Login, SignUp } from "../services/user";
+import { Login, ResetPassword, SignUp } from "../services/user";
 
 const useRegister = () => useMutation(SignUp);
 
 const useLogin = () => useMutation(Login);
 
-export { useRegister, useLogin };
+const useResetPassword = () => useMutation(ResetPassword);
+
+export { useRegister, useLogin, useResetPassword };

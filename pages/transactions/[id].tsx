@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { FC } from "react";
 import {
   Button,
   Card,
@@ -10,11 +10,27 @@ import {
   Paragraph,
   SmallText,
 } from "truparse-lodre";
-import AppLayout from "../../../components/appLayout";
+import AppLayout from "../../components/appLayout";
+import { useGetATransaction } from "../api/queries/transactions";
 
-const CasefileDetails = () => {
-  const { query } = useRouter();
-  const { id } = query;
+type IProps = {
+  id: string;
+};
+
+type IParams = {
+  params: IProps;
+};
+
+export const getServerSideProps = async ({ params }: IParams) => {
+  return {
+    props: {
+      id: params.id,
+    },
+  };
+};
+
+const TransactionDetails: FC<IProps> = ({ id }) => {
+  const { data } = useGetATransaction(id);
 
   return (
     <AppLayout>
@@ -30,7 +46,7 @@ const CasefileDetails = () => {
           </Grid>
           <Grid xl="1fr 1fr">
             <div>
-              <SmallText weight="w500">Case Type</SmallText>
+              <SmallText weight="w500">Transaction Type</SmallText>
               <Input placeholder="" type="text" className="mt-10" />
             </div>
           </Grid>
@@ -42,13 +58,7 @@ const CasefileDetails = () => {
           </Grid>
           <Grid xl="1fr 1fr">
             <div>
-              <SmallText weight="w500">Brief</SmallText>
-              <Input placeholder="" type="text" className="mt-10" />
-            </div>
-          </Grid>
-          <Grid xl="1fr 1fr">
-            <div>
-              <SmallText weight="w500">Letter of Engagement</SmallText>
+              <SmallText weight="w500">Transaction Summary</SmallText>
               <Input placeholder="" type="text" className="mt-10" />
             </div>
           </Grid>
@@ -63,4 +73,4 @@ const CasefileDetails = () => {
   );
 };
 
-export default CasefileDetails;
+export default TransactionDetails;

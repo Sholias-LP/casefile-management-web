@@ -2,6 +2,7 @@ export interface IResponse<T = null> {
   success: boolean;
   data: T;
   message?: string | null;
+  count?: number;
 }
 
 export interface IList<T = null> {
