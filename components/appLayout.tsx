@@ -105,6 +105,15 @@ const Nav = () => {
   const { currentUser } = useContext(AuthContext);
   const userName = `${currentUser.first_name} ${currentUser.last_name}`;
 
+  const captalize = (str: string) => {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    return splitStr.join(' '); 
+ }
+ 
+
   return (
     <Flex>
       <Col>
@@ -120,7 +129,7 @@ const Nav = () => {
 
           <Col>
             <Paragraph weight="w600" size="pLarge">
-              {userName.toUpperCase()}
+              { captalize(userName) }
             </Paragraph>
           </Col>
         </Flex>
