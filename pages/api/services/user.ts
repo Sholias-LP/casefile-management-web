@@ -4,6 +4,8 @@ import {
   ILogin,
   IRegister,
   IResetpassword,
+  IResources,
+  IResourceTypes,
   IUser,
 } from "../../../interfaces/user";
 import Axios from "./axios";
@@ -37,4 +39,25 @@ const GetUsers = async () => {
   return res;
 };
 
-export { SignUp, Login, ResetPassword, GetUsers };
+const GetUserResources = async (id: string) => {
+  const res: AxiosResponse<IResponse<IResources>> = await Axios.get(
+    `/users/${id}/resources`
+  );
+  return res;
+};
+
+const GetResourceTypes = async () => {
+  const res: AxiosResponse<IResponse<IResourceTypes>> = await Axios.get(
+    "/resourcecategory"
+  );
+  return res;
+};
+
+export {
+  SignUp,
+  Login,
+  ResetPassword,
+  GetUsers,
+  GetUserResources,
+  GetResourceTypes,
+};

@@ -1,18 +1,5 @@
-import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  Col,
-  Flex,
-  Grid,
-  Heading,
-  Input,
-  Paragraph,
-  ProfilePicture,
-  SmallText,
-} from "truparse-lodre";
+import { useContext } from "react";
+import { Button, Card, CardBody, Grid, Heading, Input } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
 import AuthContext from "../context/user";
 

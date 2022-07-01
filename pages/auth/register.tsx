@@ -38,6 +38,7 @@ const Register = () => {
   };
 
   const submit = async () => {
+    setLoading(true);
     mutate(
       { ...inputs, role: role },
       {

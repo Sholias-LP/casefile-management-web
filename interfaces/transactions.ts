@@ -8,6 +8,7 @@ export interface ITransaction {
   transactionSummary: string;
   serviceFee: number;
   deposit: number[];
+  _id?: string;
   expenses: IExpenses[];
 }
 
@@ -24,4 +25,5 @@ export interface ITransactionsResponse {
   transaction_id: string;
   transaction_type: string;
   _id: string;
+  createdAt: string;
 }

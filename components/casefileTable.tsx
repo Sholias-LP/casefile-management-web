@@ -2,6 +2,7 @@ import Link from "next/link";
 import React, { FC } from "react";
 import { Paragraph } from "truparse-lodre";
 import { ICasefilesResponse } from "../interfaces/casefiles";
+import { Tr, Td } from "react-super-responsive-table";
 import Menu from "./menu";
 
 interface tableProps {
@@ -11,17 +12,17 @@ interface tableProps {
 const CaseFilesTable: FC<tableProps> = ({ item }) => {
   const { client, occupation, case_type, _id } = item;
   return (
-    <tr>
-      <td>
+    <Tr>
+      <Td>
         <Paragraph>{client}</Paragraph>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <Paragraph>{occupation}</Paragraph>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <Paragraph>{case_type}</Paragraph>
-      </td>
-      <td>
+      </Td>
+      <Td>
         <Menu>
           <ul>
             <li>
@@ -36,8 +37,8 @@ const CaseFilesTable: FC<tableProps> = ({ item }) => {
             </li>
           </ul>
         </Menu>
-      </td>
-    </tr>
+      </Td>
+    </Tr>
   );
 };
 

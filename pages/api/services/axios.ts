@@ -11,7 +11,7 @@ Axios.interceptors.request.use(
     const token = getDefaultAuth();
     if (token) {
       config.headers = {
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       };
     }

@@ -1585,6 +1585,11 @@ minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
+moment@^2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
+  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -1865,6 +1870,11 @@ react-stars@^2.2.5:
   resolved "https://registry.yarnpkg.com/react-stars/-/react-stars-2.2.5.tgz#911852018e1574a0f9a2c1dfa4f0bc9af071b921"
   integrity sha1-kRhSAY4VdKD5osHfpPC8mvBxuSE=
 
+react-super-responsive-table@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/react-super-responsive-table/-/react-super-responsive-table-5.2.1.tgz#e9c3113d7676e74db9110f8385a3dddce45ee00f"
+  integrity sha512-93DAJbI4FjR0Yops+0v1MZIUhIMRQOm/N//o35mk/g4NCZ99HIOB+gdZPorZwKX3mfr3h3H3ATcU4jLMfpuC9Q==
+
 react@18.1.0:
   version "18.1.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890"
@@ -2103,10 +2113,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-truparse-lodre@^1.6.60:
-  version "1.6.60"
-  resolved "https://registry.yarnpkg.com/truparse-lodre/-/truparse-lodre-1.6.60.tgz#594b3254dfda96b1c65cd0aac32b3476be1bedbf"
-  integrity sha512-i/OCYue6fJsMqNPUno+yvkJ0dgM34XjCE9uvUv+EhvdKjqR15Emk+7Ate8Tfhcge3xHsQFudMC/LC8mgApeZbA==
+truparse-lodre@^1.6.66:
+  version "1.6.66"
+  resolved "https://registry.yarnpkg.com/truparse-lodre/-/truparse-lodre-1.6.66.tgz#d9ea91c9bbece4f8c1f26002da43da1bbe6d6b1c"
+  integrity sha512-D7CaihUz92NHxdjfnlW1XBnGjmHmPKH3eoC62yEFx3lw7GVkcFXK61WCTlUyVnDB+ryhR07qfLCnUwkOCS81JA==
   dependencies:
     "@types/react-stars" "^2.2.1"
     react-stars "^2.2.5"

@@ -14,3 +14,8 @@ export interface IPagination {
   size: number;
   total: number;
 }
+
+export interface ISelect {
+  text: string;
+  value: string;
+}

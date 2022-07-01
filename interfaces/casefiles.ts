@@ -10,6 +10,7 @@ export interface ICasefile {
   deposit: number[];
   expenses: IExpenses[];
   courtSitting: ICourtSitting[];
+  _id?: string;
 }
 
 export interface ICasefilesResponse {
@@ -29,15 +30,18 @@ export interface ICasefilesResponse {
   service_fee: number;
   status: string;
   _id: string;
+  case_id: string;
+  views: number;
 }
 
 export interface ICourtSitting {
-  amount: string;
-  description: string;
+  date: string;
+  note: string;
+  _id?: string;
 }
 
 export interface IExpenses {
-  date: string;
-  description: string;
-  _id: string;
+  amount: number;
+  note: string;
+  _id?: string;
 }

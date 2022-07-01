@@ -23,6 +23,7 @@ const Login = () => {
   };
 
   const submit = async () => {
+    setLoading(true);
     mutate(
       { ...inputs },
       {

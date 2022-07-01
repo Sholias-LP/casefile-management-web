@@ -6,8 +6,9 @@ import { GlobalStyles } from "truparse-lodre";
 import ProtectedRoute from "../components/protectedRoutes";
 import { AuthProviderContainer } from "../context/user";
 import "../styles/globals.css";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
-const MyApp = ({ Component, pageProps, router }: AppProps) => {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (

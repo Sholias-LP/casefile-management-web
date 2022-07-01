@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { Card, CardBody, Grid, Paragraph } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
 import { useGetCaseFiles } from "./api/queries/caseFiles";
@@ -15,46 +16,81 @@ const HomePage: NextPage = () => {
       <Card>
         <CardBody className="pt-50 pb-50">
           <Grid xl="repeat(3, 1fr)">
-            <Card bgColor="cream" className="h-100">
-              <CardBody className="h-100">
-                <Paragraph className="pt-20 pb-20" weight="w600" size="pLarge">
-                  Members
-                </Paragraph>
-                <Paragraph className="pb-20" weight="w600" size="pLarge">
-                  {users.data?.data.count || 0}
-                </Paragraph>
-              </CardBody>
-            </Card>
-            <Card bgColor="cream" className="h-100">
-              <CardBody className="h-100">
-                <Paragraph className="pt-20 pb-20" weight="w600" size="pLarge">
-                  Casefiles
-                </Paragraph>
-                <Paragraph className="pb-20" weight="w600" size="pLarge">
-                  {casefiles.data?.data.count || 0}
-                </Paragraph>
-              </CardBody>
-            </Card>
-            <Card bgColor="cream" className="h-100">
-              <CardBody className="h-100">
-                <Paragraph className="pt-20 pb-20" weight="w600" size="pLarge">
-                  Transactions
-                </Paragraph>
-                <Paragraph className="pb-20" weight="w600" size="pLarge">
-                  {transactions.data?.data.count || 0}
-                </Paragraph>
-              </CardBody>
-            </Card>
-            <Card bgColor="cream" className="h-100">
-              <CardBody className="h-100">
-                <Paragraph className="pt-20 pb-20" weight="w600" size="pLarge">
-                  Notifications
-                </Paragraph>
-                <Paragraph className="pb-20" weight="w600" size="pLarge">
-                  0
-                </Paragraph>
-              </CardBody>
-            </Card>
+            <Link href="/team">
+              <a>
+                <Card bgColor="cream" className="h-100">
+                  <CardBody className="h-100">
+                    <Paragraph
+                      className="pt-20 pb-20"
+                      weight="w600"
+                      size="pLarge"
+                    >
+                      Members
+                    </Paragraph>
+                    <Paragraph className="pb-20" weight="w600" size="pLarge">
+                      {users.data?.data.count || 0}
+                    </Paragraph>
+                  </CardBody>
+                </Card>
+              </a>
+            </Link>
+
+            <Link href="/casefiles">
+              <a>
+                <Card bgColor="cream" className="h-100">
+                  <CardBody className="h-100">
+                    <Paragraph
+                      className="pt-20 pb-20"
+                      weight="w600"
+                      size="pLarge"
+                    >
+                      Casefiles
+                    </Paragraph>
+                    <Paragraph className="pb-20" weight="w600" size="pLarge">
+                      {casefiles.data?.data.count || 0}
+                    </Paragraph>
+                  </CardBody>
+                </Card>
+              </a>
+            </Link>
+
+            <Link href="/transactions">
+              <a>
+                <Card bgColor="cream" className="h-100">
+                  <CardBody className="h-100">
+                    <Paragraph
+                      className="pt-20 pb-20"
+                      weight="w600"
+                      size="pLarge"
+                    >
+                      Transactions
+                    </Paragraph>
+                    <Paragraph className="pb-20" weight="w600" size="pLarge">
+                      {transactions.data?.data.count || 0}
+                    </Paragraph>
+                  </CardBody>
+                </Card>
+              </a>
+            </Link>
+
+            <Link href="/notifications">
+              <a>
+                <Card bgColor="cream" className="h-100">
+                  <CardBody className="h-100">
+                    <Paragraph
+                      className="pt-20 pb-20"
+                      weight="w600"
+                      size="pLarge"
+                    >
+                      Notifications
+                    </Paragraph>
+                    <Paragraph className="pb-20" weight="w600" size="pLarge">
+                      0
+                    </Paragraph>
+                  </CardBody>
+                </Card>
+              </a>
+            </Link>
           </Grid>
         </CardBody>
       </Card>
