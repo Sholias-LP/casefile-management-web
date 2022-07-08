@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { FC } from "react";
-import { Paragraph } from "truparse-lodre";
+import { Paragraph, SmallText } from "truparse-lodre";
 import { ITransactionsResponse } from "../interfaces/transactions";
 import { Tr, Td } from "react-super-responsive-table";
 import Menu from "./menu";
@@ -32,7 +32,9 @@ const TransactionTable: FC<tableProps> = ({ item }) => {
                   query: { id: _id },
                 }}
               >
-                <a>Details</a>
+                <a>
+                  <SmallText>Details</SmallText>
+                </a>
               </Link>
             </li>
           </ul>

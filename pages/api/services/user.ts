@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { IResponse } from "../../../interfaces/response";
 import {
+  IForgotPassword,
   ILogin,
   IRegister,
   IResetpassword,
@@ -53,6 +54,19 @@ const GetResourceTypes = async () => {
   return res;
 };
 
+const ForgotPassword = async (payload: IForgotPassword) => {
+  const res: AxiosResponse<IResponse<IUser>> = await Axios.put(
+    "/auth/forgotpassword",
+    payload
+  );
+  return res;
+};
+
+const GetNotifications = async () => {
+  const res: AxiosResponse<IResponse> = await Axios.post("/notifications");
+  return res;
+};
+
 export {
   SignUp,
   Login,
@@ -60,4 +74,6 @@ export {
   GetUsers,
   GetUserResources,
   GetResourceTypes,
+  ForgotPassword,
+  GetNotifications,
 };

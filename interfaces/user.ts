@@ -31,6 +31,12 @@ export interface IResetpassword {
   confirmNewPassword: string;
 }
 
+export interface IForgotPassword {
+  newPassword: string;
+  confirmNewPassword: string;
+  email: string;
+}
+
 export interface IResources {
   casefiles: ICasefilesResponse[];
   transactions: ITransactionsResponse[];

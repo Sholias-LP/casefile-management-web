@@ -1,9 +1,27 @@
-import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import { AxiosError, AxiosResponse } from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { Card, CardBody } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
+import { IResponse } from "../interfaces/response";
+import { GetNotifications } from "./api/services/user";
 
-const notifications = () => {
+const Notifications = () => {
+  // const [popNotifications, setPopNotifications] =
+  //   useState<AxiosResponse<IResponse>>();
+
+  // useEffect(() => {
+  //   try {
+  //     const res = GetNotifications();
+  //     console.log(res);
+  //   } catch (error) {
+  //     const err = error as AxiosError;
+  //     toast.error(err.message);
+  //   }
+  // }, []);
+
+  // console.log(popNotifications);
+
   return (
     <AppLayout>
       {Array(6)
@@ -17,4 +35,4 @@ const notifications = () => {
   );
 };
 
-export default notifications;
+export default Notifications;

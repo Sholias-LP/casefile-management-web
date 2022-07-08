@@ -7,9 +7,14 @@ export interface ICasefile {
   email: string;
   letterOfEngagement: string;
   serviceFee: number;
-  deposit: number[];
+  deposit: IDeposit[];
   expenses: IExpenses[];
   courtSitting: ICourtSitting[];
+  _id?: string;
+}
+
+export interface IDeposit {
+  amount: number;
   _id?: string;
 }
 
@@ -21,7 +26,7 @@ export interface ICasefilesResponse {
   client: string;
   court_sitting: ICourtSitting[];
   createdAt: string;
-  deposit: string[];
+  deposit: IDeposit[];
   expenses: IExpenses[];
   gender: string;
   isDeleted: boolean;

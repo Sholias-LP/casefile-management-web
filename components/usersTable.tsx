@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Paragraph } from "truparse-lodre";
+import { Paragraph, SmallText } from "truparse-lodre";
 import { IUser } from "../interfaces/user";
 import { Tr, Td } from "react-super-responsive-table";
 import Link from "next/link";
@@ -33,7 +33,9 @@ const UsersTable: FC<tableProps> = ({ item }) => {
                   query: { id: _id },
                 }}
               >
-                <a>Resources</a>
+                <a>
+                  <SmallText>Resources</SmallText>
+                </a>
               </Link>
             </li>
           </ul>

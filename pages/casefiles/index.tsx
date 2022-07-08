@@ -62,17 +62,24 @@ const CaseFiles = () => {
               </Td>
             </Tr>
           ) : casefiles?.length === 0 ? (
-            <Card className="h-100">
-              <CardBody className="h-100">
-                <Flex justifyContent="center" className="pb-30 emptystateIcon">
-                  <Overview width={60} height={60} />
-                </Flex>
+            <Tr>
+              <Td colSpan={5}>
+                <Card className="h-100">
+                  <CardBody className="h-100">
+                    <Flex
+                      justifyContent="center"
+                      className="pb-30 emptystateIcon"
+                    >
+                      <Overview width={60} height={60} />
+                    </Flex>
 
-                <Flex justifyContent="center" className="mb-20">
-                  <Paragraph>No Casefiles Yet.</Paragraph>
-                </Flex>
-              </CardBody>
-            </Card>
+                    <Flex justifyContent="center" className="mb-20">
+                      <Paragraph>No Casefiles Yet.</Paragraph>
+                    </Flex>
+                  </CardBody>
+                </Card>
+              </Td>
+            </Tr>
           ) : (
             casefiles?.map((item: ICasefilesResponse, index: number) => (
               <CaseFilesTable item={item} key={index} />

@@ -72,25 +72,6 @@ const HomePage: NextPage = () => {
                 </Card>
               </a>
             </Link>
-
-            <Link href="/notifications">
-              <a>
-                <Card bgColor="cream" className="h-100">
-                  <CardBody className="h-100">
-                    <Paragraph
-                      className="pt-20 pb-20"
-                      weight="w600"
-                      size="pLarge"
-                    >
-                      Notifications
-                    </Paragraph>
-                    <Paragraph className="pb-20" weight="w600" size="pLarge">
-                      0
-                    </Paragraph>
-                  </CardBody>
-                </Card>
-              </a>
-            </Link>
           </Grid>
         </CardBody>
       </Card>

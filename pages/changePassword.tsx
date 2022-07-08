@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardBody,
+  Flex,
   Grid,
   Heading,
   Input,
@@ -48,11 +49,20 @@ const ChangePassword = () => {
   return (
     <AppLayout>
       <Card>
-        <CardBody>
-          <Heading size="hSmall" weight="w700" className="mb-30">
-            Change password
-          </Heading>
-          <Grid md="1fr 1fr" alignItems="center">
+        <CardBody className="px-50 py-50">
+          <Grid
+            xl="600px"
+            lg="400px"
+            md="400px"
+            sm="1fr"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Flex justifyContent="center">
+              <Heading size="hSmall" weight="w700" className="mb-30">
+                Change password
+              </Heading>
+            </Flex>
             <form onSubmit={handleSubmit}>
               <SmallText>Enter New Password</SmallText>
               <Input

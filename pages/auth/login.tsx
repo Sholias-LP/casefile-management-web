@@ -1,4 +1,5 @@
 import { AxiosResponse, AxiosError } from "axios";
+import Link from "next/link";
 import router from "next/router";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
@@ -83,7 +84,11 @@ const Login = () => {
           {loading ? "" : "Login"}
         </Button>
         <Flex justifyContent="center">
-          <SmallText weight="w600">Forgot Password?</SmallText>
+          <Link href="/auth/forgotPassword">
+            <a>
+              <SmallText weight="w600">Forgot Password?</SmallText>
+            </a>
+          </Link>
         </Flex>
       </div>
     </form>

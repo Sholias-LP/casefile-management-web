@@ -1,4 +1,4 @@
-import { IExpenses } from "./casefiles";
+import { IDeposit, IExpenses } from "./casefiles";
 
 export interface ITransaction {
   transactionType: string;
@@ -7,15 +7,16 @@ export interface ITransaction {
   occupation: string;
   transactionSummary: string;
   serviceFee: number;
-  deposit: number[];
+  deposit: IDeposit[];
   _id?: string;
   expenses: IExpenses[];
 }
 
 export interface ITransactionsResponse {
   author: string;
+  transaction_summary: string;
   client: string;
-  deposit: number[];
+  deposit: IDeposit[];
   expenses: IExpenses[];
   gender: string;
   isDeleted: boolean;
@@ -26,4 +27,5 @@ export interface ITransactionsResponse {
   transaction_type: string;
   _id: string;
   createdAt: string;
+  views: number;
 }
