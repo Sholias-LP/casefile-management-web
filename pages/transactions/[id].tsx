@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
+  Badge,
   Button,
   Card,
   CardBody,
@@ -15,6 +16,7 @@ import {
   SelectField,
   SmallText,
 } from "truparse-lodre";
+import { X } from "truparse-lodre/lib/icons";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
 import AppLayout from "../../components/appLayout";
 import { IDeposit, IExpenses } from "../../interfaces/casefiles";
@@ -62,6 +64,11 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
   const [editExpenses, setEditExpenses] = useState<IExpenses[]>(
     transactions?.expenses!
   );
+  const [addDeposit, setAddDeposit] = useState<boolean>(false);
+  const [deposit, setDeposit] = useState<string>("");
+  const [expensesNote, setExpensesNote] = useState<string>("");
+  const [expensesAmount, setExpensesAmount] = useState<string>("");
+  const [addExpenses, setAddExpenses] = useState<boolean>(false);
   const { mutate, isLoading } = useDeleteTransactions();
   const router = useRouter();
   const editTransactions = useUpdateTransactions();
@@ -267,45 +274,137 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 </Grid>
               </CardBody>
             </Card>
-            <Card>
+            <Card className="mb-20 mt-20">
               <CardBody>
                 <div className="mb-10">
                   <SmallText weight="w600">Expenses</SmallText>
                 </div>
-                <div>
-                  {transactions?.expenses.map(
-                    (item: IExpenses, index: number) => (
-                      <Grid xl="1fr 1fr" key={index}>
-                        <div>
-                          <SmallText weight="w500">Amount</SmallText>
+                <Grid xl="1fr 1fr">
+                  <div>
+                    {transactions?.expenses.map(
+                      (item: IExpenses, index: number) => (
+                        <div key={index}>
+                          <Card border className="mb-10">
+                            <CardBody>
+                              <SmallText weight="w500">Amount</SmallText>
+                              <Input
+                                placeholder=""
+                                type="number"
+                                name="amount"
+                                className="mt-10"
+                                defaultValue={item.amount}
+                                onChange={(e) =>
+                                  handleExpenseAmountChange(
+                                    index,
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              <SmallText weight="w500">Note</SmallText>
+                              <Input
+                                placeholder=""
+                                type="text"
+                                className="mt-10"
+                                name="note"
+                                defaultValue={item.note}
+                                onChange={(e) =>
+                                  handleExpenseNoteChange(index, e.target.value)
+                                }
+                              />
+                            </CardBody>
+                          </Card>
+                        </div>
+                      )
+                    )}
+                    {addExpenses && (
+                      <Card border className="mb-10">
+                        <CardBody>
+                          <SmallText weight="w500">New Amount</SmallText>
                           <Input
                             placeholder=""
                             type="number"
                             name="amount"
                             className="mt-10"
-                            defaultValue={item.amount}
-                            onChange={(e) =>
-                              handleExpenseAmountChange(index, e.target.value)
-                            }
+                            value={expensesAmount}
+                            onChange={(e) => setExpensesAmount(e.target.value)}
                           />
-                        </div>
-                        <div>
-                          <SmallText weight="w500">Note</SmallText>
+                          <SmallText weight="w500">New Note</SmallText>
                           <Input
                             placeholder=""
                             type="text"
                             className="mt-10"
+                            value={expensesAmount}
                             name="note"
-                            defaultValue={item.note}
-                            onChange={(e) =>
-                              handleExpenseNoteChange(index, e.target.value)
-                            }
+                            onChange={(e) => setExpensesNote(e.target.value)}
                           />
-                        </div>
+                        </CardBody>
+                      </Card>
+                    )}
+                    <Button
+                      onClick={() => {
+                        addExpenses
+                          ? (setEditExpenses([
+                              ...editExpenses,
+                              {
+                                amount: Number(expensesAmount),
+                                note: expensesNote,
+                              },
+                            ]),
+                            setExpensesAmount(""),
+                            setExpensesNote(""))
+                          : setAddExpenses(true);
+                      }}
+                      type="button"
+                    >
+                      Add Expenses
+                    </Button>
+                  </div>
+                  <div>
+                    <SmallText weight="w500">Preview</SmallText>
+
+                    {editExpenses.length > 0 ? (
+                      <Grid
+                        xl="repeat(2, auto)"
+                        lg="repeat(2, auto)"
+                        md="repeat(2, auto)"
+                        sm="repeat(1, auto)"
+                        className="mt-10"
+                      >
+                        {editExpenses.map((el: IExpenses, index: number) => (
+                          <Card
+                            bgColor="primary"
+                            className="px-20 py-10"
+                            key={index}
+                          >
+                            <Flex
+                              justifyContent="space-between"
+                              className="mb-10"
+                            >
+                              <SmallText weight="w500">
+                                Amount: &#8358;{el.amount.toLocaleString()}
+                              </SmallText>
+                              <X
+                                style={{ cursor: "pointer" }}
+                                width={14}
+                                height={14}
+                                onClick={() =>
+                                  setEditExpenses(
+                                    editExpenses.filter((item: IExpenses) => {
+                                      return item !== el;
+                                    })
+                                  )
+                                }
+                              />
+                            </Flex>
+                            <SmallText weight="w500">Note: {el.note}</SmallText>
+                          </Card>
+                        ))}
                       </Grid>
-                    )
-                  )}
-                </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Grid>
               </CardBody>
             </Card>
             <Card>
@@ -313,27 +412,107 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 <div className="mb-10">
                   <SmallText weight="w600">Deposit</SmallText>
                 </div>
-                <div>
-                  {transactions?.deposit.map(
-                    (item: IDeposit, index: number) => (
-                      <Grid xl="1fr 1fr" key={index}>
-                        <div>
-                          <SmallText weight="w500">Amount</SmallText>
-                          <Input
-                            placeholder=""
-                            type="text"
-                            className="mt-10"
-                            name="amount"
-                            defaultValue={item.amount}
-                            onChange={(e) =>
-                              handleDepositAmount(index, e.target.value)
-                            }
-                          />
-                        </div>
-                      </Grid>
-                    )
-                  )}
-                </div>
+                <Grid xl="1fr 1fr">
+                  <>
+                    <div>
+                      {transactions?.deposit.map(
+                        (item: IDeposit, index: number) => (
+                          <div key={index}>
+                            <Card border className="mb-10">
+                              <CardBody>
+                                <SmallText weight="w500">Amount</SmallText>
+                                <Input
+                                  placeholder=""
+                                  type="text"
+                                  className="mt-10"
+                                  name="amount"
+                                  defaultValue={item.amount}
+                                  onChange={(e) =>
+                                    handleDepositAmount(index, e.target.value)
+                                  }
+                                />
+                              </CardBody>
+                            </Card>
+                          </div>
+                        )
+                      )}
+                      {addDeposit && (
+                        <Card border className="mb-10">
+                          <CardBody>
+                            <SmallText weight="w500">New Deposit</SmallText>
+                            <Input
+                              placeholder=""
+                              type="number"
+                              name="amount"
+                              className="mt-10"
+                              value={deposit}
+                              onChange={(e) => setDeposit(e.target.value)}
+                            />
+                          </CardBody>
+                        </Card>
+                      )}
+                      <Button
+                        onClick={(e) => {
+                          addDeposit
+                            ? (setEditDeposit([
+                                ...editDeposit,
+                                { amount: Number(deposit) },
+                              ]),
+                              setDeposit(""))
+                            : setAddDeposit(true);
+                        }}
+                        type="button"
+                      >
+                        Add Deposit
+                      </Button>
+                    </div>
+
+                    <div>
+                      <SmallText weight="w500">Preview</SmallText>
+
+                      {editDeposit.length > 0 ? (
+                        <Grid
+                          xl="repeat(5, auto)"
+                          lg="repeat(5, auto)"
+                          md="repeat(5, auto)"
+                          sm="repeat(2, auto)"
+                          className="mt-20"
+                        >
+                          {editDeposit.map((el: IDeposit, index: number) => (
+                            <Badge
+                              fillColor="primary"
+                              key={index}
+                              borderColor={"cream"}
+                              color="dark"
+                            >
+                              <Flex justifyContent="space-between">
+                                <SmallText weight="w600">
+                                  &#8358;{el.amount}
+                                </SmallText>
+                                <X
+                                  style={{ cursor: "pointer" }}
+                                  width={14}
+                                  height={14}
+                                  onClick={() =>
+                                    setEditDeposit(
+                                      editDeposit.filter(
+                                        (deposit: IDeposit) => {
+                                          return deposit !== el;
+                                        }
+                                      )
+                                    )
+                                  }
+                                />
+                              </Flex>
+                            </Badge>
+                          ))}
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </>
+                </Grid>
               </CardBody>
             </Card>
             <Flex justifyContent="end" className="mt-20">

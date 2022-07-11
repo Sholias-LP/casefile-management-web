@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import {
+  Badge,
   Button,
   Card,
   CardBody,
@@ -15,6 +16,7 @@ import {
   SelectField,
   SmallText,
 } from "truparse-lodre";
+import { X } from "truparse-lodre/lib/icons";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
 import CaseFiles from ".";
 import AppLayout from "../../components/appLayout";
@@ -69,6 +71,15 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
   const [editCourtSitting, setCourtSitting] = useState<ICourtSitting[]>(
     caseFile?.court_sitting!
   );
+  const [addExpenses, setAddExpenses] = useState<boolean>(false);
+  const [addDeposit, setAddDeposit] = useState<boolean>(false);
+  const [courtSitting, setAddCourtSitting] = useState<boolean>(false);
+  const [deposit, setDeposit] = useState<string>("");
+  const [expensesNote, setExpensesNote] = useState<string>("");
+  const [courtNote, setCourtNote] = useState<string>("");
+  const [expensesAmount, setExpensesAmount] = useState<string>("");
+  const [courtDate, setCourtDate] = useState<string>("");
+
   const editCasefile = useUpdateCasefile();
 
   const router = useRouter();
@@ -151,7 +162,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
 
   const casefileList: ISelect[] = [];
 
-  casefileTypes.data?.data.data.casefiles.map((item: ICasefileTypes) => {
+  casefileTypes.data?.data.data.casefiles.map((item: ICasefileTypes, index) => {
     return casefileList.push({ text: item.name, value: item.name });
   });
 
@@ -301,40 +312,134 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 <div className="mb-10">
                   <SmallText weight="w600">Court Sitting</SmallText>
                 </div>
-                <div>
-                  {caseFile?.court_sitting.map(
-                    (item: ICourtSitting, index: number) => (
-                      <Grid xl="1fr 1fr" key={index}>
-                        <div>
-                          <SmallText weight="w500">Date</SmallText>
-                          <Input
-                            placeholder=""
-                            type="text"
-                            name="date"
-                            className="mt-10"
-                            defaultValue={item.date}
-                            onChange={(e) =>
-                              handleCourtSittingDate(index, e.target.value)
-                            }
-                          />
-                        </div>
-                        <div>
-                          <SmallText weight="w500">Note</SmallText>
-                          <Input
-                            placeholder=""
-                            type="text"
-                            name="note"
-                            className="mt-10"
-                            defaultValue={item.note}
-                            onChange={(e) =>
-                              handleCourtSittingNote(index, e.target.value)
-                            }
-                          />
-                        </div>
-                      </Grid>
-                    )
-                  )}
-                </div>
+                <Grid xl="1fr 1fr">
+                  <>
+                    <div>
+                      {caseFile?.court_sitting.map(
+                        (item: ICourtSitting, index: number) => (
+                          <Card key={index} border className="mb-10">
+                            <CardBody>
+                              <SmallText weight="w500">Date</SmallText>
+                              <Input
+                                placeholder=""
+                                type="text"
+                                name="date"
+                                className="mt-10"
+                                defaultValue={item.date}
+                                onChange={(e) =>
+                                  handleCourtSittingDate(index, e.target.value)
+                                }
+                              />
+
+                              <SmallText weight="w500">Note</SmallText>
+                              <Input
+                                placeholder=""
+                                type="text"
+                                name="note"
+                                className="mt-10"
+                                defaultValue={item.note}
+                                onChange={(e) =>
+                                  handleCourtSittingNote(index, e.target.value)
+                                }
+                              />
+                            </CardBody>
+                          </Card>
+                        )
+                      )}
+                      {courtSitting && (
+                        <Card border className="mb-10">
+                          <CardBody>
+                            <SmallText weight="w500">New Date</SmallText>
+                            <Input
+                              placeholder=""
+                              type="text"
+                              name="date"
+                              className="mt-10"
+                              value={courtDate}
+                              onChange={(e) => setCourtDate(e.target.value)}
+                            />
+
+                            <SmallText weight="w500">New Note</SmallText>
+                            <Input
+                              placeholder=""
+                              type="text"
+                              name="note"
+                              className="mt-10"
+                              value={courtNote}
+                              onChange={(e) => setCourtNote(e.target.value)}
+                            />
+                          </CardBody>
+                        </Card>
+                      )}
+                      <Button
+                        onClick={() => {
+                          courtSitting
+                            ? (setCourtSitting([
+                                ...editCourtSitting,
+                                { date: courtDate, note: courtNote },
+                              ]),
+                              setCourtDate(""),
+                              setCourtNote(""))
+                            : setAddCourtSitting(true);
+                        }}
+                        type="button"
+                      >
+                        Add Court Sitting
+                      </Button>
+                    </div>
+                    <div>
+                      <SmallText weight="w500">Preview</SmallText>
+
+                      {editCourtSitting.length > 0 ? (
+                        <Grid
+                          xl="repeat(2, auto)"
+                          lg="repeat(2, auto)"
+                          md="repeat(2, auto)"
+                          sm="repeat(1, auto)"
+                          className="mt-10"
+                        >
+                          {editCourtSitting.map(
+                            (el: ICourtSitting, index: number) => (
+                              <Card
+                                bgColor="primary"
+                                className="px-20 py-10"
+                                key={index}
+                              >
+                                <Flex
+                                  justifyContent="space-between"
+                                  className="mb-10"
+                                >
+                                  <SmallText weight="w500">
+                                    Date: {el.date}
+                                  </SmallText>
+                                  <X
+                                    style={{ cursor: "pointer" }}
+                                    width={14}
+                                    height={14}
+                                    onClick={() =>
+                                      setCourtSitting(
+                                        editCourtSitting.filter(
+                                          (item: ICourtSitting) => {
+                                            return item !== el;
+                                          }
+                                        )
+                                      )
+                                    }
+                                  />
+                                </Flex>
+                                <SmallText weight="w500">
+                                  Note: {el.note}
+                                </SmallText>
+                              </Card>
+                            )
+                          )}
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </>
+                </Grid>
               </CardBody>
             </Card>
             <Card className="mb-20 mt-20">
@@ -342,38 +447,132 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 <div className="mb-10">
                   <SmallText weight="w600">Expenses</SmallText>
                 </div>
-                <div>
-                  {caseFile?.expenses.map((item: IExpenses, index: number) => (
-                    <Grid xl="1fr 1fr" key={index}>
-                      <div>
-                        <SmallText weight="w500">Amount</SmallText>
-                        <Input
-                          placeholder=""
-                          type="number"
-                          name="amount"
-                          className="mt-10"
-                          defaultValue={item.amount}
-                          onChange={(e) =>
-                            handleExpenseAmountChange(index, e.target.value)
-                          }
-                        />
-                      </div>
-                      <div>
-                        <SmallText weight="w500">Note</SmallText>
-                        <Input
-                          placeholder=""
-                          type="text"
-                          className="mt-10"
-                          name="note"
-                          defaultValue={item.note}
-                          onChange={(e) =>
-                            handleExpenseNoteChange(index, e.target.value)
-                          }
-                        />
-                      </div>
-                    </Grid>
-                  ))}
-                </div>
+                <Grid xl="1fr 1fr">
+                  <div>
+                    {caseFile?.expenses.map(
+                      (item: IExpenses, index: number) => (
+                        <div key={index}>
+                          <Card border className="mb-10">
+                            <CardBody>
+                              <SmallText weight="w500">Amount</SmallText>
+                              <Input
+                                placeholder=""
+                                type="number"
+                                name="amount"
+                                className="mt-10"
+                                defaultValue={item.amount}
+                                onChange={(e) =>
+                                  handleExpenseAmountChange(
+                                    index,
+                                    e.target.value
+                                  )
+                                }
+                              />
+                              <SmallText weight="w500">Note</SmallText>
+                              <Input
+                                placeholder=""
+                                type="text"
+                                className="mt-10"
+                                name="note"
+                                defaultValue={item.note}
+                                onChange={(e) =>
+                                  handleExpenseNoteChange(index, e.target.value)
+                                }
+                              />
+                            </CardBody>
+                          </Card>
+                        </div>
+                      )
+                    )}
+                    {addExpenses && (
+                      <Card border className="mb-10">
+                        <CardBody>
+                          <SmallText weight="w500">New Amount</SmallText>
+                          <Input
+                            placeholder=""
+                            type="number"
+                            name="amount"
+                            className="mt-10"
+                            value={expensesAmount}
+                            onChange={(e) => setExpensesAmount(e.target.value)}
+                          />
+                          <SmallText weight="w500">New Note</SmallText>
+                          <Input
+                            placeholder=""
+                            type="text"
+                            className="mt-10"
+                            value={expensesAmount}
+                            name="note"
+                            onChange={(e) => setExpensesNote(e.target.value)}
+                          />
+                        </CardBody>
+                      </Card>
+                    )}
+                    <Button
+                      onClick={() => {
+                        addExpenses
+                          ? (setEditExpenses([
+                              ...editExpenses,
+                              {
+                                amount: Number(expensesAmount),
+                                note: expensesNote,
+                              },
+                            ]),
+                            setExpensesAmount(""),
+                            setExpensesNote(""))
+                          : setAddExpenses(true);
+                      }}
+                      type="button"
+                    >
+                      Add Expenses
+                    </Button>
+                  </div>
+                  <div>
+                    <SmallText weight="w500">Preview</SmallText>
+
+                    {editExpenses.length > 0 ? (
+                      <Grid
+                        xl="repeat(2, auto)"
+                        lg="repeat(2, auto)"
+                        md="repeat(2, auto)"
+                        sm="repeat(1, auto)"
+                        className="mt-10"
+                      >
+                        {editExpenses.map((el: IExpenses, index: number) => (
+                          <Card
+                            bgColor="primary"
+                            className="px-20 py-10"
+                            key={index}
+                          >
+                            <Flex
+                              justifyContent="space-between"
+                              className="mb-10"
+                            >
+                              <SmallText weight="w500">
+                                Amount: &#8358;{el.amount.toLocaleString()}
+                              </SmallText>
+                              <X
+                                style={{ cursor: "pointer" }}
+                                width={14}
+                                height={14}
+                                onClick={() =>
+                                  setEditExpenses(
+                                    editExpenses.filter((item: IExpenses) => {
+                                      return item !== el;
+                                    })
+                                  )
+                                }
+                              />
+                            </Flex>
+                            <SmallText weight="w500">Note: {el.note}</SmallText>
+                          </Card>
+                        ))}
+                      </Grid>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Grid>
               </CardBody>
             </Card>
             <Card>
@@ -381,25 +580,107 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 <div className="mb-10">
                   <SmallText weight="w600">Deposit</SmallText>
                 </div>
-                <div>
-                  {caseFile?.deposit.map((item: IDeposit, index: number) => (
-                    <Grid xl="1fr 1fr" key={index}>
-                      <div>
-                        <SmallText weight="w500">Amount</SmallText>
-                        <Input
-                          placeholder=""
-                          type="text"
-                          className="mt-10"
-                          name="amount"
-                          defaultValue={item.amount}
-                          onChange={(e) =>
-                            handleDepositAmount(index, e.target.value)
-                          }
-                        />
-                      </div>
-                    </Grid>
-                  ))}
-                </div>
+                <Grid xl="1fr 1fr">
+                  <>
+                    <div>
+                      {caseFile?.deposit.map(
+                        (item: IDeposit, index: number) => (
+                          <div key={index}>
+                            <Card border className="mb-10">
+                              <CardBody>
+                                <SmallText weight="w500">Amount</SmallText>
+                                <Input
+                                  placeholder=""
+                                  type="text"
+                                  className="mt-10"
+                                  name="amount"
+                                  defaultValue={item.amount}
+                                  onChange={(e) =>
+                                    handleDepositAmount(index, e.target.value)
+                                  }
+                                />
+                              </CardBody>
+                            </Card>
+                          </div>
+                        )
+                      )}
+                      {addDeposit && (
+                        <Card border className="mb-10">
+                          <CardBody>
+                            <SmallText weight="w500">New Deposit</SmallText>
+                            <Input
+                              placeholder=""
+                              type="number"
+                              name="amount"
+                              className="mt-10"
+                              value={deposit}
+                              onChange={(e) => setDeposit(e.target.value)}
+                            />
+                          </CardBody>
+                        </Card>
+                      )}
+                      <Button
+                        onClick={(e) => {
+                          addDeposit
+                            ? (setEditDeposit([
+                                ...editDeposit,
+                                { amount: Number(deposit) },
+                              ]),
+                              setDeposit(""))
+                            : setAddDeposit(true);
+                        }}
+                        type="button"
+                      >
+                        Add Deposit
+                      </Button>
+                    </div>
+
+                    <div>
+                      <SmallText weight="w500">Preview</SmallText>
+
+                      {editDeposit.length > 0 ? (
+                        <Grid
+                          xl="repeat(5, auto)"
+                          lg="repeat(5, auto)"
+                          md="repeat(5, auto)"
+                          sm="repeat(2, auto)"
+                          className="mt-20"
+                        >
+                          {editDeposit.map((el: IDeposit, index: number) => (
+                            <Badge
+                              fillColor="primary"
+                              key={index}
+                              borderColor={"cream"}
+                              color="dark"
+                            >
+                              <Flex justifyContent="space-between">
+                                <SmallText weight="w600">
+                                  &#8358;{el.amount}
+                                </SmallText>
+                                <X
+                                  style={{ cursor: "pointer" }}
+                                  width={14}
+                                  height={14}
+                                  onClick={() =>
+                                    setEditDeposit(
+                                      editDeposit.filter(
+                                        (deposit: IDeposit) => {
+                                          return deposit !== el;
+                                        }
+                                      )
+                                    )
+                                  }
+                                />
+                              </Flex>
+                            </Badge>
+                          ))}
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </>
+                </Grid>
               </CardBody>
             </Card>
             {edit && (
