@@ -248,7 +248,7 @@ const AddCasefile = () => {
                 </div>
 
                 <div>
-                  <SmallText weight="w500">Note</SmallText>
+                  <SmallText weight="w500">Endorsements</SmallText>
                   <textarea
                     placeholder=""
                     className="mt-10 mb-20"

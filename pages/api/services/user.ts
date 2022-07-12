@@ -7,6 +7,7 @@ import {
   IResetpassword,
   IResources,
   IResourceTypes,
+  IUpdateUser,
   IUser,
 } from "../../../interfaces/user";
 import Axios from "./axios";
@@ -67,6 +68,14 @@ const GetNotifications = async () => {
   return res;
 };
 
+const UpdateUser = async (payload: IUpdateUser) => {
+  const res: AxiosResponse<IResponse<IUser>> = await Axios.put(
+    `/users/${payload._id}`,
+    payload
+  );
+  return res;
+};
+
 export {
   SignUp,
   Login,
@@ -76,4 +85,5 @@ export {
   GetResourceTypes,
   ForgotPassword,
   GetNotifications,
+  UpdateUser,
 };

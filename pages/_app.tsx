@@ -2,11 +2,10 @@ import type { AppProps } from "next/app";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "react-query";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { GlobalStyles } from "truparse-lodre";
-import ProtectedRoute from "../components/protectedRoutes";
 import { AuthProviderContainer } from "../context/user";
 import "../styles/globals.css";
-import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
@@ -17,9 +16,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <Toaster />
         <AuthProviderContainer>
           <GlobalStyles />
-          <ProtectedRoute>
-            <Component {...pageProps} />
-          </ProtectedRoute>
+          <Component {...pageProps} />
         </AuthProviderContainer>
       </QueryClientProvider>
     </>

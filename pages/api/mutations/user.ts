@@ -5,6 +5,7 @@ import {
   Login,
   ResetPassword,
   SignUp,
+  UpdateUser,
 } from "../services/user";
 
 const useRegister = () => useMutation(SignUp);
@@ -15,4 +16,12 @@ const useResetPassword = () => useMutation(ResetPassword);
 
 const useForgotPassword = () => useMutation(ForgotPassword);
 
-export { useRegister, useLogin, useResetPassword, useForgotPassword };
+const useUpdateUser = () => useMutation(UpdateUser);
+
+export {
+  useRegister,
+  useLogin,
+  useResetPassword,
+  useForgotPassword,
+  useUpdateUser,
+};

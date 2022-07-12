@@ -34,6 +34,7 @@ const Login = () => {
           toast.success(data.message!);
           setAuthAndCache(data.data.token);
           updateCurrentUser(data.data);
+          console.log(data.data);
           router.push("/");
         },
         onError: (error) => {

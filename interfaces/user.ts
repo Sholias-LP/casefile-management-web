@@ -58,3 +58,9 @@ export interface ITransactionTypes {
   slug: string;
   type: string;
 }
+
+export interface IUpdateUser {
+  firstName: string;
+  lastName: string;
+  _id: string;
+}

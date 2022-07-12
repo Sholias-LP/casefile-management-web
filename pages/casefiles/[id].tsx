@@ -331,10 +331,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                 }
                               />
 
-                              <SmallText weight="w500">Note</SmallText>
-                              <Input
+                              <SmallText weight="w500">Endorsements</SmallText>
+                              <textarea
                                 placeholder=""
-                                type="text"
                                 name="note"
                                 className="mt-10"
                                 defaultValue={item.note}
@@ -360,9 +359,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             />
 
                             <SmallText weight="w500">New Note</SmallText>
-                            <Input
+                            <textarea
                               placeholder=""
-                              type="text"
                               name="note"
                               className="mt-10"
                               value={courtNote}
@@ -469,9 +467,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                 }
                               />
                               <SmallText weight="w500">Note</SmallText>
-                              <Input
+                              <textarea
                                 placeholder=""
-                                type="text"
                                 className="mt-10"
                                 name="note"
                                 defaultValue={item.note}
@@ -497,9 +494,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
                           <SmallText weight="w500">New Note</SmallText>
-                          <Input
+                          <textarea
                             placeholder=""
-                            type="text"
                             className="mt-10"
                             value={expensesAmount}
                             name="note"
@@ -801,7 +797,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                 <Paragraph weight="w400">{item.date}</Paragraph>
                               </Flex>
                               <Flex>
-                                <Paragraph weight="w500">Note</Paragraph>
+                                <Paragraph weight="w500">
+                                  Endorsements
+                                </Paragraph>
                                 <Paragraph weight="w400">{item.note}</Paragraph>
                               </Flex>
                             </div>

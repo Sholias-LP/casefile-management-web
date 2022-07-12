@@ -16,6 +16,7 @@ import { IResponse } from "../interfaces/response";
 import { IResetpassword } from "../interfaces/user";
 import useForm from "../utils/useForm";
 import { useResetPassword } from "./api/mutations/user";
+import ChangePasswordIcon from "../components/assets/change password.svg";
 
 const ChangePassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -58,6 +59,9 @@ const ChangePassword = () => {
             justifyContent="center"
             alignItems="center"
           >
+            <Flex justifyContent="center">
+              <ChangePasswordIcon style={{ width: "30px", height: "30px" }} />
+            </Flex>
             <Flex justifyContent="center">
               <Heading size="hSmall" weight="w700" className="mb-30">
                 Change password

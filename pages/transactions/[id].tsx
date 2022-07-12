@@ -69,6 +69,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
   const [expensesNote, setExpensesNote] = useState<string>("");
   const [expensesAmount, setExpensesAmount] = useState<string>("");
   const [addExpenses, setAddExpenses] = useState<boolean>(false);
+  const [transactionSummary, setTransactionSummary] = useState<string>("");
   const { mutate, isLoading } = useDeleteTransactions();
   const router = useRouter();
   const editTransactions = useUpdateTransactions();
@@ -133,6 +134,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
         expenses: editExpenses,
         deposit: editDeposit,
         transactionType: transaction,
+        transactionSummary: transactionSummary,
       },
       {
         onSuccess: async (
@@ -249,12 +251,11 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 <Grid xl="1fr 1fr">
                   <div>
                     <SmallText weight="w500">Transaction Summary</SmallText>
-                    <Input
+                    <textarea
                       placeholder=""
-                      type="text"
                       className="mt-10"
                       name="transactionSummary"
-                      onChange={handleChange}
+                      onChange={(e) => setTransactionSummary(e.target.value)}
                       defaultValue={transactions?.transaction_summary}
                     />
                   </div>
@@ -329,9 +330,8 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
                           <SmallText weight="w500">New Note</SmallText>
-                          <Input
+                          <textarea
                             placeholder=""
-                            type="text"
                             className="mt-10"
                             value={expensesAmount}
                             name="note"

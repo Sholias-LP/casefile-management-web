@@ -3,11 +3,7 @@ import { FC, useContext, useEffect, useState } from "react";
 import AuthContext from "../context/user";
 import Initializer from "./initializer";
 
-interface IProps {
-  children: JSX.Element | JSX.Element[];
-}
-
-const ProtectedRoute: FC<IProps> = ({ children }) => {
+const ProtectedRoute = (WrappedComponent: any) => (props: any) => {
   const { auth, initializing } = useContext(AuthContext);
   const router = useRouter();
 
@@ -17,11 +13,9 @@ const ProtectedRoute: FC<IProps> = ({ children }) => {
     }
   }, [initializing, auth]);
 
-  if (initializing) {
-    return <Initializer />;
-  }
+  if (auth) return <WrappedComponent {...props} />;
 
-  return <div>{children}</div>;
+  return <Initializer text="redirecting" />;
 };
 
 export default ProtectedRoute;

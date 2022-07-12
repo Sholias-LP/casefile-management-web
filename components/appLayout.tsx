@@ -1,32 +1,32 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import {
-  Button,
   Card,
-  CardBody,
   Col,
-  Container,
-  Dropdown,
   Flex,
-  Img,
   MerchantNavbar,
-  Navbar,
   Paragraph,
   ProfileNavItem,
   ProfilePicture,
 } from "truparse-lodre";
-import { Home, Logo } from "truparse-lodre/lib/icons";
-import SvgHelp from "truparse-lodre/lib/icons/Help";
-import SvgUser from "truparse-lodre/lib/icons/User";
+import { Home } from "truparse-lodre/lib/icons";
 import AuthContext, { setLogout } from "../context/user";
 import ImageComponent from "./image";
-import SholiasLogo from "../public/logoo.png";
+import ProtectedRoute from "./protectedRoutes";
+import DashboardIcon from "../components/assets/dashboard.svg";
+import CaseFileIcon from "../components/assets/case files.svg";
+import TransactionIcon from "../components/assets/transaction.svg";
+import NotificationIcon from "../components/assets/notification.svg";
+import TeamIcon from "../components/assets/team.svg";
+import LogoutIcon from "../components/assets/logout.svg";
+import ChangePasswordIcon from "../components/assets/change password.svg";
+import ProfileDetailIcon from "../components/assets/profile details.svg";
 
 interface IAppLayoutProps {
   name: string;
   pathName: string;
-  icon: JSX.Element;
+  icon: SVGElement | JSX.Element;
 }
 
 interface IProps {
@@ -37,37 +37,37 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
   {
     name: "Dashboard",
     pathName: "/",
-    icon: <Home />,
+    icon: <DashboardIcon />,
   },
   {
-    name: "CaseFiles",
+    name: "Case Files",
     pathName: "/casefiles",
-    icon: <Home />,
+    icon: <CaseFileIcon />,
   },
   {
     name: "Transactions",
     pathName: "/transactions",
-    icon: <Home />,
+    icon: <TransactionIcon />,
   },
   {
     name: "Notifications",
     pathName: "/notifications",
-    icon: <Home />,
+    icon: <NotificationIcon />,
   },
   {
     name: "Team",
     pathName: "/team",
-    icon: <Home />,
+    icon: <TeamIcon />,
   },
   {
     name: "Profile Details",
     pathName: "/userProfile",
-    icon: <Home />,
+    icon: <ProfileDetailIcon />,
   },
   {
     name: "Change Password",
     pathName: "/changePassword",
-    icon: <Home />,
+    icon: <ChangePasswordIcon />,
   },
 ];
 
@@ -93,7 +93,7 @@ const NavItems = () => {
         ))}
         <Link href="/auth">
           <a onClick={handleLogOut}>
-            <ProfileNavItem>Logout</ProfileNavItem>
+            <ProfileNavItem icon={<LogoutIcon />}>Logout</ProfileNavItem>
           </a>
         </Link>
       </div>
@@ -142,4 +142,4 @@ const AppLayout: FC<IProps> = ({ children }) => {
   );
 };
 
-export default AppLayout;
+export default ProtectedRoute(AppLayout);

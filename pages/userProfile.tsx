@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   Button,
   Card,
@@ -10,9 +10,47 @@ import {
 } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
 import AuthContext from "../context/user";
+import ProfileDetailIcon from "../components/assets/profile details.svg";
+import { useUpdateUser } from "./api/mutations/user";
+import useForm from "../utils/useForm";
+import { IUpdateUser, IUser } from "../interfaces/user";
+import { AxiosResponse, AxiosError } from "axios";
+import toast from "react-hot-toast";
+import { IResponse } from "../interfaces/response";
 
 const UserProfile = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, updateCurrentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState<boolean>(false);
+  console.log(currentUser._id);
+
+  const { mutate } = useUpdateUser();
+
+  const submit = async () => {
+    setLoading(true);
+    mutate(
+      { ...inputs, _id: currentUser._id },
+      {
+        onSuccess: async (response: AxiosResponse<IResponse<IUser>>) => {
+          const { data } = response;
+          setLoading(false);
+          toast.success(data.message!);
+          updateCurrentUser(data.data);
+        },
+        onError: (error) => {
+          const err = error as AxiosError;
+          if (err.response) {
+            setLoading(false);
+            toast.error(err.response.data.message);
+          }
+        },
+      }
+    );
+  };
+
+  const { inputs, handleChange, handleSubmit } = useForm<IUpdateUser>(
+    {} as IUpdateUser,
+    submit
+  );
 
   return (
     <AppLayout>
@@ -27,23 +65,28 @@ const UserProfile = () => {
             alignItems="center"
           >
             <Flex justifyContent="center">
+              <ProfileDetailIcon style={{ width: "30px", height: "30px" }} />
+            </Flex>
+            <Flex justifyContent="center">
               <Heading size="hSmall" weight="w700" className="mb-30">
                 Profile details
               </Heading>
             </Flex>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <Input
                 type="text"
                 placeholder="First name"
                 name="firstName"
                 defaultValue={currentUser.first_name}
+                onChange={handleChange}
               />
               <Input
                 type="text"
                 placeholder="Last name"
                 name="lastName"
                 defaultValue={currentUser.last_name}
+                onChange={handleChange}
               />
               <Input
                 type="email"
@@ -53,7 +96,9 @@ const UserProfile = () => {
                 defaultValue={currentUser.email}
               />
 
-              <Button fluid>Save Changes</Button>
+              <Button fluid loading={loading} disabled={loading}>
+                Save Changes
+              </Button>
             </form>
           </Grid>
         </CardBody>

@@ -106,3 +106,7 @@ textarea {
 textarea:focus {
   outline: 2px solid #ffc20e;
 }
+
+.cardHover:hover {
+  box-shadow: 4px 25px 25px 0px rgba(255,	250,	235, 0.6);
+}
