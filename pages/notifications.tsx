@@ -4,23 +4,18 @@ import toast from "react-hot-toast";
 import { Card, CardBody } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
 import { IResponse } from "../interfaces/response";
+import Axios from "./api/services/axios";
 import { GetNotifications } from "./api/services/user";
 
 const Notifications = () => {
-  // const [popNotifications, setPopNotifications] =
-  //   useState<AxiosResponse<IResponse>>();
+  const data = async () => {
+    const res = await GetNotifications();
+    console.log(res);
+  };
 
-  // useEffect(() => {
-  //   try {
-  //     const res = GetNotifications();
-  //     console.log(res);
-  //   } catch (error) {
-  //     const err = error as AxiosError;
-  //     toast.error(err.message);
-  //   }
-  // }, []);
-
-  // console.log(popNotifications);
+  useEffect(() => {
+    data();
+  }, []);
 
   return (
     <AppLayout>

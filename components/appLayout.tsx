@@ -4,6 +4,7 @@ import { FC, useContext } from "react";
 import {
   Card,
   Col,
+  Divider,
   Flex,
   MerchantNavbar,
   Paragraph,
@@ -22,6 +23,7 @@ import TeamIcon from "../components/assets/team.svg";
 import LogoutIcon from "../components/assets/logout.svg";
 import ChangePasswordIcon from "../components/assets/change password.svg";
 import ProfileDetailIcon from "../components/assets/profile details.svg";
+import { captalize } from "../utils/nameConverter";
 
 interface IAppLayoutProps {
   name: string;
@@ -59,6 +61,9 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
     pathName: "/team",
     icon: <TeamIcon />,
   },
+];
+
+const NavLayout: IAppLayoutProps[] = [
   {
     name: "Profile Details",
     pathName: "/userProfile",
@@ -91,6 +96,20 @@ const NavItems = () => {
             </a>
           </Link>
         ))}
+        <Divider />
+        {NavLayout.map((item: IAppLayoutProps, index: number) => (
+          <Link href={item.pathName} key={index}>
+            <a href={item.pathName}>
+              <ProfileNavItem
+                active={item.pathName === query.pathname}
+                icon={item.icon}
+              >
+                {item.name}
+              </ProfileNavItem>
+            </a>
+          </Link>
+        ))}
+        <Divider />
         <Link href="/auth">
           <a onClick={handleLogOut}>
             <ProfileNavItem icon={<LogoutIcon />}>Logout</ProfileNavItem>
@@ -120,7 +139,7 @@ const Nav = () => {
 
           <Col>
             <Paragraph weight="w600" size="pLarge">
-              {userName.toUpperCase()}
+              {captalize(userName)}
             </Paragraph>
           </Col>
         </Flex>

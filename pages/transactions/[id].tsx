@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { FC, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import toast, { LoaderIcon } from "react-hot-toast";
 import {
   Badge,
   Button,
@@ -52,7 +52,7 @@ export const getServerSideProps = async ({ params }: IParams) => {
 };
 
 const TransactionDetails: FC<IProps> = ({ id }) => {
-  const { data, refetch } = useGetATransaction(id);
+  const { data, refetch, isSuccess } = useGetATransaction(id);
   const transactions = data?.data.data;
   const [edit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -327,46 +327,60 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             name="amount"
                             className="mt-10"
                             value={expensesAmount}
+                            required
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
                           <SmallText weight="w500">New Note</SmallText>
                           <textarea
                             placeholder=""
                             className="mt-10"
-                            value={expensesAmount}
+                            value={expensesNote}
+                            required
                             name="note"
                             onChange={(e) => setExpensesNote(e.target.value)}
                           />
                         </CardBody>
                       </Card>
                     )}
-                    <Button
-                      onClick={() => {
-                        addExpenses
-                          ? (setEditExpenses([
-                              ...editExpenses,
-                              {
-                                amount: Number(expensesAmount),
-                                note: expensesNote,
-                              },
-                            ]),
-                            setExpensesAmount(""),
-                            setExpensesNote(""))
-                          : setAddExpenses(true);
-                      }}
-                      type="button"
-                    >
-                      Add Expenses
-                    </Button>
+                    {addExpenses ? (
+                      <Button
+                        onClick={() => {
+                          addExpenses
+                            ? (setEditExpenses([
+                                ...editExpenses,
+                                {
+                                  amount: Number(expensesAmount),
+                                  note: expensesNote,
+                                },
+                              ]),
+                              setExpensesAmount(""),
+                              setExpensesNote(""))
+                            : setAddExpenses(true);
+                        }}
+                        type="button"
+                        disabled={expensesAmount === "" || expensesNote === ""}
+                      >
+                        Add Expenses
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          setAddExpenses(true);
+                        }}
+                        type="button"
+                      >
+                        Add New Expenses
+                      </Button>
+                    )}
                   </div>
                   <div>
                     <SmallText weight="w500">Preview</SmallText>
 
                     {editExpenses.length > 0 ? (
                       <Grid
-                        xl="repeat(2, auto)"
-                        lg="repeat(2, auto)"
-                        md="repeat(2, auto)"
+                        xl="repeat(1, auto)"
+                        lg="repeat(1, auto)"
+                        md="repeat(1, auto)"
                         sm="repeat(1, auto)"
                         className="mt-10"
                       >
@@ -451,20 +465,30 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           </CardBody>
                         </Card>
                       )}
-                      <Button
-                        onClick={(e) => {
-                          addDeposit
-                            ? (setEditDeposit([
-                                ...editDeposit,
-                                { amount: Number(deposit) },
-                              ]),
-                              setDeposit(""))
-                            : setAddDeposit(true);
-                        }}
-                        type="button"
-                      >
-                        Add Deposit
-                      </Button>
+                      {addDeposit ? (
+                        <Button
+                          onClick={(e) => {
+                            setEditDeposit([
+                              ...editDeposit,
+                              { amount: Number(deposit) },
+                            ]),
+                              setDeposit("");
+                          }}
+                          type="button"
+                          disabled={deposit === ""}
+                        >
+                          Add Deposit
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={(e) => {
+                            setAddDeposit(true);
+                          }}
+                          type="button"
+                        >
+                          Add New Deposit
+                        </Button>
+                      )}
                     </div>
 
                     <div>
@@ -538,128 +562,144 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
           </form>
         ) : (
           <>
-            <Card className="mt-20">
-              <CardBody>
-                <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
-                  <Card bgColor="cream" className="h-100">
-                    <CardBody>
-                      <Flex justifyContent="space-between">
-                        <Flex>
-                          <Paragraph weight="w600">
-                            Transaction status:
-                          </Paragraph>
-                          <Paragraph weight="w500">
-                            {transactions?.status}
-                          </Paragraph>
-                        </Flex>
-                        <Flex gap={0.4}>
-                          <SvgEyeOpen />
-                          <SmallText>{transactions?.views}</SmallText>
-                        </Flex>
-                      </Flex>
-                    </CardBody>
-                    <Divider />
-                    <CardBody className="h-100">
-                      <Flex>
-                        <Paragraph className="mb-10" weight="w500">
-                          Client's Name:
-                        </Paragraph>
-                        <Paragraph weight="w400">
-                          {transactions?.client}
-                        </Paragraph>
-                      </Flex>
-                      <Flex>
-                        <Paragraph className="mb-10" weight="w500">
-                          Transaction Type:
-                        </Paragraph>
-                        <Paragraph weight="w400">
-                          {transactions?.transaction_type}
-                        </Paragraph>
-                      </Flex>
-                      <Flex>
-                        <Paragraph className="mb-10" weight="w500">
-                          Transaction ID:
-                        </Paragraph>
-                        <Paragraph weight="w400">
-                          {transactions?.transaction_id}
-                        </Paragraph>
-                      </Flex>
-                      <Flex>
-                        <Paragraph weight="w500">Date: </Paragraph>
-                        <Paragraph>
-                          {moment(transactions?.createdAt).format("LL")}
-                        </Paragraph>
-                      </Flex>
-                    </CardBody>
-                  </Card>
-                  <Card bgColor="cream" className="h-100">
-                    <CardBody>
-                      <Flex>
-                        <Paragraph weight="w600">Service Fee:</Paragraph>
-                        <Paragraph weight="w500">
-                          {transactions?.service_fee}
-                        </Paragraph>
-                      </Flex>
-                    </CardBody>
-                    <Divider />
-                    <CardBody className="h-100">
-                      <Paragraph weight="w500">Total Deposit</Paragraph>
-                      <>
-                        {transactions?.deposit.map(
-                          (item: IDeposit, index: number) => (
-                            <ul key={index}>
-                              <li>
-                                <SmallText>{item.amount}</SmallText>
-                              </li>
-                            </ul>
-                          )
-                        )}
-                      </>
-                    </CardBody>
-                  </Card>
-                </Grid>
+            {isSuccess ? (
+              <>
+                <Card className="mt-20">
+                  <CardBody>
+                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                      <Card bgColor="cream" className="h-100">
+                        <CardBody>
+                          <Flex justifyContent="space-between">
+                            <Flex>
+                              <Paragraph weight="w600">
+                                Transaction status:
+                              </Paragraph>
+                              <Paragraph weight="w500">
+                                {transactions?.status}
+                              </Paragraph>
+                            </Flex>
+                            <Flex gap={0.4}>
+                              <SvgEyeOpen />
+                              <SmallText>{transactions?.views}</SmallText>
+                            </Flex>
+                          </Flex>
+                        </CardBody>
+                        <Divider />
+                        <CardBody className="h-100">
+                          <Flex>
+                            <Paragraph className="mb-10" weight="w500">
+                              Client's Name:
+                            </Paragraph>
+                            <Paragraph weight="w400">
+                              {transactions?.client}
+                            </Paragraph>
+                          </Flex>
+                          <Flex>
+                            <Paragraph className="mb-10" weight="w500">
+                              Transaction Type:
+                            </Paragraph>
+                            <Paragraph weight="w400">
+                              {transactions?.transaction_type}
+                            </Paragraph>
+                          </Flex>
+                          <Flex>
+                            <Paragraph className="mb-10" weight="w500">
+                              Transaction ID:
+                            </Paragraph>
+                            <Paragraph weight="w400">
+                              {transactions?.transaction_id}
+                            </Paragraph>
+                          </Flex>
+                          <Flex>
+                            <Paragraph weight="w500">Date: </Paragraph>
+                            <Paragraph>
+                              {moment(transactions?.createdAt).format("LL")}
+                            </Paragraph>
+                          </Flex>
+                        </CardBody>
+                      </Card>
+                      <Card bgColor="cream" className="h-100">
+                        <CardBody>
+                          <Flex>
+                            <Paragraph weight="w600">Service Fee:</Paragraph>
+                            <Paragraph weight="w500">
+                              {transactions?.service_fee}
+                            </Paragraph>
+                          </Flex>
+                        </CardBody>
+                        <Divider />
+                        <CardBody className="h-100">
+                          <Paragraph weight="w500">Total Deposit</Paragraph>
+                          <>
+                            {transactions?.deposit.map(
+                              (item: IDeposit, index: number) => (
+                                <ul key={index}>
+                                  <li>
+                                    <SmallText>{item.amount}</SmallText>
+                                  </li>
+                                </ul>
+                              )
+                            )}
+                          </>
+                        </CardBody>
+                      </Card>
+                    </Grid>
 
-                <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
-                  <Card bgColor="cream" className="h-100">
-                    <CardBody>
-                      <Paragraph weight="w500">Expenses</Paragraph>
-                    </CardBody>
-                    <Divider />
-                    <CardBody className="h-100">
-                      <>
-                        {transactions?.expenses.map(
-                          (item: IExpenses, index: number) => (
-                            <div key={index}>
-                              <Flex>
-                                <Paragraph weight="w500">Amount: </Paragraph>
-                                <Paragraph weight="w400">
-                                  {item.amount}
-                                </Paragraph>
-                              </Flex>
-                              <Flex>
-                                <Paragraph weight="w500">Note</Paragraph>
-                                <Paragraph weight="w400">{item.note}</Paragraph>
-                              </Flex>
-                            </div>
-                          )
-                        )}
-                      </>
-                    </CardBody>
-                  </Card>
-                </Grid>
-              </CardBody>
-            </Card>
-            <Flex className="mt-20" justifyContent="end">
-              <Button onClick={() => setIsEdit(true)}>Edit</Button>
+                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                      <Card bgColor="cream" className="h-100">
+                        <CardBody>
+                          <Paragraph weight="w500">Expenses</Paragraph>
+                        </CardBody>
+                        <Divider />
+                        <CardBody className="h-100">
+                          <>
+                            {transactions?.expenses.map(
+                              (item: IExpenses, index: number) => (
+                                <div key={index}>
+                                  <Flex>
+                                    <Paragraph weight="w500">
+                                      Amount:{" "}
+                                    </Paragraph>
+                                    <Paragraph weight="w400">
+                                      {item.amount}
+                                    </Paragraph>
+                                  </Flex>
+                                  <Flex>
+                                    <Paragraph weight="w500">Note</Paragraph>
+                                    <Paragraph weight="w400">
+                                      {item.note}
+                                    </Paragraph>
+                                  </Flex>
+                                </div>
+                              )
+                            )}
+                          </>
+                        </CardBody>
+                      </Card>
+                    </Grid>
+                  </CardBody>
+                </Card>
+                <Flex className="mt-20" justifyContent="end">
+                  <Button onClick={() => setIsEdit(true)}>Edit</Button>
 
-              <DeleteModal
-                toggleModal={toggleModal}
-                setToggleModal={setToggleModal}
-                isloading={isLoading}
-                loading={loading}
-                submit={submit}
-              />
-            </Flex>
+                  <DeleteModal
+                    toggleModal={toggleModal}
+                    setToggleModal={setToggleModal}
+                    isloading={isLoading}
+                    loading={loading}
+                    submit={submit}
+                  />
+                </Flex>
+              </>
+            ) : (
+              <Card className="h-100 mt-20">
+                <CardBody className="h-100">
+                  <Flex justifyContent="center">
+                    <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                  </Flex>
+                </CardBody>
+              </Card>
+            )}
           </>
         )}
       </>
