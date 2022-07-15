@@ -633,11 +633,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           <>
                             {transactions?.deposit.map(
                               (item: IDeposit, index: number) => (
-                                <ul key={index}>
-                                  <li>
-                                    <SmallText>{item.amount}</SmallText>
-                                  </li>
-                                </ul>
+                                <li key={index}>
+                                  <SmallText>{item.amount}</SmallText>
+                                </li>
                               )
                             )}
                           </>
@@ -651,11 +649,12 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           <Paragraph weight="w500">Expenses</Paragraph>
                         </CardBody>
                         <Divider />
-                        <CardBody className="h-100">
-                          <>
-                            {transactions?.expenses.map(
-                              (item: IExpenses, index: number) => (
-                                <div key={index}>
+
+                        <>
+                          {transactions?.expenses.map(
+                            (item: IExpenses, index: number) => (
+                              <div key={index}>
+                                <div className="px-30 py-15">
                                   <Flex>
                                     <Paragraph weight="w500">
                                       Amount:{" "}
@@ -671,10 +670,15 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                     </Paragraph>
                                   </Flex>
                                 </div>
-                              )
-                            )}
-                          </>
-                        </CardBody>
+                                {index != transactions.expenses.length - 1 ? (
+                                  <hr style={{ borderTop: "dashed 1px" }} />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            )
+                          )}
+                        </>
                       </Card>
                     </Grid>
                   </CardBody>

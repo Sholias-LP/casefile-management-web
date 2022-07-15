@@ -5,7 +5,7 @@ const ImageComponent = () => {
   return (
     <Img
       src="/logoo.png"
-      style={{ width: "179px", height: "70px", objectFit: "contain" }}
+      style={{ width: "150px", height: "50px", objectFit: "contain" }}
     />
   );
 };

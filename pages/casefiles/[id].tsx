@@ -800,11 +800,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                           <>
                             {caseFile?.deposit.map(
                               (item: IDeposit, index: number) => (
-                                <ul key={index}>
-                                  <li>
-                                    <SmallText>{item.amount}</SmallText>
-                                  </li>
-                                </ul>
+                                <li key={index}>
+                                  <SmallText>{item.amount}</SmallText>
+                                </li>
                               )
                             )}
                           </>
@@ -818,7 +816,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                           <Paragraph weight="w600">Case Details</Paragraph>
                         </CardBody>
                         <Divider />
-                        <CardBody className="h-100">
+                        <div className="py-10 px-30">
                           <Flex>
                             <Paragraph className="mb-10" weight="w500">
                               Brief:
@@ -828,13 +826,13 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             </Paragraph>
                           </Flex>
 
-                          <Paragraph className="mb-5" weight="w500">
-                            Course Sitting
-                          </Paragraph>
-                          <>
-                            {caseFile?.court_sitting.map(
-                              (item: ICourtSitting, index) => (
-                                <div key={index} className="mb-10">
+                          <Paragraph weight="w500">Course Sitting</Paragraph>
+                        </div>
+                        <>
+                          {caseFile?.court_sitting.map(
+                            (item: ICourtSitting, index) => (
+                              <div key={index}>
+                                <div className="py-10 px-30">
                                   <Flex className="mb-5">
                                     <Paragraph weight="w500">Date: </Paragraph>
                                     <Paragraph weight="w400">
@@ -843,17 +841,22 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                   </Flex>
                                   <Flex>
                                     <Paragraph weight="w500">
-                                      Endorsements
+                                      Endorsements:
                                     </Paragraph>
                                     <Paragraph weight="w400">
                                       {item.note}
                                     </Paragraph>
                                   </Flex>
                                 </div>
-                              )
-                            )}
-                          </>
-                        </CardBody>
+                                {index != caseFile.court_sitting.length - 1 ? (
+                                  <hr style={{ borderTop: "dashed 1px" }} />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            )
+                          )}
+                        </>
                       </Card>
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
@@ -864,25 +867,31 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                         <>
                           {caseFile?.expenses.map(
                             (item: IExpenses, index: number) => (
-                              <>
-                                {index}
-                                <div className="py-15 px-15" key={index}>
-                                  <Flex>
-                                    <Paragraph weight="w500">Amount:</Paragraph>
-                                    <Paragraph weight="w400">
-                                      {item.amount}
-                                    </Paragraph>
-                                  </Flex>
-                                  <Flex>
-                                    <Paragraph weight="w500">Note</Paragraph>
-                                    <Paragraph weight="w400">
-                                      {item.note}
-                                    </Paragraph>
-                                  </Flex>
-                                </div>
-
-                                <hr style={{ borderTop: "dashed 1px" }} />
-                              </>
+                              <div key={index}>
+                                <>
+                                  <div className="py-15 px-30" key={index}>
+                                    <Flex>
+                                      <Paragraph weight="w500">
+                                        Amount:
+                                      </Paragraph>
+                                      <Paragraph weight="w400">
+                                        {item.amount}
+                                      </Paragraph>
+                                    </Flex>
+                                    <Flex>
+                                      <Paragraph weight="w500">Note</Paragraph>
+                                      <Paragraph weight="w400">
+                                        {item.note}
+                                      </Paragraph>
+                                    </Flex>
+                                  </div>
+                                </>
+                                {index != caseFile.expenses.length - 1 ? (
+                                  <hr style={{ borderTop: "dashed 1px" }} />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             )
                           )}
                         </>
