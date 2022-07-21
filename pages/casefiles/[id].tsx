@@ -506,7 +506,6 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             type="number"
                             name="amount"
                             className="mt-10"
-                            required
                             value={expensesAmount}
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
@@ -515,7 +514,6 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             placeholder=""
                             className="mt-10"
                             value={expensesNote}
-                            required
                             name="note"
                             onChange={(e) => setExpensesNote(e.target.value)}
                           />
@@ -743,7 +741,13 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
               <>
                 <Card className="mt-20">
                   <CardBody>
-                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                    <Grid
+                      xl="1.5fr 1fr"
+                      lg="1fr"
+                      md="1fr"
+                      gap={3}
+                      className="mb-20"
+                    >
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
                           <Flex justifyContent="space-between">
@@ -810,7 +814,13 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       </Card>
                     </Grid>
 
-                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                    <Grid
+                      xl="1.5fr 1fr"
+                      lg="1fr"
+                      md="1fr"
+                      gap={3}
+                      className="mb-20"
+                    >
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
                           <Paragraph weight="w600">Case Details</Paragraph>

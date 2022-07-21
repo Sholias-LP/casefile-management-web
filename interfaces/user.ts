@@ -64,3 +64,14 @@ export interface IUpdateUser {
   lastName: string;
   _id: string;
 }
+
+export interface INotificationResponse {
+  activity: string;
+  date: number;
+  resourceId: string;
+  status: string;
+  userId: string;
+  _id: string;
+  user: string;
+  resource: string;
+}

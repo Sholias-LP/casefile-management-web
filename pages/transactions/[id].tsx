@@ -327,7 +327,6 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             name="amount"
                             className="mt-10"
                             value={expensesAmount}
-                            required
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
                           <SmallText weight="w500">New Note</SmallText>
@@ -335,7 +334,6 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             placeholder=""
                             className="mt-10"
                             value={expensesNote}
-                            required
                             name="note"
                             onChange={(e) => setExpensesNote(e.target.value)}
                           />
@@ -566,7 +564,13 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
               <>
                 <Card className="mt-20">
                   <CardBody>
-                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                    <Grid
+                      xl="1.5fr 1fr"
+                      lg="1fr"
+                      md="1fr"
+                      gap={3}
+                      className="mb-20"
+                    >
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
                           <Flex justifyContent="space-between">
@@ -643,7 +647,13 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                       </Card>
                     </Grid>
 
-                    <Grid xl="1.5fr 1fr" lg="1fr" gap={3} className="mb-20">
+                    <Grid
+                      xl="1.5fr 1fr"
+                      lg="1fr"
+                      md="1fr"
+                      gap={3}
+                      className="mb-20"
+                    >
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
                           <Paragraph weight="w500">Expenses</Paragraph>

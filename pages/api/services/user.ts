@@ -3,6 +3,7 @@ import { IResponse } from "../../../interfaces/response";
 import {
   IForgotPassword,
   ILogin,
+  INotificationResponse,
   IRegister,
   IResetpassword,
   IResources,
@@ -37,7 +38,7 @@ const ResetPassword = async (payload: IResetpassword) => {
 };
 
 const GetUsers = async () => {
-  const res: AxiosResponse<IResponse<any>> = await Axios.get("/users");
+  const res: AxiosResponse<IResponse<IUser[]>> = await Axios.get("/users");
   return res;
 };
 
@@ -64,7 +65,8 @@ const ForgotPassword = async (payload: IForgotPassword) => {
 };
 
 const GetNotifications = async () => {
-  const res: AxiosResponse<IResponse> = await Axios.post("/notifications");
+  const res: AxiosResponse<IResponse<INotificationResponse[]>> =
+    await Axios.post("/notifications");
   return res;
 };
 
