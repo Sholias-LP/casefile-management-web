@@ -1,12 +1,12 @@
-import { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import { More } from "truparse-lodre/lib/icons";
-import { StyledMenu, StyledMenuContainer, StyledMenuTrigger } from "./styled";
+import { StyledMenuContainer, StyledMenuTrigger, StyledMenu } from "./styled";
 
 export interface IMenu {
   children: ReactNode;
 }
 
-const Menu: FC<IMenu> = ({ children }) => {
+const NotificationMenu: FC<IMenu> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -29,4 +29,4 @@ const Menu: FC<IMenu> = ({ children }) => {
   );
 };
 
-export default Menu;
+export default NotificationMenu;

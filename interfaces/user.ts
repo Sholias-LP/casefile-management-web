@@ -75,3 +75,7 @@ export interface INotificationResponse {
   user: string;
   resource: string;
 }
+
+export interface IReadNotification {
+  notificationIds: string[];
+}

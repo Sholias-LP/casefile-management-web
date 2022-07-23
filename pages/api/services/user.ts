@@ -64,12 +64,6 @@ const ForgotPassword = async (payload: IForgotPassword) => {
   return res;
 };
 
-const GetNotifications = async () => {
-  const res: AxiosResponse<IResponse<INotificationResponse[]>> =
-    await Axios.post("/notifications");
-  return res;
-};
-
 const UpdateUser = async (payload: IUpdateUser) => {
   const res: AxiosResponse<IResponse<IUser>> = await Axios.put(
     `/users/${payload._id}`,
@@ -86,6 +80,5 @@ export {
   GetUserResources,
   GetResourceTypes,
   ForgotPassword,
-  GetNotifications,
   UpdateUser,
 };

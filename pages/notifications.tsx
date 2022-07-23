@@ -1,46 +1,52 @@
+import { AxiosError, AxiosResponse } from "axios";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import toast, { LoaderIcon } from "react-hot-toast";
 import {
+  Button,
   Card,
   CardBody,
-  Checkbox,
-  Divider,
   Flex,
   Grid,
   Paragraph,
   SmallText,
 } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
+import NotificationMenu from "../components/notificationMenu";
 import { ICasefilesResponse } from "../interfaces/casefiles";
+import { IResponse } from "../interfaces/response";
 import { ITransactionsResponse } from "../interfaces/transactions";
 import { INotificationResponse } from "../interfaces/user";
+import {
+  useDeleteNotifications,
+  useReadNotifications,
+  useUnReadNotifications,
+} from "./api/mutations/notification";
 import { useGetCaseFiles } from "./api/queries/caseFiles";
 import { useGetTransactions } from "./api/queries/transactions";
-import { GetNotifications } from "./api/services/user";
+import {
+  DeleteNotification,
+  GetNotifications,
+} from "./api/services/notifications";
+import NotificationIcon from "../components/assets/notification.svg";
+import { useGetNofications } from "./api/queries/notification";
 
 const Notifications = () => {
   const router = useRouter();
   const { data: casefiles } = useGetCaseFiles();
   const { data: transactions } = useGetTransactions();
-  const [notificationData, setNotificationdata] = useState<
-    INotificationResponse[]
-  >([]);
+  const { mutate: readNotification } = useReadNotifications();
+  const { mutate: unReadNotification } = useUnReadNotifications();
+  const { data: notificationData, refetch, isLoading } = useGetNofications();
   const [clickedItem, setItem] = useState<string>("");
+  const [checkedId, setcheckedId] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   TimeAgo.setDefaultLocale(en.locale);
   TimeAgo.addLocale(en);
   const timeAgo = new TimeAgo("en-US");
-
-  const data = async () => {
-    const res = await GetNotifications();
-    setNotificationdata(res.data.data);
-  };
-
-  useEffect(() => {
-    data();
-  }, []);
 
   useEffect(() => {
     if (clickedItem) {
@@ -57,84 +63,212 @@ const Notifications = () => {
     }
   }, [clickedItem]);
 
-  const handleCheckBoxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.target;
-    console.log(name);
+  const handleCheckBoxChange = (id: string) => {
+    if (checkedId.indexOf(id) !== -1) {
+      setcheckedId(checkedId.filter((checkId: string) => checkId !== id));
+    } else {
+      setcheckedId([...checkedId, id]);
+    }
+  };
+
+  const handleSelectAllCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    if (checked && notificationData) {
+      setcheckedId(notificationData.data.data.map((item) => item._id));
+    }
+  };
+
+  const submitReadNotification = async () => {
+    readNotification(
+      { notificationIds: checkedId },
+      {
+        onSuccess: async (
+          response: AxiosResponse<IResponse<INotificationResponse>>
+        ) => {
+          const { data } = response;
+          toast.success(data.message!);
+          refetch();
+          setcheckedId([]);
+        },
+        onError: (error) => {
+          const err = error as AxiosError;
+          if (err.response) {
+            toast.error(err.response.data.message);
+            setcheckedId([]);
+          }
+        },
+      }
+    );
+  };
+
+  const submitUnReadNotification = async () => {
+    unReadNotification(
+      { notificationIds: checkedId },
+      {
+        onSuccess: async (
+          response: AxiosResponse<IResponse<INotificationResponse>>
+        ) => {
+          const { data } = response;
+          toast.success(data.message!);
+          refetch();
+          setcheckedId([]);
+        },
+        onError: (error) => {
+          const err = error as AxiosError;
+          if (err.response) {
+            toast.error(err.response.data.message);
+            setcheckedId([]);
+          }
+        },
+      }
+    );
+  };
+
+  const deleteNotifications = async () => {
+    setLoading(true);
+    const res = await DeleteNotification(checkedId);
+    if (res) {
+      setLoading(false);
+      refetch();
+      setcheckedId([]);
+    }
   };
 
   return (
     <AppLayout>
-      <Card bgColor="grey">
-        <CardBody>
-          <div style={{ alignItems: "center", display: "flex" }}>
-            <input type="checkbox" />
-            <label style={{ fontSize: "12px", marginLeft: "5px" }}>
-              Select All
-            </label>
-          </div>
-        </CardBody>
-      </Card>
-      <Divider />
-      <>
-        {notificationData &&
-          notificationData.map((item: INotificationResponse, index: number) => (
-            <>
-              <Card
-                bgColor={item.status === "unread" ? "light" : "cream"}
-                key={index}
-                style={{
-                  borderLeft:
-                    item.status === "unread" ? "" : "4px solid #FFC20E",
-                }}
-              >
+      {isLoading ? (
+        <Card className="h-100">
+          <CardBody className="h-100">
+            <Flex justifyContent="center">
+              <LoaderIcon style={{ width: "100px", height: "100px" }} />
+            </Flex>
+          </CardBody>
+        </Card>
+      ) : (
+        <>
+          <Card bgColor="grey" className="mb-5">
+            <CardBody>
+              {checkedId.length > 0 ? (
                 <Grid
-                  xl="30px 1fr"
-                  lg="30px 1fr"
-                  md="30px 1fr"
-                  sm="15px 1fr"
-                  xs="15px 1fr"
+                  gap={0}
+                  alignItems="center"
+                  xl="1fr 1fr 1fr 1fr 1fr 1fr 1fr"
+                  lg="1fr 1fr 1fr 1fr"
+                  md="1fr 1fr 1fr 1fr"
+                  sm="1fr 1fr 1fr"
+                  xs="1fr 1fr"
                 >
-                  <CardBody>
-                    <div>
-                      <input
-                        type="checkbox"
-                        value={item._id}
-                        name={item._id}
-                        onChange={handleCheckBoxChange}
-                      />
-                    </div>
-                  </CardBody>
-                  <CardBody
-                    onClick={() => setItem(item.resourceId)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <Grid
-                      xl="1fr auto"
-                      lg="1fr auto"
-                      md="1fr auto"
-                      sm="1fr auto"
-                      xs="1fr auto"
-                    >
-                      <Flex gap={0.2}>
-                        <SmallText
-                          onClick={() => router.push(`/team/${item.userId}`)}
-                          weight={"w600"}
-                        >
-                          {item.user}
+                  <Flex alignItems="center">
+                    <Paragraph>{checkedId.length} selected</Paragraph>
+                    <button onClick={deleteNotifications} disabled={loading}>
+                      Delete
+                    </button>
+                  </Flex>
+                  <NotificationMenu>
+                    <ul style={{ cursor: "pointer" }}>
+                      <li>
+                        <SmallText onClick={submitReadNotification}>
+                          Mark as Read
                         </SmallText>
-                        <SmallText>{item.activity}</SmallText>
-                      </Flex>
-                      <Flex justifyContent="end">
-                        <SmallText>{timeAgo.format(item.date)}</SmallText>
-                      </Flex>
-                    </Grid>
-                  </CardBody>
+                      </li>
+                      <li>
+                        <SmallText onClick={submitUnReadNotification}>
+                          Mark as Unread
+                        </SmallText>
+                      </li>
+                    </ul>
+                  </NotificationMenu>
                 </Grid>
+              ) : (
+                <div style={{ alignItems: "center", display: "flex" }}>
+                  <input type="checkbox" onChange={handleSelectAllCheckbox} />
+                  <label style={{ fontSize: "12px", marginLeft: "5px" }}>
+                    Select All
+                  </label>
+                </div>
+              )}
+            </CardBody>
+          </Card>
+          <>
+            {notificationData && notificationData.data.data.length > 0 ? (
+              notificationData.data.data.map(
+                (item: INotificationResponse, index: number) => (
+                  <>
+                    <Card
+                      className="mb-5"
+                      bgColor={item.status === "read" ? "light" : "cream"}
+                      key={index}
+                      style={{
+                        borderLeft:
+                          item.status === "read" ? "" : "4px solid #FFC20E",
+                      }}
+                    >
+                      <Grid
+                        xl="30px 1fr"
+                        lg="30px 1fr"
+                        md="30px 1fr"
+                        sm="15px 1fr"
+                        xs="15px 1fr"
+                      >
+                        <CardBody>
+                          <div>
+                            <input
+                              type="checkbox"
+                              value={item._id}
+                              onChange={(e) =>
+                                handleCheckBoxChange(e.target.value)
+                              }
+                              checked={checkedId.includes(item._id)}
+                            />
+                          </div>
+                        </CardBody>
+                        <CardBody
+                          onClick={() => setItem(item.resourceId)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Grid
+                            xl="1fr auto"
+                            lg="1fr auto"
+                            md="1fr auto"
+                            sm="1fr auto"
+                            xs="1fr auto"
+                          >
+                            <Flex gap={0.2}>
+                              <SmallText
+                                onClick={() =>
+                                  router.push(`/team/${item.userId}`)
+                                }
+                                weight={"w600"}
+                              >
+                                {item.user}
+                              </SmallText>
+                              <SmallText>{item.activity}</SmallText>
+                            </Flex>
+                            <Flex justifyContent="end">
+                              <SmallText>{timeAgo.format(item.date)}</SmallText>
+                            </Flex>
+                          </Grid>
+                        </CardBody>
+                      </Grid>
+                    </Card>
+                  </>
+                )
+              )
+            ) : (
+              <Card className="h-100">
+                <CardBody className="h-100">
+                  <Flex justifyContent="center">
+                    <NotificationIcon />
+                  </Flex>
+                  <Flex>
+                    <Paragraph>No Notifications yet</Paragraph>
+                  </Flex>
+                </CardBody>
               </Card>
-              <Divider />
-            </>
-          ))}
-      </>
+            )}
+          </>
+        </>
+      )}
     </AppLayout>
   );
 };

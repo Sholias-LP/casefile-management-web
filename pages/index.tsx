@@ -17,9 +17,9 @@ import CaseFileIcon from "../components/assets/case files.svg";
 import TransactionIcon from "../components/assets/transaction.svg";
 import en from "javascript-time-ago/locale/en.json";
 import TimeAgo from "javascript-time-ago";
-import { GetNotifications } from "./api/services/user";
 import { useEffect, useState } from "react";
 import { INotificationResponse, IUser } from "../interfaces/user";
+import { GetNotifications } from "./api/services/notifications";
 
 const HomePage: NextPage = () => {
   const [notificationData, setNotificationdata] = useState<
@@ -156,12 +156,21 @@ const HomePage: NextPage = () => {
                       style={{ cursor: "pointer" }}
                     >
                       <CardBody>
-                        <Flex gap={0.2}>
-                          <SmallText>{item.userId}</SmallText>
-                          <SmallText>{item.activity}</SmallText>
-
-                          <SmallText>{timeAgo.format(item.date)}</SmallText>
-                        </Flex>
+                        <Grid
+                          xl="1fr auto"
+                          lg="1fr auto"
+                          md="1fr auto"
+                          sm="1fr auto"
+                          xs="1fr auto"
+                        >
+                          <Flex gap={0.2}>
+                            <SmallText>{item.user}</SmallText>
+                            <SmallText>{item.activity}</SmallText>
+                          </Flex>
+                          <Flex justifyContent="end">
+                            <SmallText>{timeAgo.format(item.date)}</SmallText>
+                          </Flex>
+                        </Grid>
                       </CardBody>
                     </Card>
                   )
