@@ -31,7 +31,12 @@ import {
   useDeleteTransactions,
   useUpdateTransactions,
 } from "../api/mutations/transactions";
-import { useGetATransaction } from "../api/queries/transactions";
+import {
+  useGetATransaction,
+  useGetClientBalance,
+  useGetTotalDeposit,
+  useGetTotalExpenses,
+} from "../api/queries/transactions";
 import { useGetResourceTypes } from "../api/queries/users";
 import DeleteModal from "./deleteModal";
 
@@ -54,6 +59,9 @@ export const getServerSideProps = async ({ params }: IParams) => {
 const TransactionDetails: FC<IProps> = ({ id }) => {
   const { data, refetch, isSuccess } = useGetATransaction(id);
   const transactions = data?.data.data;
+  const transactionExpenses = useGetTotalExpenses(id);
+  const clientDeposit = useGetTotalDeposit(id);
+  const clientBalance = useGetClientBalance(id);
   const [edit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [toggleModal, setToggleModal] = useState<boolean>(false);
@@ -654,6 +662,22 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               )
                             )}
                           </>
+                          <Flex
+                            justifyContent="end"
+                            className="mb-10 mt-15"
+                            alignItems="center"
+                          >
+                            <SmallText weight="w600">
+                              Total Deposit = &#8358;
+                              {clientDeposit.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
+                          <Flex justifyContent="end" alignItems="center">
+                            <SmallText weight="w600">
+                              Balance = &#8358;
+                              {clientBalance.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
                         </CardBody>
                       </Card>
                     </Grid>
@@ -700,6 +724,14 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             )
                           )}
                         </>
+                        <CardBody>
+                          <Flex justifyContent="end">
+                            <SmallText weight="w600">
+                              Total Expenses = &#8358;
+                              {transactionExpenses.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
+                        </CardBody>
                       </Card>
                     </Grid>
                   </CardBody>

@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import {
   GetATransaction,
+  GetClientBalance,
   GetTotalDeposit,
   GetTotalExpenses,
   GetTransactions,
@@ -18,7 +19,7 @@ const useGetTotalDeposit = (id: string) =>
   useQuery(["getTotalDeposit", id], () => GetTotalDeposit(id));
 
 const useGetClientBalance = (id: string) =>
-  useQuery(["getClientBalance", id], () => GetTotalExpenses(id));
+  useQuery(["getClientBalance", id], () => GetClientBalance(id));
 
 export {
   useGetTransactions,
