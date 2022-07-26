@@ -1,7 +1,6 @@
 import { useMutation } from "react-query";
 import {
   ForgotPassword,
-  GetNotifications,
   Login,
   ResetPassword,
   SignUp,

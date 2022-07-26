@@ -34,7 +34,11 @@ import {
   useDeleteCasefile,
   useUpdateCasefile,
 } from "../api/mutations/casefiles";
-import { useGetACasefile } from "../api/queries/caseFiles";
+import {
+  useGetACasefile,
+  useGetCasefilesClientBalance,
+  useGetCasefilesTotalExpenses,
+} from "../api/queries/caseFiles";
 import { useGetResourceTypes } from "../api/queries/users";
 import DeleteModal from "./deleteModal";
 
@@ -57,6 +61,9 @@ export const getServerSideProps = async ({ params }: IParams) => {
 const CasefileDetails: FC<IProps> = ({ id }) => {
   const { data, refetch, isSuccess } = useGetACasefile(id);
   const { mutate, isLoading } = useDeleteCasefile();
+  const caseExpenses = useGetCasefilesTotalExpenses(id);
+  const clientDeposit = useGetCasefilesTotalExpenses(id);
+  const clientBalance = useGetCasefilesClientBalance(id);
   const caseFile = data?.data.data;
   const [edit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -212,7 +219,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
     setEditDeposit(caseFile?.deposit!);
     setCourtSitting(caseFile?.court_sitting!);
     getLastItem();
-  }, [caseFile]);
+  }, [caseFile, getLastItem]);
 
   return (
     <AppLayout>
@@ -357,7 +364,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             <SmallText weight="w500">New Date</SmallText>
                             <Input
                               placeholder=""
-                              type="text"
+                              type="date"
                               name="date"
                               className="mt-10"
                               value={courtDate}
@@ -468,7 +475,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                         <div key={index}>
                           <Card border className="mb-10">
                             <CardBody>
-                              <SmallText weight="w500">Amount</SmallText>
+                              <SmallText weight="w500">
+                                Amount(&#8358;)
+                              </SmallText>
                               <Input
                                 placeholder=""
                                 type="number"
@@ -500,7 +509,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                     {addExpenses && (
                       <Card border className="mb-10">
                         <CardBody>
-                          <SmallText weight="w500">New Amount</SmallText>
+                          <SmallText weight="w500">
+                            New Amount(&#8358;)
+                          </SmallText>
                           <Input
                             placeholder=""
                             type="number"
@@ -611,7 +622,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                           <div key={index}>
                             <Card border className="mb-10">
                               <CardBody>
-                                <SmallText weight="w500">Amount</SmallText>
+                                <SmallText weight="w500">
+                                  Amount(&#8358;)
+                                </SmallText>
                                 <Input
                                   placeholder=""
                                   type="text"
@@ -630,7 +643,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       {addDeposit && (
                         <Card border className="mb-10">
                           <CardBody>
-                            <SmallText weight="w500">New Deposit</SmallText>
+                            <SmallText weight="w500">
+                              New Deposit(&#8358;)
+                            </SmallText>
                             <Input
                               placeholder=""
                               type="number"
@@ -688,7 +703,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             >
                               <Flex justifyContent="space-between">
                                 <SmallText weight="w600">
-                                  &#8358;{el.amount}
+                                  &#8358;{el.amount.toLocaleString()}
                                 </SmallText>
                                 <X
                                   style={{ cursor: "pointer" }}
@@ -767,7 +782,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                         <CardBody className="h-100">
                           <Flex>
                             <Paragraph className="mb-10" weight="w500">
-                              Client's Name:
+                              Client&apos;s Name:
                             </Paragraph>
                             <Paragraph weight="w400">
                               {caseFile?.client}
@@ -794,7 +809,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                           <Flex>
                             <Paragraph weight="w600">Service Fee:</Paragraph>
                             <Paragraph weight="w500">
-                              {caseFile?.service_fee}
+                              &#8358;{caseFile?.service_fee.toLocaleString()}
                             </Paragraph>
                           </Flex>
                         </CardBody>
@@ -805,11 +820,30 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             {caseFile?.deposit.map(
                               (item: IDeposit, index: number) => (
                                 <li key={index}>
-                                  <SmallText>{item.amount}</SmallText>
+                                  <SmallText>
+                                    &#8358;{item.amount.toLocaleString()}
+                                  </SmallText>
                                 </li>
                               )
                             )}
                           </>
+
+                          <Flex
+                            justifyContent="end"
+                            className="mb-10 mt-15"
+                            alignItems="center"
+                          >
+                            <SmallText weight="w600">
+                              Total Deposit = &#8358;
+                              {clientDeposit.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
+                          <Flex justifyContent="end" alignItems="center">
+                            <SmallText weight="w600">
+                              Balance = &#8358;
+                              {clientBalance.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
                         </CardBody>
                       </Card>
                     </Grid>
@@ -885,7 +919,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                         Amount:
                                       </Paragraph>
                                       <Paragraph weight="w400">
-                                        {item.amount}
+                                        &#8358;{item.amount.toLocaleString()}
                                       </Paragraph>
                                     </Flex>
                                     <Flex>
@@ -905,6 +939,14 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             )
                           )}
                         </>
+                        <CardBody>
+                          <Flex justifyContent="end">
+                            <SmallText weight="w600">
+                              Total Expenses = &#8358;
+                              {caseExpenses.data?.data.data.toLocaleString()}
+                            </SmallText>
+                          </Flex>
+                        </CardBody>
                       </Card>
                     </Grid>
                   </CardBody>

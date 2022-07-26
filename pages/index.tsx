@@ -20,11 +20,15 @@ import TimeAgo from "javascript-time-ago";
 import { useEffect, useState } from "react";
 import { INotificationResponse, IUser } from "../interfaces/user";
 import { GetNotifications } from "./api/services/notifications";
+import { Pie } from "react-chartjs-2";
+import { Chart, ArcElement } from "chart.js";
 
 const HomePage: NextPage = () => {
   const [notificationData, setNotificationdata] = useState<
     INotificationResponse[]
   >([]);
+
+  Chart.register(ArcElement);
 
   TimeAgo.addDefaultLocale(en);
   const timeAgo = new TimeAgo("en-US");
@@ -38,11 +42,23 @@ const HomePage: NextPage = () => {
     setNotificationdata(res.data.data);
   };
 
+  const state = {
+    labels: ["Casefiles", "Transactions"],
+    datasets: [
+      {
+        label: "User Count",
+        backgroundColor: ["#FB1919", "#F97034"],
+        hoverBackgroundColor: ["#F70404", "#FF502D"],
+        data: [casefiles.data?.data.count, transactions.data?.data.count],
+      },
+    ],
+  };
+
   useEffect(() => {
     data();
   }, []);
 
-  const recentActivities = notificationData && notificationData.slice(0, 5);
+  const recentActivities = notificationData && notificationData.slice(0, 4);
 
   return (
     <AppLayout>
@@ -176,6 +192,11 @@ const HomePage: NextPage = () => {
                   )
                 )}
             </>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            <Pie data={state} style={{ width: "50px", height: "50px" }} />
           </CardBody>
         </Card>
       </Grid>

@@ -111,7 +111,7 @@ textarea:focus {
   box-shadow: 4px 25px 25px 0px rgba(255,	250,	235, 0.6);
 }
 
-button {
+.notificationButton {
   width: 70px;
   border-radius: 4px;
   border: 1px solid #191919;

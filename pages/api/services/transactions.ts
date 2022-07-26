@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { ICasefilesResponse } from "../../../interfaces/casefiles";
-import { IResponse } from "../../../interfaces/response";
+import { IResourseResponse, IResponse } from "../../../interfaces/response";
 import {
   ITransaction,
   ITransactionsResponse,
@@ -43,10 +43,34 @@ const DeleteTransaction = async (id: string) => {
   return res;
 };
 
+const GetTotalExpenses = async (id: string) => {
+  const res: AxiosResponse<IResourseResponse> = await Axios.get(
+    `/transactions/${id}/totalexpenses`
+  );
+  return res;
+};
+
+const GetTotalDeposit = async (id: string) => {
+  const res: AxiosResponse<IResourseResponse> = await Axios.get(
+    `/transactions/${id}/totaldeposit`
+  );
+  return res;
+};
+
+const GetClientBalance = async (id: string) => {
+  const res: AxiosResponse<IResourseResponse> = await Axios.get(
+    `/transactions/${id}/balance`
+  );
+  return res;
+};
+
 export {
   GetTransactions,
   GetATransaction,
   AddTransaction,
   UpdateTransaction,
   DeleteTransaction,
+  GetTotalExpenses,
+  GetTotalDeposit,
+  GetClientBalance,
 };

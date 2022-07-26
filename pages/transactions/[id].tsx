@@ -287,7 +287,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                         <div key={index}>
                           <Card border className="mb-10">
                             <CardBody>
-                              <SmallText weight="w500">Amount</SmallText>
+                              <SmallText weight="w500">
+                                Amount(&#8358;)
+                              </SmallText>
                               <Input
                                 placeholder=""
                                 type="number"
@@ -320,7 +322,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                     {addExpenses && (
                       <Card border className="mb-10">
                         <CardBody>
-                          <SmallText weight="w500">New Amount</SmallText>
+                          <SmallText weight="w500">
+                            New Amount(&#8358;)
+                          </SmallText>
                           <Input
                             placeholder=""
                             type="number"
@@ -432,7 +436,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           <div key={index}>
                             <Card border className="mb-10">
                               <CardBody>
-                                <SmallText weight="w500">Amount</SmallText>
+                                <SmallText weight="w500">
+                                  Amount(&#8358;)
+                                </SmallText>
                                 <Input
                                   placeholder=""
                                   type="text"
@@ -451,7 +457,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                       {addDeposit && (
                         <Card border className="mb-10">
                           <CardBody>
-                            <SmallText weight="w500">New Deposit</SmallText>
+                            <SmallText weight="w500">
+                              New Deposit(&#8358;)
+                            </SmallText>
                             <Input
                               placeholder=""
                               type="number"
@@ -592,7 +600,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                         <CardBody className="h-100">
                           <Flex>
                             <Paragraph className="mb-10" weight="w500">
-                              Client's Name:
+                              Client&apos;s Name:
                             </Paragraph>
                             <Paragraph weight="w400">
                               {transactions?.client}
@@ -627,7 +635,8 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           <Flex>
                             <Paragraph weight="w600">Service Fee:</Paragraph>
                             <Paragraph weight="w500">
-                              {transactions?.service_fee}
+                              &#8358;
+                              {transactions?.service_fee.toLocaleString()}
                             </Paragraph>
                           </Flex>
                         </CardBody>
@@ -638,7 +647,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             {transactions?.deposit.map(
                               (item: IDeposit, index: number) => (
                                 <li key={index}>
-                                  <SmallText>{item.amount}</SmallText>
+                                  <SmallText>
+                                    &#8358;{item.amount.toLocaleString()}
+                                  </SmallText>
                                 </li>
                               )
                             )}
@@ -670,7 +681,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                       Amount:{" "}
                                     </Paragraph>
                                     <Paragraph weight="w400">
-                                      {item.amount}
+                                      &#8358;{item.amount.toLocaleString()}
                                     </Paragraph>
                                   </Flex>
                                   <Flex>

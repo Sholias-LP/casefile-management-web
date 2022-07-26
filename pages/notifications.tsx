@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import toast, { LoaderIcon } from "react-hot-toast";
 import {
-  Button,
   Card,
   CardBody,
   Flex,
@@ -14,24 +13,20 @@ import {
   SmallText,
 } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
+import NotificationIcon from "../components/assets/notification.svg";
 import NotificationMenu from "../components/notificationMenu";
 import { ICasefilesResponse } from "../interfaces/casefiles";
 import { IResponse } from "../interfaces/response";
 import { ITransactionsResponse } from "../interfaces/transactions";
 import { INotificationResponse } from "../interfaces/user";
 import {
-  useDeleteNotifications,
   useReadNotifications,
   useUnReadNotifications,
 } from "./api/mutations/notification";
 import { useGetCaseFiles } from "./api/queries/caseFiles";
-import { useGetTransactions } from "./api/queries/transactions";
-import {
-  DeleteNotification,
-  GetNotifications,
-} from "./api/services/notifications";
-import NotificationIcon from "../components/assets/notification.svg";
 import { useGetNofications } from "./api/queries/notification";
+import { useGetTransactions } from "./api/queries/transactions";
+import { DeleteNotification } from "./api/services/notifications";
 
 const Notifications = () => {
   const router = useRouter();
@@ -61,7 +56,7 @@ const Notifications = () => {
         }
       });
     }
-  }, [clickedItem]);
+  }, [clickedItem, casefiles, transactions]);
 
   const handleCheckBoxChange = (id: string) => {
     if (checkedId.indexOf(id) !== -1) {
@@ -160,7 +155,11 @@ const Notifications = () => {
                 >
                   <Flex alignItems="center">
                     <Paragraph>{checkedId.length} selected</Paragraph>
-                    <button onClick={deleteNotifications} disabled={loading}>
+                    <button
+                      onClick={deleteNotifications}
+                      disabled={loading}
+                      className="notificationButton"
+                    >
                       Delete
                     </button>
                   </Flex>
@@ -256,12 +255,14 @@ const Notifications = () => {
               )
             ) : (
               <Card className="h-100">
-                <CardBody className="h-100">
+                <CardBody className="h-100 pt-50 pb-50">
                   <Flex justifyContent="center">
-                    <NotificationIcon />
+                    <NotificationIcon
+                      style={{ width: "100px", height: "100px" }}
+                    />
                   </Flex>
-                  <Flex>
-                    <Paragraph>No Notifications yet</Paragraph>
+                  <Flex justifyContent="center">
+                    <Paragraph weight="w600">No Notifications yet</Paragraph>
                   </Flex>
                 </CardBody>
               </Card>

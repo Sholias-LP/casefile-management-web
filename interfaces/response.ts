@@ -5,6 +5,11 @@ export interface IResponse<T = null> {
   count?: number;
 }
 
+export interface IResourseResponse {
+  data: number;
+  success: string;
+}
+
 export interface IList<T = null> {
   response: T[];
   pagination: IPagination;
