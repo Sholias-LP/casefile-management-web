@@ -3,6 +3,8 @@ export interface IResponse<T = null> {
   data: T;
   message?: string | null;
   count?: number;
+  read?: number;
+  unread?: number;
 }
 
 export interface IResourseResponse {

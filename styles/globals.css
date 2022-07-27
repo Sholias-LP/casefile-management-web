@@ -123,3 +123,23 @@ textarea:focus {
   color: #191919;
   background-color: transparent;
 }
+
+.cartContainer {
+  margin-right: 0.3rem;
+  position: relative;
+}
+
+.badge {
+  background-color: #ffc20e;
+  border-radius: 14px;
+  color: black;
+  position: absolute;
+  font-size: 10px;
+  font-weight: 600;
+  top: -3px;
+  right: -30px;
+  height: 22px;
+  min-width: 22px;
+  padding-top: 5px;
+  text-align: center;
+}

@@ -92,10 +92,6 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
 
   const router = useRouter();
 
-  const getLastItem = () => {
-    const lastItem = caseFile?.expenses.length! - 1;
-  };
-
   const handleExpenseAmountChange = (index: number, item: string) => {
     if (editExpenses) {
       const indexValue = editExpenses[index];
@@ -218,8 +214,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
     setEditExpenses(caseFile?.expenses!);
     setEditDeposit(caseFile?.deposit!);
     setCourtSitting(caseFile?.court_sitting!);
-    getLastItem();
-  }, [caseFile, getLastItem]);
+  }, [caseFile]);
 
   return (
     <AppLayout>

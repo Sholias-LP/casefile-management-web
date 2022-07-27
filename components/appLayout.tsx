@@ -24,6 +24,7 @@ import LogoutIcon from "../components/assets/logout.svg";
 import ChangePasswordIcon from "../components/assets/change password.svg";
 import ProfileDetailIcon from "../components/assets/profile details.svg";
 import { captalize } from "../utils/nameConverter";
+import { useGetNofications } from "../pages/api/queries/notification";
 
 interface IAppLayoutProps {
   name: string;
@@ -81,6 +82,8 @@ const NavItems = () => {
   const handleLogOut = () => {
     setLogout("/auth");
   };
+  const { data } = useGetNofications();
+
   return (
     <Card>
       <div>
@@ -91,7 +94,14 @@ const NavItems = () => {
                 active={item.pathName === query.pathname}
                 icon={item.icon}
               >
-                {item.name}
+                {item.name === "Notifications" ? (
+                  <div className="cartContainer">
+                    <div>{item.name}</div>
+                    <div className="badge">{data?.data.unread}</div>
+                  </div>
+                ) : (
+                  item.name
+                )}
               </ProfileNavItem>
             </a>
           </Link>

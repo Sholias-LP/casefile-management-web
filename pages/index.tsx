@@ -21,14 +21,14 @@ import { useEffect, useState } from "react";
 import { INotificationResponse, IUser } from "../interfaces/user";
 import { GetNotifications } from "./api/services/notifications";
 import { Pie } from "react-chartjs-2";
-import { Chart, ArcElement } from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 const HomePage: NextPage = () => {
   const [notificationData, setNotificationdata] = useState<
     INotificationResponse[]
   >([]);
 
-  Chart.register(ArcElement);
+  ChartJS.register(ArcElement, Tooltip, Legend);
 
   TimeAgo.addDefaultLocale(en);
   const timeAgo = new TimeAgo("en-US");
@@ -47,8 +47,12 @@ const HomePage: NextPage = () => {
     datasets: [
       {
         label: "User Count",
-        backgroundColor: ["#FB1919", "#F97034"],
-        hoverBackgroundColor: ["#F70404", "#FF502D"],
+        backgroundColor: ["rgba(255, 194, 14, 0.8)", "rgba(255, 194, 14, 0.5)"],
+        hoverBackgroundColor: [
+          "rgba(255, 194, 14, 0.9)",
+          "rgba(255, 194, 14, 0.6)",
+        ],
+        borderColor: ["rgba(255, 194, 14, 1)", "rgba(255, 194, 14, 0.7)"],
         data: [casefiles.data?.data.count, transactions.data?.data.count],
       },
     ],
