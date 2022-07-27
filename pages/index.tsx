@@ -47,12 +47,11 @@ const HomePage: NextPage = () => {
     datasets: [
       {
         label: "User Count",
-        backgroundColor: ["rgba(255, 194, 14, 0.8)", "rgba(255, 194, 14, 0.5)"],
+        backgroundColor: ["rgba(255, 194, 14, 0.6)", "rgba(255, 194, 14, 0.3)"],
         hoverBackgroundColor: [
-          "rgba(255, 194, 14, 0.9)",
-          "rgba(255, 194, 14, 0.6)",
+          "rgba(255, 194, 14, 0.7)",
+          "rgba(255, 194, 14, 0.4)",
         ],
-        borderColor: ["rgba(255, 194, 14, 1)", "rgba(255, 194, 14, 0.7)"],
         data: [casefiles.data?.data.count, transactions.data?.data.count],
       },
     ],
