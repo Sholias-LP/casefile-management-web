@@ -72,7 +72,7 @@ const ChangePassword = () => {
               <Input
                 type="password"
                 className="mt-5"
-                placeholder=""
+                placeholder="New password"
                 name="newPassword"
                 onChange={handleChange}
               />
@@ -80,7 +80,7 @@ const ChangePassword = () => {
               <Input
                 type="password"
                 className="mt-5"
-                placeholder=""
+                placeholder="Confirm new password"
                 name="confirmNewPassword"
                 onChange={handleChange}
               />

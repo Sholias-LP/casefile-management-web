@@ -233,9 +233,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 </SmallText>
                 <Grid xl="1fr 1fr">
                   <div className="mt-10">
-                    <SmallText weight="w500">Client Name</SmallText>
+                    <SmallText weight="w500">Client</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder="Client's name"
                       type="text"
                       name="client"
                       className="mt-10"
@@ -295,7 +295,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                   <div>
                     <SmallText weight="w500">Letter of Engagement</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder="Letter of engagement"
                       type="text"
                       className="mt-10"
                       name="caseFileSummary"
@@ -306,9 +306,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 </Grid>
                 <Grid xl="1fr 1fr">
                   <div>
-                    <SmallText weight="w500">Service Fee</SmallText>
+                    <SmallText weight="w500">Service Fee (&#8358;)</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder="e.g 5000000"
                       type="number"
                       className="mt-10"
                       name="serviceFee"
@@ -347,6 +347,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               <textarea
                                 placeholder=""
                                 name="note"
+                                rows={4}
                                 className="mt-10"
                                 defaultValue={item.note}
                                 onChange={(e) =>
@@ -370,10 +371,11 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               onChange={(e) => setCourtDate(e.target.value)}
                             />
 
-                            <SmallText weight="w500">New Note</SmallText>
+                            <SmallText weight="w500">Endorsement</SmallText>
                             <textarea
-                              placeholder=""
+                              placeholder="New endorsement"
                               name="note"
+                              rows={4}
                               className="mt-10"
                               value={courtNote}
                               onChange={(e) => setCourtNote(e.target.value)}
@@ -519,9 +521,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             value={expensesAmount}
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
-                          <SmallText weight="w500">New Note</SmallText>
+                          <SmallText weight="w500">Add a note</SmallText>
                           <textarea
-                            placeholder=""
+                            placeholder="e.g. flight ticket, hotel accommodation etc"
                             className="mt-10"
                             value={expensesNote}
                             name="note"
