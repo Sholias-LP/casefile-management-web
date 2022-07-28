@@ -43,7 +43,7 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
     icon: <DashboardIcon />,
   },
   {
-    name: "Case Files",
+    name: "Case files",
     pathName: "/casefiles",
     icon: <CaseFileIcon />,
   },
@@ -66,12 +66,12 @@ const AppLayoutNavigation: IAppLayoutProps[] = [
 
 const NavLayout: IAppLayoutProps[] = [
   {
-    name: "Profile Details",
+    name: "Profile details",
     pathName: "/userProfile",
     icon: <ProfileDetailIcon />,
   },
   {
-    name: "Change Password",
+    name: "Change password",
     pathName: "/changePassword",
     icon: <ChangePasswordIcon />,
   },
