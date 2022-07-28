@@ -201,9 +201,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 </SmallText>
                 <Grid xl="1fr 1fr">
                   <div className="mt-10">
-                    <SmallText weight="w500">Client Name</SmallText>
+                    <SmallText weight="w500">Client</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder="Client's name"
                       type="text"
                       name="client"
                       className="mt-10"
@@ -263,7 +263,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                   <div>
                     <SmallText weight="w500">Transaction Summary</SmallText>
                     <textarea
-                      placeholder=""
+                      placeholder="Lawyer's understanding / summary of the client's needs"
                       className="mt-10"
                       name="transactionSummary"
                       onChange={(e) => setTransactionSummary(e.target.value)}
@@ -273,9 +273,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 </Grid>
                 <Grid xl="1fr 1fr">
                   <div>
-                    <SmallText weight="w500">Service Fee</SmallText>
+                    <SmallText weight="w500">Service Fee (&#8358;)</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder="e.g. 5000000"
                       type="number"
                       className="mt-10"
                       name="serviceFee"
@@ -344,9 +344,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             value={expensesAmount}
                             onChange={(e) => setExpensesAmount(e.target.value)}
                           />
-                          <SmallText weight="w500">New Note</SmallText>
+                          <SmallText weight="w500">Add a note</SmallText>
                           <textarea
-                            placeholder=""
+                            placeholder="eg. flight ticket, hotel accommodation etc"
                             className="mt-10"
                             value={expensesNote}
                             name="note"

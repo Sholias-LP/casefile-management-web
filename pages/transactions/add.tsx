@@ -99,9 +99,9 @@ const AddTransactions = () => {
             </SmallText>
             <Grid xl="1fr 1fr">
               <div className="mt-10">
-                <SmallText weight="w500">Client Name</SmallText>
+                <SmallText weight="w500">Client</SmallText>
                 <Input
-                  placeholder=""
+                  placeholder="Full name"
                   type="text"
                   name="client"
                   className="mt-10"
@@ -173,12 +173,13 @@ const AddTransactions = () => {
               <div>
                 <SmallText weight="w500">
                   Service Fee{" "}
+                  (&#8358;) &nbsp;
                   <span style={{ color: "red", fontSize: "8px" }}>
                     (required)
                   </span>
                 </SmallText>
                 <Input
-                  placeholder=""
+                  placeholder="e.g. 5000000"
                   type="number"
                   className="mt-10"
                   name="serviceFee"
@@ -192,7 +193,7 @@ const AddTransactions = () => {
                   <SmallText weight="w500">Transaction Summary</SmallText>
                 </div>
                 <textarea
-                  placeholder=""
+                  placeholder="Lawyer's understanding / summary of the client's needs"
                   className="mt-10"
                   name="transactionSummary"
                   onChange={(e) => setTransactionSummary(e.target.value)}
@@ -210,18 +211,18 @@ const AddTransactions = () => {
 
             <Grid xl="1fr 1fr">
               <div>
-                <SmallText weight="w500">Amount</SmallText>
+                <SmallText weight="w500">Amount (&#8358;)</SmallText>
                 <Input
-                  placeholder=""
+                  placeholder="e.g. 200000"
                   type="number"
                   name="amount"
                   value={expensesAmount}
                   className="mt-10"
                   onChange={(e) => setExpensesAmount(e.target.value)}
                 />
-                <SmallText weight="w500">Note</SmallText>
+                <SmallText weight="w500">Add a note</SmallText>
                 <textarea
-                  placeholder=""
+                  placeholder="e.g. flight ticket, hotel accommodation etc"
                   className="mt-10 mb-10"
                   name="note"
                   onChange={(e) => setExpensesNote(e.target.value)}
@@ -302,9 +303,9 @@ const AddTransactions = () => {
             </div>
             <Grid xl="1fr 1fr">
               <div>
-                <SmallText weight="w500">Amount</SmallText>
+                <SmallText weight="w500">Amount (&#8358;)</SmallText>
                 <Input
-                  placeholder=""
+                  placeholder="e.g. 200000"
                   type="number"
                   name="amount"
                   value={deposit}
