@@ -153,6 +153,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
           toast.success(data.message!);
           setIsEdit(false);
           refetch();
+          transactionExpenses.refetch();
+          clientBalance.refetch();
+          clientDeposit.refetch();
         },
         onError: (error) => {
           const err = error as AxiosError;
@@ -474,6 +477,8 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               name="amount"
                               className="mt-10"
                               value={deposit}
+                              max={clientBalance.data?.data.data}
+                              min={0}
                               onChange={(e) => setDeposit(e.target.value)}
                             />
                           </CardBody>

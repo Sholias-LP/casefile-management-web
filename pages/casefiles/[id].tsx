@@ -38,6 +38,7 @@ import {
   useGetACasefile,
   useGetCasefilesClientBalance,
   useGetCasefilesTotalExpenses,
+  useGetCasefileTotalDeposit,
 } from "../api/queries/caseFiles";
 import { useGetResourceTypes } from "../api/queries/users";
 import DeleteModal from "./deleteModal";
@@ -62,7 +63,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
   const { data, refetch, isSuccess } = useGetACasefile(id);
   const { mutate, isLoading } = useDeleteCasefile();
   const caseExpenses = useGetCasefilesTotalExpenses(id);
-  const clientDeposit = useGetCasefilesTotalExpenses(id);
+  const clientDeposit = useGetCasefileTotalDeposit(id);
   const clientBalance = useGetCasefilesClientBalance(id);
   const caseFile = data?.data.data;
   const [edit, setIsEdit] = useState<boolean>(false);
@@ -193,6 +194,9 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
           toast.success(data.message!);
           setIsEdit(false);
           refetch();
+          caseExpenses.refetch();
+          clientBalance.refetch();
+          clientDeposit.refetch();
         },
         onError: (error) => {
           const err = error as AxiosError;
@@ -646,6 +650,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               type="number"
                               name="amount"
                               className="mt-10"
+                              max={clientBalance.data?.data.data}
+                              min={0}
                               value={deposit}
                               onChange={(e) => setDeposit(e.target.value)}
                             />
