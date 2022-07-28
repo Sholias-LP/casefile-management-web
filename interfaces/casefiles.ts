@@ -39,6 +39,7 @@ export interface ICasefilesResponse {
   views: number;
 }
 
+
 export interface ICourtSitting {
   date: string;
   note: string;
