@@ -107,23 +107,23 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                                       <CardBody>
                                         <Flex>
                                           <Paragraph weight="w600">
-                                            Client Name :
+                                            Client:
                                           </Paragraph>
                                           <Paragraph>{item.client}</Paragraph>
                                         </Flex>
                                         <Flex>
                                           <Paragraph weight="w600">
-                                            Client Occupation :
+                                            Type:
                                           </Paragraph>
                                           <Paragraph>
-                                            {item.occupation}
+                                            {item.case_type}
                                           </Paragraph>
                                         </Flex>
                                         <Flex>
                                           <Paragraph weight="w600">
-                                            Client Gender :
+                                            Case file ID:
                                           </Paragraph>
-                                          <Paragraph>{item.gender}</Paragraph>
+                                          <Paragraph>{item.casefile_id}</Paragraph>
                                         </Flex>
                                       </CardBody>
                                     </Card>
@@ -188,21 +188,21 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                                     <CardBody>
                                       <Flex>
                                         <Paragraph weight="w600">
-                                          Client Name :
+                                          Client:
                                         </Paragraph>
                                         <Paragraph>{item.client}</Paragraph>
                                       </Flex>
                                       <Flex>
                                         <Paragraph weight="w600">
-                                          Client Occupation :
+                                          Type :
                                         </Paragraph>
-                                        <Paragraph>{item.occupation}</Paragraph>
+                                        <Paragraph>{item.transaction_type}</Paragraph>
                                       </Flex>
                                       <Flex>
                                         <Paragraph weight="w600">
-                                          Client Gender :
+                                          Transaction ID:
                                         </Paragraph>
-                                        <Paragraph>{item.gender}</Paragraph>
+                                        <Paragraph>{item.transaction_id}</Paragraph>
                                       </Flex>
                                     </CardBody>
                                   </Card>
