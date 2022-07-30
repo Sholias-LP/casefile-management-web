@@ -43,7 +43,7 @@ const HomePage: NextPage = () => {
   };
 
   const state = {
-    labels: ["Casefiles", "Transactions"],
+    labels: ["Case files", "Transactions"],
     datasets: [
       {
         label: "User Count",
@@ -107,7 +107,7 @@ const HomePage: NextPage = () => {
                           weight="w600"
                           size="pLarge"
                         >
-                          Casefiles
+                          Case files
                         </Paragraph>
                         <Paragraph
                           className="pb-20"

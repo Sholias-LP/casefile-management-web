@@ -23,7 +23,7 @@ const CaseFiles = () => {
 
   return (
     <AppLayout>
-      <Paragraph weight="w600">Casefiles</Paragraph>
+      <Paragraph weight="w600">Case files</Paragraph>
 
       <Flex justifyContent="end">
         <Button onClick={() => router.push("/casefiles/add")}>
