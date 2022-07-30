@@ -37,7 +37,7 @@ const CaseFiles = () => {
               <SmallText weight="w700">Client Name</SmallText>
             </Th>
             <Th>
-              <SmallText weight="w700">File No. / Suit No.</SmallText>
+              <SmallText weight="w700">File/Suit No.</SmallText>
             </Th>
             <Th>
               <SmallText weight="w700">Case Type</SmallText>

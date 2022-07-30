@@ -611,7 +611,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                         <CardBody className="h-100">
                           <Flex>
                             <Paragraph className="mb-10" weight="w500">
-                              Client&apos;s Name:
+                              Client:
                             </Paragraph>
                             <Paragraph weight="w400">
                               {transactions?.client}

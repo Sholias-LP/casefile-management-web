@@ -121,7 +121,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                                         </Flex>
                                         <Flex>
                                           <Paragraph weight="w600">
-                                            Case file ID:
+                                            File/Suit No.:
                                           </Paragraph>
                                           <Paragraph>{item.casefile_id}</Paragraph>
                                         </Flex>
