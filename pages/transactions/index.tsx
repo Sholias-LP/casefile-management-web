@@ -36,7 +36,7 @@ const Transactions = () => {
               <SmallText weight="w700">Client Name</SmallText>
             </Th>
             <Th>
-              <SmallText weight="w700">Occupation</SmallText>
+              <SmallText weight="w700">Transacation No.</SmallText>
             </Th>
             <Th>
               <SmallText weight="w700">Transaction Type</SmallText>

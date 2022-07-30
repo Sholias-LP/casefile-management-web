@@ -10,14 +10,14 @@ interface tableProps {
 }
 
 const CaseFilesTable: FC<tableProps> = ({ item }) => {
-  const { client, occupation, case_type, _id } = item;
+  const { client, casefile_id, case_type, _id } = item;
   return (
     <Tr>
       <Td>
         <Paragraph>{client}</Paragraph>
       </Td>
       <Td>
-        <Paragraph>{occupation}</Paragraph>
+        <Paragraph>{casefile_id}</Paragraph>
       </Td>
       <Td>
         <Paragraph>{case_type}</Paragraph>

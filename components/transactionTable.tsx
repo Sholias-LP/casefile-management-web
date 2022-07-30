@@ -10,14 +10,14 @@ interface tableProps {
 }
 
 const TransactionTable: FC<tableProps> = ({ item }) => {
-  const { client, occupation, transaction_type, _id } = item;
+  const { client, transaction_id, transaction_type, _id } = item;
   return (
     <Tr>
       <Td>
         <Paragraph>{client}</Paragraph>
       </Td>
       <Td>
-        <Paragraph>{occupation}</Paragraph>
+        <Paragraph>{transaction_id}</Paragraph>
       </Td>
       <Td>
         <Paragraph>{transaction_type}</Paragraph>
