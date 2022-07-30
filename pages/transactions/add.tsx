@@ -70,10 +70,9 @@ const AddTransactions = () => {
           router.push("/transactions");
         },
         onError: (error) => {
-          const err = error as AxiosError;
-          if (err.response) {
+          if (error instanceof AxiosError) {
             setLoading(false);
-            toast.error(err.response.data.message);
+            toast.error(error.response?.data.message);
           }
         },
       }
@@ -172,8 +171,7 @@ const AddTransactions = () => {
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <SmallText weight="w500">
-                  Service Fee{" "}
-                  (&#8358;) &nbsp;
+                  Service Fee (&#8358;) &nbsp;
                   <span style={{ color: "red", fontSize: "8px" }}>
                     (required)
                   </span>

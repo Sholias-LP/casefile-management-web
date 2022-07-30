@@ -14,7 +14,7 @@ import {
 import { Home } from "truparse-lodre/lib/icons";
 import AuthContext, { setLogout } from "../context/user";
 import ImageComponent from "./image";
-import ProtectedRoute from "./protectedRoutes";
+import protectedRoute from "../pages/api/protectedRoute";
 import DashboardIcon from "../components/assets/dashboard.svg";
 import CaseFileIcon from "../components/assets/case files.svg";
 import TransactionIcon from "../components/assets/transaction.svg";
@@ -171,4 +171,4 @@ const AppLayout: FC<IProps> = ({ children }) => {
   );
 };
 
-export default ProtectedRoute(AppLayout);
+export default protectedRoute(AppLayout);

@@ -56,7 +56,7 @@ const Notifications = () => {
         }
       });
     }
-  }, [clickedItem, casefiles, transactions]);
+  }, [clickedItem, casefiles, transactions, router]);
 
   const handleCheckBoxChange = (id: string) => {
     if (checkedId.indexOf(id) !== -1) {
@@ -86,9 +86,9 @@ const Notifications = () => {
           setcheckedId([]);
         },
         onError: (error) => {
-          const err = error as AxiosError;
-          if (err.response) {
-            toast.error(err.response.data.message);
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
             setcheckedId([]);
           }
         },
@@ -109,9 +109,9 @@ const Notifications = () => {
           setcheckedId([]);
         },
         onError: (error) => {
-          const err = error as AxiosError;
-          if (err.response) {
-            toast.error(err.response.data.message);
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
             setcheckedId([]);
           }
         },

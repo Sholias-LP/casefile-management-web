@@ -125,10 +125,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
         router.push("/transactions");
       },
       onError: (error) => {
-        const err = error as AxiosError;
-        if (err.response) {
+        if (error instanceof AxiosError) {
           setLoading(false);
-          toast.error(err.response.data.message);
+          toast.error(error.response?.data.message);
         }
       },
     });
@@ -158,10 +157,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
           clientDeposit.refetch();
         },
         onError: (error) => {
-          const err = error as AxiosError;
-          if (err.response) {
+          if (error instanceof AxiosError) {
             setLoading(false);
-            toast.error(err.response.data.message);
+            toast.error(error.response?.data.message);
           }
         },
       }
