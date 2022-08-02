@@ -123,7 +123,7 @@ const AddCasefile = () => {
                 <Input
                   placeholder="FHC/KD/CS/500/2022"
                   type="text"
-                  name="casefileId"
+                  name="casefileID"
                   className="mt-10"
                   onChange={handleChange}
                 />

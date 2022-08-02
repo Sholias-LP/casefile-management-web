@@ -11,7 +11,7 @@ export interface ICasefile {
   expenses: IExpenses[];
   courtSitting: ICourtSitting[];
   _id?: string;
-  casefileId: string;
+  casefileID: string;
 }
 
 export interface IDeposit {
