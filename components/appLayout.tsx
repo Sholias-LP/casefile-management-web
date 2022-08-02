@@ -25,6 +25,7 @@ import ChangePasswordIcon from "../components/assets/change password.svg";
 import ProfileDetailIcon from "../components/assets/profile details.svg";
 import { captalize } from "../utils/nameConverter";
 import { useGetNofications } from "../pages/api/queries/notification";
+import Meta from "./Meta";
 
 interface IAppLayoutProps {
   name: string;
@@ -160,14 +161,17 @@ const Nav = () => {
 
 const AppLayout: FC<IProps> = ({ children }) => {
   return (
-    <MerchantNavbar
-      logo={<ImageComponent />}
-      nav={<Nav />}
-      sideNavSize={250}
-      navChildren={<NavItems />}
-    >
-      <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
-    </MerchantNavbar>
+    <>
+      <Meta />
+      <MerchantNavbar
+        logo={<ImageComponent />}
+        nav={<Nav />}
+        sideNavSize={250}
+        navChildren={<NavItems />}
+      >
+        <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
+      </MerchantNavbar>
+    </>
   );
 };
 

@@ -736,6 +736,20 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           </Flex>
                         </CardBody>
                       </Card>
+
+                      <Card bgColor="cream" className="h-100">
+                        <CardBody>
+                          <Paragraph weight="w600">
+                            Transaction Summary
+                          </Paragraph>
+                        </CardBody>
+                        <Divider />
+                        <CardBody>
+                          <SmallText>
+                            {data.data.data.transaction_summary}
+                          </SmallText>
+                        </CardBody>
+                      </Card>
                     </Grid>
                   </CardBody>
                 </Card>

@@ -12,6 +12,7 @@ import {
 import SvgHelp from "truparse-lodre/lib/icons/Help";
 import SvgUser from "truparse-lodre/lib/icons/User";
 import ImageComponent from "./image";
+import Meta from "./Meta";
 
 interface IProps {
   children: JSX.Element | JSX.Element[];
@@ -36,9 +37,12 @@ const Nav = () => {
 
 const AuthLayout: FC<IProps> = ({ children }) => {
   return (
-    <MerchantNavbar logo={<ImageComponent />} nav={<Nav />} sideNavSize={0}>
-      <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
-    </MerchantNavbar>
+    <>
+      <Meta />
+      <MerchantNavbar logo={<ImageComponent />} nav={<Nav />} sideNavSize={0}>
+        <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
+      </MerchantNavbar>
+    </>
   );
 };
 
