@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React, { FC } from "react";
 import { LoaderIcon } from "react-hot-toast";
+import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
 import {
   Card,
   CardBody,
@@ -14,6 +15,9 @@ import AppLayout from "../../components/appLayout";
 import { ICasefilesResponse } from "../../interfaces/casefiles";
 import { ITransactionsResponse } from "../../interfaces/transactions";
 import { useGetUserResources } from "../api/queries/users";
+import TeamIcon from "../../components/assets/notification.svg";
+import CaseFilesTable from "../../components/casefileTable";
+import TransactionTable from "../../components/transactionTable";
 
 type IProps = {
   id: string;
@@ -33,19 +37,16 @@ export const getServerSideProps = async ({ params }: IParams) => {
 };
 
 const TeamDetails: FC<IProps> = ({ id }) => {
-  const { data, isLoading, isSuccess } = useGetUserResources(id);
+  const { data, isLoading } = useGetUserResources(id);
 
   return (
     <AppLayout>
-      <Paragraph weight="w600" className="mb-20">
-        User Resourses
-      </Paragraph>
       {data?.data.data.casefiles.length === 0 &&
       data?.data.data.transactions.length === 0 ? (
         <Card className="h-100">
           <CardBody className="h-100">
             <Flex justifyContent="center" className="pb-30 emptystateIcon">
-              <Overview width={60} height={60} />
+              <TeamIcon style={{ width: "100px", height: "100px" }} />
             </Flex>
 
             <Flex justifyContent="center" className="mb-20">
@@ -55,169 +56,130 @@ const TeamDetails: FC<IProps> = ({ id }) => {
         </Card>
       ) : (
         <>
-          <Card>
-            <CardBody>
-              <>
-                <div className="mb-20">
-                  <SmallText weight="w600">Casefiles</SmallText>
-                </div>
+          <>
+            <div className="mb-20">
+              <SmallText weight="w600">Casefiles</SmallText>
+            </div>
 
+            <>
+              {isLoading ? (
+                <Card className="h-100">
+                  <CardBody className="h-100">
+                    <Flex justifyContent="center">
+                      <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                    </Flex>
+                  </CardBody>
+                </Card>
+              ) : (
                 <>
-                  {isLoading ? (
+                  {data?.data.data.casefiles.length === 0 ? (
                     <Card className="h-100">
                       <CardBody className="h-100">
-                        <Flex justifyContent="center">
-                          <LoaderIcon
-                            style={{ width: "50px", height: "50px" }}
+                        <Flex
+                          justifyContent="center"
+                          className="pb-30 emptystateIcon"
+                        >
+                          <TeamIcon
+                            style={{ width: "100px", height: "100px" }}
                           />
+                        </Flex>
+
+                        <Flex justifyContent="center" className="mb-20">
+                          <Paragraph>User has No Casefiles Yet.</Paragraph>
                         </Flex>
                       </CardBody>
                     </Card>
                   ) : (
-                    <>
-                      {data?.data.data.casefiles.length === 0 ? (
-                        <Card className="h-100">
-                          <CardBody className="h-100">
-                            <Flex
-                              justifyContent="center"
-                              className="pb-30 emptystateIcon"
-                            >
-                              <Overview width={60} height={60} />
-                            </Flex>
-
-                            <Flex justifyContent="center" className="mb-20">
-                              <Paragraph>User has No Casefiles Yet.</Paragraph>
-                            </Flex>
-                          </CardBody>
-                        </Card>
-                      ) : (
-                        <Grid className="mb-20" xl="1fr 1fr">
-                          <>
-                            {data?.data.data.casefiles.map(
-                              (item: ICasefilesResponse, index: number) => (
-                                <Link
-                                  href={{
-                                    pathname: "/casefiles/[id]",
-                                    query: { id: item._id },
-                                  }}
-                                  key={index}
-                                >
-                                  <a>
-                                    <Card bgColor="cream">
-                                      <CardBody>
-                                        <Flex>
-                                          <Paragraph weight="w600">
-                                            Client:
-                                          </Paragraph>
-                                          <Paragraph>{item.client}</Paragraph>
-                                        </Flex>
-                                        <Flex>
-                                          <Paragraph weight="w600">
-                                            Type:
-                                          </Paragraph>
-                                          <Paragraph>
-                                            {item.case_type}
-                                          </Paragraph>
-                                        </Flex>
-                                        <Flex>
-                                          <Paragraph weight="w600">
-                                            File/Suit No.:
-                                          </Paragraph>
-                                          <Paragraph>{item.casefile_id}</Paragraph>
-                                        </Flex>
-                                      </CardBody>
-                                    </Card>
-                                  </a>
-                                </Link>
-                              )
-                            )}
-                          </>
-                        </Grid>
-                      )}
-                    </>
+                    <Table>
+                      <Thead>
+                        <Tr>
+                          <Th>
+                            <SmallText weight="w700">Client Name</SmallText>
+                          </Th>
+                          <Th>
+                            <SmallText weight="w700">Case ID</SmallText>
+                          </Th>
+                          <Th>
+                            <SmallText weight="w700">CaseType</SmallText>
+                          </Th>
+                          <Th>
+                            <SmallText weight="w700">Action</SmallText>
+                          </Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {data?.data.data.casefiles.map(
+                          (item: ICasefilesResponse, index: number) => (
+                            <CaseFilesTable item={item} key={index} />
+                          )
+                        )}
+                      </Tbody>
+                    </Table>
                   )}
                 </>
-              </>
-            </CardBody>
-          </Card>
-          <Card className="mt-20">
-            <CardBody>
-              <div className="mb-20">
-                <SmallText weight="w600">Transactions</SmallText>
-              </div>
+              )}
+            </>
+          </>
+
+          <div className="mb-20 mt-20">
+            <SmallText weight="w600">Transactions</SmallText>
+          </div>
+          <>
+            {isLoading ? (
+              <Card className="h-100">
+                <CardBody className="h-100">
+                  <Flex justifyContent="center">
+                    <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                  </Flex>
+                </CardBody>
+              </Card>
+            ) : (
               <>
-                {isLoading ? (
+                {data?.data.data.transactions.length === 0 ? (
                   <Card className="h-100">
                     <CardBody className="h-100">
-                      <Flex justifyContent="center">
-                        <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                      <Flex
+                        justifyContent="center"
+                        className="pb-30 emptystateIcon"
+                      >
+                        <TeamIcon style={{ width: "100px", height: "100px" }} />
+                      </Flex>
+
+                      <Flex justifyContent="center" className="mb-20">
+                        <Paragraph>User has No Transactions Yet.</Paragraph>
                       </Flex>
                     </CardBody>
                   </Card>
                 ) : (
-                  <>
-                    {data?.data.data.transactions.length === 0 ? (
-                      <Card className="h-100">
-                        <CardBody className="h-100">
-                          <Flex
-                            justifyContent="center"
-                            className="pb-30 emptystateIcon"
-                          >
-                            <Overview width={60} height={60} />
-                          </Flex>
-
-                          <Flex justifyContent="center" className="mb-20">
-                            <Paragraph>User has No Transactions Yet.</Paragraph>
-                          </Flex>
-                        </CardBody>
-                      </Card>
-                    ) : (
-                      <Grid className="mb-20" xl="1fr 1fr">
-                        <>
-                          {data?.data.data.transactions.map(
-                            (item: ITransactionsResponse, index: number) => (
-                              <Link
-                                href={{
-                                  pathname: "/transactions/[id]",
-                                  query: { id: item._id },
-                                }}
-                                key={index}
-                              >
-                                <a>
-                                  <Card bgColor="cream">
-                                    <CardBody>
-                                      <Flex>
-                                        <Paragraph weight="w600">
-                                          Client:
-                                        </Paragraph>
-                                        <Paragraph>{item.client}</Paragraph>
-                                      </Flex>
-                                      <Flex>
-                                        <Paragraph weight="w600">
-                                          Type :
-                                        </Paragraph>
-                                        <Paragraph>{item.transaction_type}</Paragraph>
-                                      </Flex>
-                                      <Flex>
-                                        <Paragraph weight="w600">
-                                          Transaction ID:
-                                        </Paragraph>
-                                        <Paragraph>{item.transaction_id}</Paragraph>
-                                      </Flex>
-                                    </CardBody>
-                                  </Card>
-                                </a>
-                              </Link>
-                            )
-                          )}
-                        </>
-                      </Grid>
-                    )}
-                  </>
+                  <Table>
+                    <Thead>
+                      <Tr>
+                        <Th>
+                          <SmallText weight="w700">Client Name</SmallText>
+                        </Th>
+                        <Th>
+                          <SmallText weight="w700">Transacation No.</SmallText>
+                        </Th>
+                        <Th>
+                          <SmallText weight="w700">Transaction Type</SmallText>
+                        </Th>
+                        <Th>
+                          <SmallText weight="w700">Action</SmallText>
+                        </Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {data?.data.data.transactions.map(
+                        (item: ITransactionsResponse, index: number) => (
+                          <TransactionTable item={item} key={index} />
+                        )
+                      )}
+                    </Tbody>
+                  </Table>
                 )}
               </>
-            </CardBody>
-          </Card>
+            )}
+          </>
         </>
       )}
     </AppLayout>

@@ -35,6 +35,7 @@ const Notifications = () => {
   const { mutate: readNotification } = useReadNotifications();
   const { mutate: unReadNotification } = useUnReadNotifications();
   const { data: notificationData, refetch, isLoading } = useGetNofications();
+  const [notificationsData, setNotificationData] = useState<string[]>([]);
   const [clickedItem, setItem] = useState<string>("");
   const [checkedId, setcheckedId] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,6 +71,9 @@ const Notifications = () => {
     const { checked } = e.target;
     if (checked && notificationData) {
       setcheckedId(notificationData.data.data.map((item) => item._id));
+      setNotificationData(notificationData.data.data.map((item) => item._id));
+    } else {
+      setcheckedId([]);
     }
   };
 
@@ -143,49 +147,55 @@ const Notifications = () => {
         <>
           <Card bgColor="grey" className="mb-5">
             <CardBody>
-              {checkedId.length > 0 ? (
-                <Grid
-                  gap={0}
-                  alignItems="center"
-                  xl="1fr 1fr 1fr 1fr 1fr 1fr 1fr"
-                  lg="1fr 1fr 1fr 1fr"
-                  md="1fr 1fr 1fr 1fr"
-                  sm="1fr 1fr 1fr"
-                  xs="1fr 1fr"
-                >
-                  <Flex alignItems="center">
-                    <Paragraph>{checkedId.length} selected</Paragraph>
-                    <button
-                      onClick={deleteNotifications}
-                      disabled={loading}
-                      className="notificationButton"
-                    >
-                      Delete
-                    </button>
-                  </Flex>
-                  <NotificationMenu>
-                    <ul style={{ cursor: "pointer" }}>
-                      <li>
-                        <SmallText onClick={submitReadNotification}>
-                          Mark as Read
-                        </SmallText>
-                      </li>
-                      <li>
-                        <SmallText onClick={submitUnReadNotification}>
-                          Mark as Unread
-                        </SmallText>
-                      </li>
-                    </ul>
-                  </NotificationMenu>
-                </Grid>
-              ) : (
-                <div style={{ alignItems: "center", display: "flex" }}>
-                  <input type="checkbox" onChange={handleSelectAllCheckbox} />
-                  <label style={{ fontSize: "12px", marginLeft: "5px" }}>
-                    Select All
-                  </label>
-                </div>
-              )}
+              <Flex alignItems="center">
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAllCheckbox}
+                  checked={checkedId.length !== 0}
+                />
+                {checkedId.length > 0 ? (
+                  <Grid
+                    gap={0}
+                    alignItems="center"
+                    xl="1fr 1fr 1fr 1fr"
+                    lg="1fr 1fr 1fr 1fr"
+                    md="1fr 1fr 1fr 1fr"
+                    sm="1fr 1fr 1fr"
+                    xs="1fr 1fr"
+                  >
+                    <Flex alignItems="center">
+                      <Paragraph>{checkedId.length} selected</Paragraph>
+                      <button
+                        onClick={deleteNotifications}
+                        disabled={loading}
+                        className="notificationButton"
+                      >
+                        Delete
+                      </button>
+                    </Flex>
+                    <NotificationMenu>
+                      <ul style={{ cursor: "pointer" }}>
+                        <li>
+                          <SmallText onClick={submitReadNotification}>
+                            Mark as Read
+                          </SmallText>
+                        </li>
+                        <li>
+                          <SmallText onClick={submitUnReadNotification}>
+                            Mark as Unread
+                          </SmallText>
+                        </li>
+                      </ul>
+                    </NotificationMenu>
+                  </Grid>
+                ) : (
+                  <div style={{ alignItems: "center", display: "flex" }}>
+                    <label style={{ fontSize: "12px", marginLeft: "5px" }}>
+                      Select All
+                    </label>
+                  </div>
+                )}
+              </Flex>
             </CardBody>
           </Card>
           <>
