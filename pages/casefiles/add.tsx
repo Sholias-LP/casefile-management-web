@@ -117,6 +117,18 @@ const AddCasefile = () => {
                 />
               </div>
             </Grid>
+            <Grid xl="1fr 1fr">
+              <div className="mt-10">
+                <SmallText weight="w500">File No. / Suit No.</SmallText>
+                <Input
+                  placeholder="FHC/KD/CS/500/2022"
+                  type="text"
+                  name="casefileId"
+                  className="mt-10"
+                  onChange={handleChange}
+                />
+              </div>
+            </Grid>
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <div className="mb-10">

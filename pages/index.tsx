@@ -1,5 +1,10 @@
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { Pie } from "react-chartjs-2";
+import { LoaderIcon } from "react-hot-toast";
 import {
   Card,
   CardBody,
@@ -9,24 +14,18 @@ import {
   SmallText,
 } from "truparse-lodre";
 import AppLayout from "../components/appLayout";
+import CaseFileIcon from "../components/assets/case files.svg";
+import NotificationIcon from "../components/assets/notification.svg";
+import TeamIcon from "../components/assets/team.svg";
+import TransactionIcon from "../components/assets/transaction.svg";
+import { INotificationResponse } from "../interfaces/user";
 import { useGetCaseFiles } from "./api/queries/caseFiles";
+import { useGetNofications } from "./api/queries/notification";
 import { useGetTransactions } from "./api/queries/transactions";
 import { useGetUsers } from "./api/queries/users";
-import TeamIcon from "../components/assets/team.svg";
-import CaseFileIcon from "../components/assets/case files.svg";
-import TransactionIcon from "../components/assets/transaction.svg";
-import en from "javascript-time-ago/locale/en.json";
-import TimeAgo from "javascript-time-ago";
-import { useEffect, useState } from "react";
-import { INotificationResponse, IUser } from "../interfaces/user";
-import { GetNotifications } from "./api/services/notifications";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 const HomePage: NextPage = () => {
-  const [notificationData, setNotificationdata] = useState<
-    INotificationResponse[]
-  >([]);
+  const { data: notificationData, isLoading } = useGetNofications();
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -36,11 +35,6 @@ const HomePage: NextPage = () => {
   const casefiles = useGetCaseFiles();
   const users = useGetUsers();
   const transactions = useGetTransactions();
-
-  const data = async () => {
-    const res = await GetNotifications();
-    setNotificationdata(res.data.data);
-  };
 
   const state = {
     labels: ["Case files", "Transactions"],
@@ -57,11 +51,8 @@ const HomePage: NextPage = () => {
     ],
   };
 
-  useEffect(() => {
-    data();
-  }, []);
-
-  const recentActivities = notificationData && notificationData.slice(0, 4);
+  const recentActivities =
+    notificationData && notificationData.data.data.slice(0, 4);
 
   return (
     <AppLayout>
@@ -165,12 +156,20 @@ const HomePage: NextPage = () => {
               Recent Activities
             </Paragraph>
             <>
-              {recentActivities &&
+              {isLoading ? (
+                <Card className="h-100">
+                  <CardBody className="h-100">
+                    <Flex justifyContent="center">
+                      <LoaderIcon style={{ width: "100px", height: "100px" }} />
+                    </Flex>
+                  </CardBody>
+                </Card>
+              ) : recentActivities && recentActivities.length > 0 ? (
                 recentActivities.map(
                   (item: INotificationResponse, index: number) => (
                     <Card
                       bgColor="cream"
-                      className="mb-10"
+                      className="mb-10 h-100"
                       key={index}
                       style={{ cursor: "pointer" }}
                     >
@@ -193,7 +192,21 @@ const HomePage: NextPage = () => {
                       </CardBody>
                     </Card>
                   )
-                )}
+                )
+              ) : (
+                <Card className="h-100">
+                  <CardBody className="h-100 pt-50 pb-50">
+                    <Flex justifyContent="center">
+                      <NotificationIcon
+                        style={{ width: "100px", height: "100px" }}
+                      />
+                    </Flex>
+                    <Flex justifyContent="center">
+                      <Paragraph weight="w600">No Notifications yet</Paragraph>
+                    </Flex>
+                  </CardBody>
+                </Card>
+              )}
             </>
           </CardBody>
         </Card>

@@ -264,6 +264,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                       placeholder="Lawyer's understanding / summary of the client's needs"
                       className="mt-10"
                       name="transactionSummary"
+                      rows={5}
                       onChange={(e) => setTransactionSummary(e.target.value)}
                       defaultValue={transactions?.transaction_summary}
                     />
@@ -694,6 +695,19 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                     >
                       <Card bgColor="cream" className="h-100">
                         <CardBody>
+                          <Paragraph weight="w600">
+                            Transaction Summary
+                          </Paragraph>
+                        </CardBody>
+                        <Divider />
+                        <CardBody>
+                          <Paragraph>
+                            {data.data.data.transaction_summary}
+                          </Paragraph>
+                        </CardBody>
+                      </Card>
+                      <Card bgColor="cream" className="h-100">
+                        <CardBody>
                           <Paragraph weight="w500">Expenses</Paragraph>
                         </CardBody>
                         <Divider />
@@ -734,20 +748,6 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               {transactionExpenses.data?.data.data.toLocaleString()}
                             </SmallText>
                           </Flex>
-                        </CardBody>
-                      </Card>
-
-                      <Card bgColor="cream" className="h-100">
-                        <CardBody>
-                          <Paragraph weight="w600">
-                            Transaction Summary
-                          </Paragraph>
-                        </CardBody>
-                        <Divider />
-                        <CardBody>
-                          <SmallText>
-                            {data.data.data.transaction_summary}
-                          </SmallText>
                         </CardBody>
                       </Card>
                     </Grid>

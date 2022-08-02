@@ -87,7 +87,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
   const [courtNote, setCourtNote] = useState<string>("");
   const [expensesAmount, setExpensesAmount] = useState<string>("");
   const [courtDate, setCourtDate] = useState<string>("");
-  const [item, setItem] = useState();
+  const [letterOfEngagement, setletterOfEngagement] = useState<string>("");
+  const [brief, setBrief] = useState<string>("");
 
   const editCasefile = useUpdateCasefile();
 
@@ -183,6 +184,8 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
         courtSitting: editCourtSitting,
         deposit: editDeposit,
         caseType: casefile,
+        letterOfEngagement: letterOfEngagement,
+        brief: brief,
       },
       {
         onSuccess: async (
@@ -291,14 +294,27 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 </Grid>
                 <Grid xl="1fr 1fr">
                   <div>
-                    <SmallText weight="w500">Letter of Engagement</SmallText>
-                    <Input
-                      placeholder="Letter of engagement"
-                      type="text"
+                    <SmallText weight="w500">Brief</SmallText>
+                    <textarea
+                      placeholder=""
+                      name="brief"
+                      rows={4}
                       className="mt-10"
+                      defaultValue={caseFile?.brief}
+                      onChange={(e) => setBrief(e.target.value)}
+                    />
+                  </div>
+                </Grid>
+                <Grid xl="1fr 1fr">
+                  <div>
+                    <SmallText weight="w500">Letter of Engagement</SmallText>
+                    <textarea
+                      placeholder=""
                       name="caseFileSummary"
-                      onChange={handleChange}
+                      rows={5}
+                      className="mt-10"
                       defaultValue={caseFile?.letter_of_engagement}
+                      onChange={(e) => setletterOfEngagement(e.target.value)}
                     />
                   </div>
                 </Grid>
@@ -787,6 +803,14 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                             </Paragraph>
                             <Paragraph weight="w400">
                               {caseFile?.client}
+                            </Paragraph>
+                          </Flex>
+                          <Flex>
+                            <Paragraph className="mb-10" weight="w500">
+                              file No. / Suit No:{" "}
+                            </Paragraph>
+                            <Paragraph className="mb-10" weight="w500">
+                              {caseFile?.casefile_id}
                             </Paragraph>
                           </Flex>
                           <Flex>
