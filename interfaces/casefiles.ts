@@ -11,7 +11,8 @@ export interface ICasefile {
   expenses: IExpenses[];
   courtSitting: ICourtSitting[];
   _id?: string;
-  casefileID: string;
+  suitNumber: string;
+  fileNumber: string;
 }
 
 export interface IDeposit {
@@ -23,7 +24,8 @@ export interface ICasefilesResponse {
   author: string;
   brief: string;
   case_type: string;
-  casefile_id: string;
+  file_number: string;
+  suit_number: string;
   client: string;
   court_sitting: ICourtSitting[];
   createdAt: string;

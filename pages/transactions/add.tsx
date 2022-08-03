@@ -111,7 +111,10 @@ const AddTransactions = () => {
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <div className="mb-10">
-                  <SmallText weight="w500">Gender</SmallText>
+                  <SmallText weight="w500">
+                    Gender{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+                  </SmallText>
                 </div>
                 <SelectField
                   background="light"
@@ -133,7 +136,10 @@ const AddTransactions = () => {
             </Grid>
             <Grid xl="1fr 1fr">
               <div>
-                <SmallText weight="w500">Occupation</SmallText>
+                <SmallText weight="w500">
+                  Occupation{" "}
+                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                </SmallText>
                 <Input
                   placeholder=""
                   type="text"
@@ -188,7 +194,10 @@ const AddTransactions = () => {
             <Grid xl="1fr 1fr">
               <div>
                 <div>
-                  <SmallText weight="w500">Transaction Summary</SmallText>
+                  <SmallText weight="w500">
+                    Transaction Summary{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+                    </SmallText>
                 </div>
                 <textarea
                   placeholder="Lawyer's understanding / summary of the client's needs"
@@ -204,7 +213,10 @@ const AddTransactions = () => {
         <Card className="mb-20">
           <CardBody>
             <div className="mb-10">
-              <SmallText weight="w600">Expenses</SmallText>
+              <SmallText weight="w600">
+                Expenses{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                </SmallText>
             </div>
 
             <Grid xl="1fr 1fr">
@@ -297,7 +309,10 @@ const AddTransactions = () => {
         <Card className="mb-20">
           <CardBody>
             <div className="mb-10">
-              <SmallText weight="w600">Deposit</SmallText>
+              <SmallText weight="w600">
+                Deposit{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                </SmallText>
             </div>
             <Grid xl="1fr 1fr">
               <div>

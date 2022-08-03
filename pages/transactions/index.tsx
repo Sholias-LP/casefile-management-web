@@ -33,7 +33,7 @@ const Transactions = () => {
         <Thead>
           <Tr>
             <Th>
-              <SmallText weight="w700">Client Name</SmallText>
+              <SmallText weight="w700">Client</SmallText>
             </Th>
             <Th>
               <SmallText weight="w700">Transacation No.</SmallText>

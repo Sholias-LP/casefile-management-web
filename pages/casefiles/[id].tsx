@@ -807,10 +807,10 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                           </Flex>
                           <Flex>
                             <Paragraph className="mb-10" weight="w500">
-                              file No. / Suit No:{" "}
+                              File No.:{" "}
                             </Paragraph>
                             <Paragraph className="mb-10" weight="w500">
-                              {caseFile?.casefile_id}
+                              {caseFile?.file_number}
                             </Paragraph>
                           </Flex>
                           <Flex>
@@ -821,6 +821,14 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               {caseFile?.case_type}
                             </Paragraph>
                           </Flex>
+                          <Flex>
+                            <Paragraph className="mb-10" weight="w500">
+                              Suit No.:{" "}
+                            </Paragraph>
+                            <Paragraph className="mb-10" weight="w500">
+                              {caseFile?.suit_number === "" ? 'xxx/xx/xx/xxx/xxxx' : caseFile?.suit_number}
+                            </Paragraph>
+                          </Flex>                          
                           <Flex>
                             <Paragraph weight="w500">Date: </Paragraph>
                             <Paragraph>

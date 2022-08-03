@@ -94,10 +94,10 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                       <Thead>
                         <Tr>
                           <Th>
-                            <SmallText weight="w700">Client Name</SmallText>
+                            <SmallText weight="w700">Client</SmallText>
                           </Th>
                           <Th>
-                            <SmallText weight="w700">Case ID</SmallText>
+                            <SmallText weight="w700">File No. / Suit No.</SmallText>
                           </Th>
                           <Th>
                             <SmallText weight="w700">CaseType</SmallText>
@@ -155,7 +155,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                     <Thead>
                       <Tr>
                         <Th>
-                          <SmallText weight="w700">Client Name</SmallText>
+                          <SmallText weight="w700">Client</SmallText>
                         </Th>
                         <Th>
                           <SmallText weight="w700">Transacation No.</SmallText>
