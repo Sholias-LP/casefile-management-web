@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
-import React, { FC, lazy, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import toast, { LoaderIcon } from "react-hot-toast";
 import {
   Badge,
@@ -18,8 +18,9 @@ import {
 } from "truparse-lodre";
 import { X } from "truparse-lodre/lib/icons";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
-import CaseFiles from ".";
 import AppLayout from "../../components/appLayout";
+import Menu from "../../components/menu";
+import AuthContext from "../../context/user";
 import {
   ICasefile,
   ICasefilesResponse,
@@ -31,6 +32,8 @@ import { IResponse, ISelect } from "../../interfaces/response";
 import { ICasefileTypes } from "../../interfaces/user";
 import useForm from "../../utils/useForm";
 import {
+  useApproveCasefileExpense,
+  useDeclineCasefileExpense,
   useDeleteCasefile,
   useUpdateCasefile,
 } from "../api/mutations/casefiles";
@@ -42,6 +45,9 @@ import {
 } from "../api/queries/caseFiles";
 import { useGetResourceTypes } from "../api/queries/users";
 import DeleteModal from "./deleteModal";
+import PendingIcon from "../../components/assets/pending.svg";
+import DeclineIcon from "../../components/assets/decline.svg";
+import ApprovedIcon from "../../components/assets/approved.svg";
 
 type IProps = {
   id: string;
@@ -62,6 +68,9 @@ export const getServerSideProps = async ({ params }: IParams) => {
 const CasefileDetails: FC<IProps> = ({ id }) => {
   const { data, refetch, isSuccess } = useGetACasefile(id);
   const { mutate, isLoading } = useDeleteCasefile();
+  const { currentUser } = useContext(AuthContext);
+  const { mutate: ApproveExpenses } = useApproveCasefileExpense();
+  const { mutate: DeclineExpenses } = useDeclineCasefileExpense();
   const caseExpenses = useGetCasefilesTotalExpenses(id);
   const clientDeposit = useGetCasefileTotalDeposit(id);
   const clientBalance = useGetCasefilesClientBalance(id);
@@ -165,6 +174,44 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
         }
       },
     });
+  };
+
+  const approveCasefileExpenses = async (expenseId: string) => {
+    ApproveExpenses(
+      { casefileId: id, expenseId: expenseId, action: "approved" },
+      {
+        onSuccess: async (res: AxiosResponse<IResponse>) => {
+          const { data } = res;
+          toast.success(data.message!);
+          refetch();
+        },
+        onError: (error) => {
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
+          }
+        },
+      }
+    );
+  };
+
+  const declineCasefileExpenses = async (expenseId: string) => {
+    DeclineExpenses(
+      { casefileId: id, expenseId: expenseId, action: "declined" },
+      {
+        onSuccess: async (res: AxiosResponse<IResponse>) => {
+          const { data } = res;
+          toast.success(data.message!);
+          refetch();
+        },
+        onError: (error) => {
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
+          }
+        },
+      }
+    );
   };
 
   const casefileTypes = useGetResourceTypes();
@@ -777,7 +824,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       xl="1.5fr 1fr"
                       lg="1fr"
                       md="1fr"
-                      gap={3}
+                      gap={1}
                       className="mb-20"
                     >
                       <Card bgColor="cream" className="h-100">
@@ -877,7 +924,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       xl="1.5fr 1fr"
                       lg="1fr"
                       md="1fr"
-                      gap={3}
+                      gap={1}
                       className="mb-20"
                     >
                       <Card bgColor="cream" className="h-100">
@@ -939,19 +986,123 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               <div key={index}>
                                 <>
                                   <div className="py-15 px-30" key={index}>
-                                    <Flex>
-                                      <Paragraph weight="w500">
-                                        Amount:
-                                      </Paragraph>
-                                      <Paragraph weight="w400">
-                                        &#8358;{item.amount.toLocaleString()}
-                                      </Paragraph>
-                                    </Flex>
-                                    <Flex>
-                                      <Paragraph weight="w500">Note</Paragraph>
-                                      <Paragraph weight="w400">
-                                        {item.note}
-                                      </Paragraph>
+                                    <Flex
+                                      alignItems="center"
+                                      justifyContent="space-between"
+                                    >
+                                      <Flex alignItems="center">
+                                        <div>
+                                          <Flex>
+                                            <Paragraph weight="w500">
+                                              Amount:
+                                            </Paragraph>
+                                            <Paragraph weight="w400">
+                                              &#8358;
+                                              {item.amount.toLocaleString()}
+                                            </Paragraph>
+                                          </Flex>
+                                          <Flex>
+                                            <Paragraph weight="w500">
+                                              Note
+                                            </Paragraph>
+                                            <Paragraph weight="w400">
+                                              {item.note}
+                                            </Paragraph>
+                                          </Flex>
+                                        </div>
+                                        <div>
+                                          {item.status === "pending" ? (
+                                            <Badge
+                                              borderColor="primary"
+                                              color="dark"
+                                              fillColor="cream"
+                                            >
+                                              <SmallText
+                                                weight="w600"
+                                                size="xSmall"
+                                              >
+                                                {item.status.toUpperCase()}
+                                              </SmallText>
+                                            </Badge>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                      </Flex>
+                                      <div>
+                                        {currentUser.role === "partner" ? (
+                                          <Flex alignItems="center">
+                                            <div
+                                              className={
+                                                item.status === "approved"
+                                                  ? "emptystateIcon"
+                                                  : ""
+                                              }
+                                            >
+                                              <div>
+                                                {item.status === "approved" ? (
+                                                  <ApprovedIcon
+                                                    style={{
+                                                      width: "20px",
+                                                      height: "20px",
+                                                    }}
+                                                  />
+                                                ) : item.status ===
+                                                  "pending" ? (
+                                                  <ApprovedIcon
+                                                    onClick={() => {
+                                                      approveCasefileExpenses(
+                                                        item._id!
+                                                      );
+                                                    }}
+                                                    style={{
+                                                      width: "20px",
+                                                      height: "20px",
+                                                    }}
+                                                  />
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </div>
+                                            </div>
+                                            <div
+                                              className={
+                                                item.status === "declined"
+                                                  ? "deleteIcon"
+                                                  : ""
+                                              }
+                                            >
+                                              <div>
+                                                {item.status === "declined" ? (
+                                                  <DeclineIcon
+                                                    style={{
+                                                      width: "15px",
+                                                      height: "15px",
+                                                    }}
+                                                  />
+                                                ) : item.status ===
+                                                  "pending" ? (
+                                                  <DeclineIcon
+                                                    onClick={() => {
+                                                      declineCasefileExpenses(
+                                                        item._id!
+                                                      );
+                                                    }}
+                                                    style={{
+                                                      width: "15px",
+                                                      height: "15px",
+                                                    }}
+                                                  />
+                                                ) : (
+                                                  ""
+                                                )}
+                                              </div>
+                                            </div>
+                                          </Flex>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
                                     </Flex>
                                   </div>
                                 </>

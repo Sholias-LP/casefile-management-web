@@ -1,5 +1,9 @@
 import { AxiosResponse } from "axios";
-import { ICasefile, ICasefilesResponse } from "../../../interfaces/casefiles";
+import {
+  ICasefile,
+  ICasefileExpense,
+  ICasefilesResponse,
+} from "../../../interfaces/casefiles";
 import { IResourseResponse, IResponse } from "../../../interfaces/response";
 import Axios from "./axios";
 
@@ -59,6 +63,22 @@ const GetCasefilesClientBalance = async (id: string) => {
   return res;
 };
 
+const ApproveExpenses = async (payload: ICasefileExpense) => {
+  const { casefileId, action, expenseId } = payload;
+  const res: AxiosResponse<IResponse> = await Axios.post(
+    `/casefiles/${casefileId}/${expenseId}/${action}`
+  );
+  return res;
+};
+
+const DeclineExpenses = async (payload: ICasefileExpense) => {
+  const { casefileId, action, expenseId } = payload;
+  const res: AxiosResponse<IResponse> = await Axios.post(
+    `/casefiles/${casefileId}/${expenseId}/${action}`
+  );
+  return res;
+};
+
 export {
   GetCaseFiles,
   GetACasefile,
@@ -68,4 +88,6 @@ export {
   GetCasefilesTotalExpenses,
   GetCasefilesTotalDeposit,
   GetCasefilesClientBalance,
+  ApproveExpenses,
+  DeclineExpenses,
 };

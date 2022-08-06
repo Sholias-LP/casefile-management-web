@@ -29,3 +29,9 @@ export interface ITransactionsResponse {
   createdAt: string;
   views: number;
 }
+
+export interface ITransactionExpense {
+  transactionId: string;
+  expenseId: string;
+  action: string;
+}
