@@ -47,7 +47,8 @@ const Register = () => {
           setLoading(false);
           toast.success(data.message!);
           updateCurrentUser(data.data);
-          setAuthAndCache(data.data.token);
+          console.log(data);
+          // setAuthAndCache(data.data.token);
           router.push("/");
         },
         onError: (error) => {

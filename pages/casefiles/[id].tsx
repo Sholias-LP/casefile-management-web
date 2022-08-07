@@ -183,6 +183,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
         onSuccess: async (res: AxiosResponse<IResponse>) => {
           const { data } = res;
           toast.success(data.message!);
+          caseExpenses.refetch();
           refetch();
         },
         onError: (error) => {
@@ -202,6 +203,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
         onSuccess: async (res: AxiosResponse<IResponse>) => {
           const { data } = res;
           toast.success(data.message!);
+          caseExpenses.refetch();
           refetch();
         },
         onError: (error) => {
@@ -289,6 +291,19 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       className="mt-10"
                       onChange={handleChange}
                       defaultValue={caseFile?.client}
+                    />
+                  </div>
+                </Grid>
+                <Grid xl="1fr 1fr">
+                  <div className="mt-10">
+                    <SmallText weight="w500">File No. / Suit No.</SmallText>
+                    <Input
+                      placeholder="FHC/KD/CS/500/2022"
+                      type="text"
+                      name="casefileID"
+                      className="mt-10"
+                      onChange={handleChange}
+                      defaultValue={caseFile?.casefile_id}
                     />
                   </div>
                 </Grid>
@@ -552,6 +567,10 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                     e.target.value
                                   )
                                 }
+                                disabled={
+                                  item.status === "pending" ||
+                                  item.status === "approved"
+                                }
                               />
                               <SmallText weight="w500">Note</SmallText>
                               <textarea
@@ -561,6 +580,10 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                 defaultValue={item.note}
                                 onChange={(e) =>
                                   handleExpenseNoteChange(index, e.target.value)
+                                }
+                                disabled={
+                                  item.status === "pending" ||
+                                  item.status === "approved"
                                 }
                               />
                             </CardBody>
@@ -1021,7 +1044,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                                 weight="w600"
                                                 size="xSmall"
                                               >
-                                                {item.status.toUpperCase()}
+                                                {item.status}
                                               </SmallText>
                                             </Badge>
                                           ) : (
@@ -1029,6 +1052,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                           )}
                                         </div>
                                       </Flex>
+
                                       <div>
                                         {currentUser.role === "partner" ? (
                                           <Flex alignItems="center">
@@ -1036,7 +1060,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                               className={
                                                 item.status === "approved"
                                                   ? "emptystateIcon"
-                                                  : ""
+                                                  : "checkIcon"
                                               }
                                             >
                                               <div>
@@ -1065,13 +1089,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                                 )}
                                               </div>
                                             </div>
-                                            <div
-                                              className={
-                                                item.status === "declined"
-                                                  ? "deleteIcon"
-                                                  : ""
-                                              }
-                                            >
+                                            <div className="deleteIcon">
                                               <div>
                                                 {item.status === "declined" ? (
                                                   <DeclineIcon
@@ -1100,7 +1118,29 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                                             </div>
                                           </Flex>
                                         ) : (
-                                          ""
+                                          <div>
+                                            {item.status === "approved" ? (
+                                              <div className="checkIcon">
+                                                <ApprovedIcon
+                                                  style={{
+                                                    width: "20px",
+                                                    height: "20px",
+                                                  }}
+                                                />
+                                              </div>
+                                            ) : item.status === "declined" ? (
+                                              <div className="deleteIcon">
+                                                <DeclineIcon
+                                                  style={{
+                                                    width: "15px",
+                                                    height: "15px",
+                                                  }}
+                                                />
+                                              </div>
+                                            ) : (
+                                              ""
+                                            )}
+                                          </div>
                                         )}
                                       </div>
                                     </Flex>
