@@ -34,10 +34,10 @@ const CaseFiles = () => {
         <Thead>
           <Tr>
             <Th>
-              <SmallText weight="w700">Client Name</SmallText>
+              <SmallText weight="w700">Client</SmallText>
             </Th>
             <Th>
-              <SmallText weight="w700">File/Suit No.</SmallText>
+              <SmallText weight="w700">File No. / Suit No.</SmallText>
             </Th>
             <Th>
               <SmallText weight="w700">Case Type</SmallText>

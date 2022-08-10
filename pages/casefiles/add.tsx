@@ -119,11 +119,14 @@ const AddCasefile = () => {
             </Grid>
             <Grid xl="1fr 1fr">
               <div className="mt-10">
-                <SmallText weight="w500">File No. / Suit No.</SmallText>
+                <SmallText weight="w500">
+                  Suit No.{" "}
+                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                </SmallText>
                 <Input
                   placeholder="FHC/KD/CS/500/2022"
                   type="text"
-                  name="casefileID"
+                  name="suitNumber"
                   className="mt-10"
                   onChange={handleChange}
                 />
@@ -132,7 +135,10 @@ const AddCasefile = () => {
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <div className="mb-10">
-                  <SmallText weight="w500">Gender</SmallText>
+                  <SmallText weight="w500">
+                    Gender{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+                  </SmallText>
                 </div>
                 <SelectField
                   background="light"
@@ -154,7 +160,10 @@ const AddCasefile = () => {
             </Grid>
             <Grid xl="1fr 1fr">
               <div>
-                <SmallText weight="w500">Occupation</SmallText>
+                <SmallText weight="w500">
+                  Occupation{" "}
+                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                </SmallText>
                 <Input
                   placeholder=""
                   type="text"
@@ -210,7 +219,10 @@ const AddCasefile = () => {
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <div>
-                  <SmallText weight="w500">Brief</SmallText>
+                  <SmallText weight="w500">
+                    Brief{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                  </SmallText>
                 </div>
 
                 <textarea
@@ -225,7 +237,10 @@ const AddCasefile = () => {
             <Grid xl="1fr 1fr">
               <div>
                 <div>
-                  <SmallText weight="w500">Letter of Engagement</SmallText>{" "}
+                  <SmallText weight="w500">
+                    Letter of Engagement{" "}
+                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                  </SmallText>{" "}
                 </div>
 
                 <textarea
@@ -242,7 +257,10 @@ const AddCasefile = () => {
         <Card className="mb-20">
           <CardBody>
             <div className="mb-10">
-              <SmallText weight="w600">Court Sitting</SmallText>
+              <SmallText weight="w600">
+                Court Sitting{" "}
+                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+              </SmallText>
             </div>
 
             <Grid xl="1fr 1fr" gap={2}>
@@ -338,7 +356,10 @@ const AddCasefile = () => {
         <Card className="mb-20">
           <CardBody>
             <div className="mb-10">
-              <SmallText weight="w600">Expenses</SmallText>
+              <SmallText weight="w600">
+                Expenses{" "}
+                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+              </SmallText>
             </div>
 
             <Grid xl="1fr 1fr">
@@ -432,7 +453,10 @@ const AddCasefile = () => {
         <Card className="mb-20">
           <CardBody>
             <div className="mb-10">
-              <SmallText weight="w600">Deposit</SmallText>
+              <SmallText weight="w600">
+                Deposit{" "}
+                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+              </SmallText>
             </div>
             <Grid xl="1fr 1fr">
               <div>
