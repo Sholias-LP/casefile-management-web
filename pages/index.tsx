@@ -3,6 +3,8 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
 import { LoaderIcon } from "react-hot-toast";
 import {
@@ -18,6 +20,8 @@ import CaseFileIcon from "../components/assets/case files.svg";
 import NotificationIcon from "../components/assets/notification.svg";
 import TeamIcon from "../components/assets/team.svg";
 import TransactionIcon from "../components/assets/transaction.svg";
+import { ICasefilesResponse } from "../interfaces/casefiles";
+import { ITransactionsResponse } from "../interfaces/transactions";
 import { INotificationResponse } from "../interfaces/user";
 import { useGetCaseFiles } from "./api/queries/caseFiles";
 import { useGetNofications } from "./api/queries/notification";
@@ -26,6 +30,8 @@ import { useGetUsers } from "./api/queries/users";
 
 const HomePage: NextPage = () => {
   const { data: notificationData, isLoading } = useGetNofications();
+  const [clickedItem, setItem] = useState<string>("");
+  const router = useRouter();
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -50,6 +56,21 @@ const HomePage: NextPage = () => {
       },
     ],
   };
+
+  useEffect(() => {
+    if (clickedItem) {
+      transactions.data?.data.data.map((item: ITransactionsResponse) => {
+        if (clickedItem === item._id) {
+          router.push(`/transactions/${clickedItem}`);
+        }
+      });
+      casefiles.data?.data.data.map((item: ICasefilesResponse) => {
+        if (clickedItem === item._id) {
+          router.push(`/casefiles/${clickedItem}`);
+        }
+      });
+    }
+  }, [clickedItem, casefiles, transactions, router]);
 
   const recentActivities =
     notificationData && notificationData.data.data.slice(0, 4);
@@ -172,6 +193,7 @@ const HomePage: NextPage = () => {
                       className="mb-10 h-100"
                       key={index}
                       style={{ cursor: "pointer" }}
+                      onClick={() => setItem(item.resourceId)}
                     >
                       <CardBody>
                         <Grid
