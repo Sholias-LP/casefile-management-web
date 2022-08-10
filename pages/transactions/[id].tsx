@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from "axios";
 import moment from "moment";
 import { useRouter } from "next/router";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import toast, { LoaderIcon } from "react-hot-toast";
 import {
   Badge,
@@ -19,6 +19,8 @@ import {
 import { X } from "truparse-lodre/lib/icons";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
 import AppLayout from "../../components/appLayout";
+import Menu from "../../components/menu";
+import AuthContext from "../../context/user";
 import { IDeposit, IExpenses } from "../../interfaces/casefiles";
 import { IResponse, ISelect } from "../../interfaces/response";
 import {
@@ -28,6 +30,8 @@ import {
 import { ITransactionTypes } from "../../interfaces/user";
 import useForm from "../../utils/useForm";
 import {
+  useApproveTransactionExpense,
+  useDeclineTransactionExpense,
   useDeleteTransactions,
   useUpdateTransactions,
 } from "../api/mutations/transactions";
@@ -39,6 +43,9 @@ import {
 } from "../api/queries/transactions";
 import { useGetResourceTypes } from "../api/queries/users";
 import DeleteModal from "./deleteModal";
+import PendingIcon from "../../components/assets/pending.svg";
+import DeclineIcon from "../../components/assets/decline.svg";
+import ApprovedIcon from "../../components/assets/approved.svg";
 
 type IProps = {
   id: string;
@@ -58,7 +65,10 @@ export const getServerSideProps = async ({ params }: IParams) => {
 
 const TransactionDetails: FC<IProps> = ({ id }) => {
   const { data, refetch, isSuccess } = useGetATransaction(id);
+  const { mutate: ApproveExpenses } = useApproveTransactionExpense();
+  const { mutate: DeclineExpenses } = useDeclineTransactionExpense();
   const transactions = data?.data.data;
+  const { currentUser } = useContext(AuthContext);
   const transactionExpenses = useGetTotalExpenses(id);
   const clientDeposit = useGetTotalDeposit(id);
   const clientBalance = useGetClientBalance(id);
@@ -155,6 +165,46 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
           transactionExpenses.refetch();
           clientBalance.refetch();
           clientDeposit.refetch();
+        },
+        onError: (error) => {
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
+          }
+        },
+      }
+    );
+  };
+
+  const approveTransactionExpenses = async (expenseId: string) => {
+    ApproveExpenses(
+      { transactionId: id, expenseId: expenseId, action: "approved" },
+      {
+        onSuccess: async (res: AxiosResponse<IResponse>) => {
+          const { data } = res;
+          toast.success(data.message!);
+          transactionExpenses.refetch();
+          refetch();
+        },
+        onError: (error) => {
+          if (error instanceof AxiosError) {
+            setLoading(false);
+            toast.error(error.response?.data.message);
+          }
+        },
+      }
+    );
+  };
+
+  const declineTransactionExpenses = async (expenseId: string) => {
+    DeclineExpenses(
+      { transactionId: id, expenseId: expenseId, action: "declined" },
+      {
+        onSuccess: async (res: AxiosResponse<IResponse>) => {
+          const { data } = res;
+          toast.success(data.message!);
+          transactionExpenses.refetch();
+          refetch();
         },
         onError: (error) => {
           if (error instanceof AxiosError) {
@@ -312,6 +362,10 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                     e.target.value
                                   )
                                 }
+                                disabled={
+                                  item.status === "pending" ||
+                                  item.status === "approved"
+                                }
                               />
                               <SmallText weight="w500">Note</SmallText>
                               <Input
@@ -322,6 +376,10 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                 defaultValue={item.note}
                                 onChange={(e) =>
                                   handleExpenseNoteChange(index, e.target.value)
+                                }
+                                disabled={
+                                  item.status === "pending" ||
+                                  item.status === "approved"
                                 }
                               />
                             </CardBody>
@@ -588,7 +646,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                       xl="1.5fr 1fr"
                       lg="1fr"
                       md="1fr"
-                      gap={3}
+                      gap={1}
                       className="mb-20"
                     >
                       <Card bgColor="cream" className="h-100">
@@ -690,7 +748,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                       xl="1.5fr 1fr"
                       lg="1fr"
                       md="1fr"
-                      gap={3}
+                      gap={1}
                       className="mb-20"
                     >
                       <Card bgColor="cream" className="h-100">
@@ -717,19 +775,137 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             (item: IExpenses, index: number) => (
                               <div key={index}>
                                 <div className="px-30 py-15">
-                                  <Flex>
-                                    <Paragraph weight="w500">
-                                      Amount:{" "}
-                                    </Paragraph>
-                                    <Paragraph weight="w400">
-                                      &#8358;{item.amount.toLocaleString()}
-                                    </Paragraph>
-                                  </Flex>
-                                  <Flex>
-                                    <Paragraph weight="w500">Note</Paragraph>
-                                    <Paragraph weight="w400">
-                                      {item.note}
-                                    </Paragraph>
+                                  <Flex
+                                    alignItems="center"
+                                    justifyContent="space-between"
+                                  >
+                                    <Flex alignItems="center">
+                                      <div>
+                                        <Flex>
+                                          <Paragraph weight="w500">
+                                            Amount:
+                                          </Paragraph>
+                                          <Paragraph weight="w400">
+                                            &#8358;
+                                            {item.amount.toLocaleString()}
+                                          </Paragraph>
+                                        </Flex>
+                                        <Flex>
+                                          <Paragraph weight="w500">
+                                            Note
+                                          </Paragraph>
+                                          <Paragraph weight="w400">
+                                            {item.note}
+                                          </Paragraph>
+                                        </Flex>
+                                      </div>
+                                      <div>
+                                        {item.status === "pending" ? (
+                                          <Badge
+                                            borderColor="primary"
+                                            color="dark"
+                                            fillColor="cream"
+                                          >
+                                            <SmallText
+                                              weight="w600"
+                                              size="xSmall"
+                                            >
+                                              {item.status}
+                                            </SmallText>
+                                          </Badge>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    </Flex>
+                                    <div>
+                                      {currentUser.role === "partner" ? (
+                                        <Flex alignItems="center">
+                                          <div
+                                            className={
+                                              item.status === "approved"
+                                                ? "emptystateIcon"
+                                                : "checkIcon"
+                                            }
+                                          >
+                                            <div>
+                                              {item.status === "approved" ? (
+                                                <ApprovedIcon
+                                                  style={{
+                                                    width: "20px",
+                                                    height: "20px",
+                                                  }}
+                                                />
+                                              ) : item.status === "pending" ? (
+                                                <ApprovedIcon
+                                                  onClick={() => {
+                                                    approveTransactionExpenses(
+                                                      item._id!
+                                                    );
+                                                  }}
+                                                  style={{
+                                                    width: "20px",
+                                                    height: "20px",
+                                                  }}
+                                                />
+                                              ) : (
+                                                ""
+                                              )}
+                                            </div>
+                                          </div>
+                                          <div className={"deleteIcon"}>
+                                            <div>
+                                              {item.status === "declined" ? (
+                                                <DeclineIcon
+                                                  style={{
+                                                    width: "15px",
+                                                    height: "15px",
+                                                  }}
+                                                />
+                                              ) : item.status === "pending" ? (
+                                                <DeclineIcon
+                                                  onClick={() => {
+                                                    declineTransactionExpenses(
+                                                      item._id!
+                                                    );
+                                                  }}
+                                                  style={{
+                                                    width: "15px",
+                                                    height: "15px",
+                                                  }}
+                                                />
+                                              ) : (
+                                                ""
+                                              )}
+                                            </div>
+                                          </div>
+                                        </Flex>
+                                      ) : (
+                                        <div>
+                                          {item.status === "approved" ? (
+                                            <div className="checkIcon">
+                                              <ApprovedIcon
+                                                style={{
+                                                  width: "20px",
+                                                  height: "20px",
+                                                }}
+                                              />
+                                            </div>
+                                          ) : item.status === "declined" ? (
+                                            <div className="deleteIcon">
+                                              <DeclineIcon
+                                                style={{
+                                                  width: "15px",
+                                                  height: "15px",
+                                                }}
+                                              />
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
                                   </Flex>
                                 </div>
                                 {index != transactions.expenses.length - 1 ? (

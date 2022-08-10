@@ -3,6 +3,7 @@ import { ICasefilesResponse } from "../../../interfaces/casefiles";
 import { IResourseResponse, IResponse } from "../../../interfaces/response";
 import {
   ITransaction,
+  ITransactionExpense,
   ITransactionsResponse,
 } from "../../../interfaces/transactions";
 import Axios from "./axios";
@@ -64,6 +65,22 @@ const GetClientBalance = async (id: string) => {
   return res;
 };
 
+const ApproveTransactionExpenses = async (payload: ITransactionExpense) => {
+  const { transactionId, action, expenseId } = payload;
+  const res: AxiosResponse<IResponse> = await Axios.post(
+    `/transactions/${transactionId}/${expenseId}/${action}`
+  );
+  return res;
+};
+
+const DeclineTransactionExpenses = async (payload: ITransactionExpense) => {
+  const { transactionId, action, expenseId } = payload;
+  const res: AxiosResponse<IResponse> = await Axios.post(
+    `/transactions/${transactionId}/${expenseId}/${action}`
+  );
+  return res;
+};
+
 export {
   GetTransactions,
   GetATransaction,
@@ -73,4 +90,6 @@ export {
   GetTotalExpenses,
   GetTotalDeposit,
   GetClientBalance,
+  ApproveTransactionExpenses,
+  DeclineTransactionExpenses,
 };

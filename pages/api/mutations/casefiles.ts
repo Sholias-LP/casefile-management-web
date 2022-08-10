@@ -1,6 +1,8 @@
 import { useMutation } from "react-query";
 import {
   AddCaseFile,
+  ApproveExpenses,
+  DeclineExpenses,
   DeleteCasefile,
   UpdateCasefile,
 } from "../services/casefiles";
@@ -11,4 +13,14 @@ const useUpdateCasefile = () => useMutation(UpdateCasefile);
 
 const useDeleteCasefile = () => useMutation(DeleteCasefile);
 
-export { useAddCasefile, useDeleteCasefile, useUpdateCasefile };
+const useApproveCasefileExpense = () => useMutation(ApproveExpenses);
+
+const useDeclineCasefileExpense = () => useMutation(DeclineExpenses);
+
+export {
+  useAddCasefile,
+  useDeleteCasefile,
+  useUpdateCasefile,
+  useApproveCasefileExpense,
+  useDeclineCasefileExpense,
+};

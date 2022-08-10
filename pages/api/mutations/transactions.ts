@@ -1,5 +1,7 @@
 import {
   AddTransaction,
+  ApproveTransactionExpenses,
+  DeclineTransactionExpenses,
   DeleteTransaction,
   UpdateTransaction,
 } from "../services/transactions";
@@ -11,4 +13,16 @@ const useUpdateTransactions = () => useMutation(UpdateTransaction);
 
 const useDeleteTransactions = () => useMutation(DeleteTransaction);
 
-export { useAddTransactions, useDeleteTransactions, useUpdateTransactions };
+const useApproveTransactionExpense = () =>
+  useMutation(ApproveTransactionExpenses);
+
+const useDeclineTransactionExpense = () =>
+  useMutation(DeclineTransactionExpenses);
+
+export {
+  useAddTransactions,
+  useDeleteTransactions,
+  useUpdateTransactions,
+  useApproveTransactionExpense,
+  useDeclineTransactionExpense,
+};

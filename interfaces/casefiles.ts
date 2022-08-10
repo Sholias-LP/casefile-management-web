@@ -52,4 +52,11 @@ export interface IExpenses {
   amount: number;
   note: string;
   _id?: string;
+  status?: string;
+}
+
+export interface ICasefileExpense {
+  casefileId: string;
+  expenseId: string;
+  action: string;
 }

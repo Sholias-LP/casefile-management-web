@@ -39,6 +39,15 @@ const Notifications = () => {
   const [clickedItem, setItem] = useState<string>("");
   const [checkedId, setcheckedId] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isHovering, setIsHovering] = useState<number>(-1);
+
+  const handleMouseEnter = (index: number) => {
+    setIsHovering(index);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(-1);
+  };
 
   TimeAgo.setDefaultLocale(en.locale);
   TimeAgo.addLocale(en);
@@ -207,9 +216,11 @@ const Notifications = () => {
                       className="mb-5"
                       bgColor={item.status === "read" ? "light" : "cream"}
                       key={index}
+                      onMouseEnter={() => handleMouseEnter(index)}
+                      onMouseLeave={handleMouseLeave}
                       style={{
                         borderLeft:
-                          item.status === "read" ? "" : "4px solid #FFC20E",
+                          isHovering === index ? "4px solid #FFC20E" : "",
                       }}
                     >
                       <Grid
