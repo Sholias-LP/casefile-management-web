@@ -296,14 +296,29 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 </Grid>
                 <Grid xl="1fr 1fr">
                   <div className="mt-10">
-                    <SmallText weight="w500">File No. / Suit No.</SmallText>
+                    <SmallText weight="w500">File No.</SmallText>
                     <Input
-                      placeholder="FHC/KD/CS/500/2022"
+                      placeholder=""
                       type="text"
-                      name="casefileID"
+                      name="fileNumber"
                       className="mt-10"
                       onChange={handleChange}
-                      defaultValue={caseFile?.casefile_id}
+                      defaultValue={caseFile?.file_number}
+                      disabled
+                    />
+                  </div>
+                </Grid>
+                <Grid xl="1fr 1fr">
+                  <div className="mt-10">
+                    <SmallText weight="w500">Suit No.</SmallText>
+                    <Input
+                      placeholder=""
+                      type="text"
+                      name="suitNumber"
+                      className="mt-10"
+                      onChange={handleChange}
+                      defaultValue={caseFile?.suit_number}
+                      disabled
                     />
                   </div>
                 </Grid>
@@ -896,9 +911,11 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               Suit No.:{" "}
                             </Paragraph>
                             <Paragraph className="mb-10" weight="w500">
-                              {caseFile?.suit_number === "" ? 'xxx/xx/xx/xxx/xxxx' : caseFile?.suit_number}
+                              {caseFile?.suit_number === ""
+                                ? "xxx/xx/xx/xxx/xxxx"
+                                : caseFile?.suit_number}
                             </Paragraph>
-                          </Flex>                          
+                          </Flex>
                           <Flex>
                             <Paragraph weight="w500">Date: </Paragraph>
                             <Paragraph>
