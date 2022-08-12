@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useContext } from "react";
+import { useIdleTimer } from "react-idle-timer";
 import {
   Card,
   Col,
@@ -11,20 +12,20 @@ import {
   ProfileNavItem,
   ProfilePicture,
 } from "truparse-lodre";
-import { Home } from "truparse-lodre/lib/icons";
-import AuthContext, { setLogout } from "../context/user";
-import ImageComponent from "./image";
-import protectedRoute from "../pages/api/protectedRoute";
-import DashboardIcon from "../components/assets/dashboard.svg";
 import CaseFileIcon from "../components/assets/case files.svg";
-import TransactionIcon from "../components/assets/transaction.svg";
-import NotificationIcon from "../components/assets/notification.svg";
-import TeamIcon from "../components/assets/team.svg";
-import LogoutIcon from "../components/assets/logout.svg";
 import ChangePasswordIcon from "../components/assets/change password.svg";
+import DashboardIcon from "../components/assets/dashboard.svg";
+import LogoutIcon from "../components/assets/logout.svg";
+import NotificationIcon from "../components/assets/notification.svg";
 import ProfileDetailIcon from "../components/assets/profile details.svg";
-import { captalize } from "../utils/nameConverter";
+import TeamIcon from "../components/assets/team.svg";
+import TransactionIcon from "../components/assets/transaction.svg";
+import AuthContext, { setLogout } from "../context/user";
+import protectedRoute from "../pages/api/protectedRoute";
 import { useGetNofications } from "../pages/api/queries/notification";
+import { captalize } from "../utils/nameConverter";
+import { SecureStorage } from "../utils/storage";
+import ImageComponent from "./image";
 import Meta from "./Meta";
 
 interface IAppLayoutProps {
@@ -80,10 +81,51 @@ const NavLayout: IAppLayoutProps[] = [
 
 const NavItems = () => {
   const query = useRouter();
+  const secureStorage = new SecureStorage();
+
   const handleLogOut = () => {
     setLogout("/auth");
   };
   const { data } = useGetNofications();
+
+  const getTimeDiffInMinutes = (prevTime: string, currTime: string) => {
+    //   @ts-ignore
+    const diff = Math.abs(new Date(currTime) - new Date(prevTime));
+
+    const minutes = Math.floor(diff / 1000 / 60);
+
+    return minutes;
+  };
+
+  let timeoutId: null | ReturnType<typeof setTimeout> = null;
+
+  const handleOnIdle = () => {
+    timeoutId = setInterval(() => {
+      localStorage.setItem("isIdle", "true");
+      handleLogOut();
+    }, 3600000);
+  };
+
+  const handleOnActive = async () => {
+    clearInterval(Number(timeoutId));
+    const currentDate = new Date();
+    let activeMins = secureStorage.getItem("activeMins");
+    if (!activeMins) activeMins = currentDate.toLocaleString();
+    const currentMins = currentDate.toLocaleString();
+    const timeDiff = getTimeDiffInMinutes(activeMins, currentMins);
+    if (timeDiff >= 20) {
+      activeMins = currentDate.toLocaleString();
+    }
+
+    secureStorage.storeItem("activeMins", activeMins);
+  };
+
+  useIdleTimer({
+    timeout: 3000,
+    onIdle: handleOnIdle,
+    onActive: handleOnActive,
+    debounce: 250,
+  });
 
   return (
     <Card>
