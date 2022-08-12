@@ -529,7 +529,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               New Deposit(&#8358;)
                             </SmallText>
                             <Input
-                              placeholder=""
+                              placeholder={`Client's balance is ${clientDeposit.data?.data.data.toLocaleString()}`}
                               type="number"
                               name="amount"
                               className="mt-10"

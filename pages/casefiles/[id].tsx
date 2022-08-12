@@ -747,11 +747,11 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               New Deposit(&#8358;)
                             </SmallText>
                             <Input
-                              placeholder=""
+                              placeholder={`Client's balance is ${clientDeposit.data?.data.data.toLocaleString()}`}
                               type="number"
                               name="amount"
                               className="mt-10"
-                              max={clientBalance.data?.data.data}
+                              maxLength={clientBalance.data?.data.data}
                               min={0}
                               value={deposit}
                               onChange={(e) => setDeposit(e.target.value)}

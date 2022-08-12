@@ -1,9 +1,9 @@
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import Link from "next/link";
 import router from "next/router";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Input, Button, Flex, SmallText } from "truparse-lodre";
+import { Button, Flex, Input, SmallText } from "truparse-lodre";
 import SvgEyeClose from "truparse-lodre/lib/icons/EyeClose";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
 import AuthContext from "../../context/user";
