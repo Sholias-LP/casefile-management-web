@@ -298,13 +298,13 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                   <div className="mt-10">
                     <SmallText weight="w500">File No.</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder={
+                        caseFile?.file_number || "xxx/xx/xx/xxx/xxxx"
+                      }
                       type="text"
                       name="fileNumber"
                       className="mt-10"
                       onChange={handleChange}
-                      defaultValue={caseFile?.file_number}
-                      disabled
                     />
                   </div>
                 </Grid>
@@ -312,12 +312,13 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                   <div className="mt-10">
                     <SmallText weight="w500">Suit No.</SmallText>
                     <Input
-                      placeholder=""
+                      placeholder={
+                        caseFile?.suit_number || "xxx/xx/xx/xxx/xxxx"
+                      }
                       type="text"
                       name="suitNumber"
                       className="mt-10"
                       onChange={handleChange}
-                      defaultValue={caseFile?.suit_number}
                       disabled
                     />
                   </div>
