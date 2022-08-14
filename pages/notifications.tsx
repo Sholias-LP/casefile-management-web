@@ -220,7 +220,8 @@ const Notifications = () => {
                       onMouseLeave={handleMouseLeave}
                       style={{
                         borderLeft:
-                          isHovering === index ? "4px solid #FFC20E" : "",
+                          isHovering === index ? "4px solid #fffaeb" : "",
+                        transition: "all 1.5sec ease-in-out",
                       }}
                     >
                       <Grid

@@ -32,6 +32,15 @@ const HomePage: NextPage = () => {
   const { data: notificationData, isLoading } = useGetNofications();
   const [clickedItem, setItem] = useState<string>("");
   const router = useRouter();
+  const [isHovering, setIsHovering] = useState<number>(-1);
+
+  const handleMouseEnter = (index: number) => {
+    setIsHovering(index);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(-1);
+  };
 
   ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -192,8 +201,15 @@ const HomePage: NextPage = () => {
                       bgColor="cream"
                       className="mb-10 h-100"
                       key={index}
-                      style={{ cursor: "pointer" }}
                       onClick={() => setItem(item.resourceId)}
+                      style={{
+                        borderLeft:
+                          isHovering === index ? "4px solid #fffaeb" : "",
+                        transition: "all .8sec ease-in-out",
+                        cursor: "pointer",
+                      }}
+                      onMouseEnter={() => handleMouseEnter(index)}
+                      onMouseLeave={handleMouseLeave}
                     >
                       <CardBody>
                         <Grid

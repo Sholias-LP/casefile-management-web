@@ -81,7 +81,7 @@ const Transactions = () => {
             </Tr>
           ) : (
             transactions?.map((item: ITransactionsResponse, index: number) => (
-              <TransactionTable item={item} key={index} />
+              <TransactionTable item={item} key={index} itemIndex={index} />
             ))
           )}
         </Tbody>

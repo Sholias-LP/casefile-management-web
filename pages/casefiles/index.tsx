@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LoaderIcon } from "react-hot-toast";
 import {
   Button,
@@ -82,7 +82,7 @@ const CaseFiles = () => {
             </Tr>
           ) : (
             casefiles?.map((item: ICasefilesResponse, index: number) => (
-              <CaseFilesTable item={item} key={index} />
+              <CaseFilesTable item={item} key={index} itemIndex={index} />
             ))
           )}
         </Tbody>

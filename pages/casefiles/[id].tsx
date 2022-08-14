@@ -305,6 +305,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       name="fileNumber"
                       className="mt-10"
                       onChange={handleChange}
+                      disabled
                     />
                   </div>
                 </Grid>
@@ -319,7 +320,6 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                       name="suitNumber"
                       className="mt-10"
                       onChange={handleChange}
-                      disabled
                     />
                   </div>
                 </Grid>

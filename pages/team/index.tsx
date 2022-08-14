@@ -51,7 +51,7 @@ const Team = () => {
             </Tr>
           ) : users && users?.length > 0 ? (
             users?.map((item: IUser, index: number) => (
-              <UsersTable item={item} key={index} />
+              <UsersTable item={item} key={index} itemIndex={index} />
             ))
           ) : (
             <Tr>
