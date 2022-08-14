@@ -97,7 +97,9 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                             <SmallText weight="w700">Client</SmallText>
                           </Th>
                           <Th>
-                            <SmallText weight="w700">File No. / Suit No.</SmallText>
+                            <SmallText weight="w700">
+                              File No. / Suit No.
+                            </SmallText>
                           </Th>
                           <Th>
                             <SmallText weight="w700">CaseType</SmallText>
@@ -110,7 +112,11 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                       <Tbody>
                         {data?.data.data.casefiles.map(
                           (item: ICasefilesResponse, index: number) => (
-                            <CaseFilesTable item={item} key={index} />
+                            <CaseFilesTable
+                              item={item}
+                              key={index}
+                              itemIndex={index}
+                            />
                           )
                         )}
                       </Tbody>
@@ -171,7 +177,11 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                     <Tbody>
                       {data?.data.data.transactions.map(
                         (item: ITransactionsResponse, index: number) => (
-                          <TransactionTable item={item} key={index} />
+                          <TransactionTable
+                            item={item}
+                            key={index}
+                            itemIndex={index}
+                          />
                         )
                       )}
                     </Tbody>
