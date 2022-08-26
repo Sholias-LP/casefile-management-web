@@ -206,7 +206,6 @@ const AppLayout: FC<IProps> = ({ children }) => {
     <>
       <Meta />
       <MerchantNavbar
-        logo={<ImageComponent />}
         nav={<Nav />}
         sideNavSize={250}
         navChildren={<NavItems />}

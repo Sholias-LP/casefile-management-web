@@ -39,7 +39,7 @@ const AuthLayout: FC<IProps> = ({ children }) => {
   return (
     <>
       <Meta />
-      <MerchantNavbar logo={<ImageComponent />} nav={<Nav />} sideNavSize={0}>
+      <MerchantNavbar nav={<Nav />} sideNavSize={0}>
         <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
       </MerchantNavbar>
     </>

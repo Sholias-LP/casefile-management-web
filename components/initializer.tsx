@@ -14,7 +14,6 @@ const Initializer: FC<IProps> = ({ text = "Loading..." }) => {
       style={{ height: "100vh" }}
     >
       <Grid xl="auto" lg="auto" sm="auto" justifyContent="center">
-        <ImageComponent />
         <Flex justifyContent="center">
           <SmallText>{text}</SmallText>
         </Flex>
