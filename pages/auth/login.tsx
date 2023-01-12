@@ -114,7 +114,7 @@ const Login = () => {
                 </Flex>
                 <Flex justifyContent="center" className="mt-10">
                   <SmallText weight="w600">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?
                     <Link href="/auth/register">
                       <a> Sign Up</a>
                     </Link>
