@@ -151,3 +151,50 @@ textarea:focus {
   padding-top: 5px;
   text-align: center;
 }
+
+.main {
+gap: 0 !important
+}
+
+.authLayout section {
+    padding: 0 !important;
+    border-bottom: 0 !important;
+    display: none;
+}
+
+@media only screen and (min-width: 992px) {
+  .authLayout section {
+    display: block;
+  }
+}
+
+
+.rightSection {
+  background-color: #ffc20e !important;
+  height: 100vh;
+  padding: 15rem 2rem;
+  display: none;
+}
+
+@media only screen and (min-width: 992px) {
+  .rightSection {
+    display: block;
+  }
+}
+
+.rightSection .homeText {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.leftSection {
+  margin: 4rem 1.5rem;
+}
+
+@media only screen and (min-width: 992px) {
+  .leftSection {
+    margin: auto 0px;
+  }
+}
+

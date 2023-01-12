@@ -25,7 +25,6 @@ import protectedRoute from "../pages/api/protectedRoute";
 import { useGetNofications } from "../pages/api/queries/notification";
 import { captalize } from "../utils/nameConverter";
 import { SecureStorage } from "../utils/storage";
-import ImageComponent from "./image";
 import Meta from "./Meta";
 
 interface IAppLayoutProps {
@@ -84,8 +83,9 @@ const NavItems = () => {
   const secureStorage = new SecureStorage();
 
   const handleLogOut = () => {
-    setLogout("/auth");
+    setLogout("/auth/login");
   };
+
   const { data } = useGetNofications();
 
   const getTimeDiffInMinutes = (prevTime: string, currTime: string) => {
@@ -163,8 +163,8 @@ const NavItems = () => {
           </Link>
         ))}
         <Divider />
-        <Link href="/auth">
-          <a onClick={handleLogOut}>
+        <Link href="/auth/login">
+          <a>
             <ProfileNavItem icon={<LogoutIcon />}>Logout</ProfileNavItem>
           </a>
         </Link>

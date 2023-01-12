@@ -11,7 +11,7 @@ const protectedRoute = (WrappedComponent: any) => (props: any) => {
 
   useEffect(() => {
     if (!initializing && !auth) {
-      router.push("/auth");
+      router.push("/auth/login");
     }
   }, [initializing, auth, router]);
 

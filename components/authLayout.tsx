@@ -8,6 +8,7 @@ import {
   Paragraph,
   Button,
   MerchantNavbar,
+  Grid,
 } from "truparse-lodre";
 import SvgHelp from "truparse-lodre/lib/icons/Help";
 import SvgUser from "truparse-lodre/lib/icons/User";
@@ -39,9 +40,18 @@ const AuthLayout: FC<IProps> = ({ children }) => {
   return (
     <>
       <Meta />
-      <MerchantNavbar nav={<Nav />} sideNavSize={0}>
-        <div className="mt-20 mb-50 mx-20 my-20">{children}</div>
-      </MerchantNavbar>
+      <div className="authLayout">
+        <MerchantNavbar sideNavSize={0}>
+          <Grid xl="1fr 1fr" lg="1fr 1fr" md="1fr">
+            <div className="rightSection">
+              <div className="homeText">
+                Manage legal cases and transactions; all in one place.
+              </div>
+            </div>
+            <div className="leftSection">{children}</div>
+          </Grid>
+        </MerchantNavbar>
+      </div>
     </>
   );
 };

@@ -37,12 +37,15 @@ const ForgotPassword = () => {
           setLoading(false);
           updateCurrentUser(data.data);
           toast.success(data.message!);
-          router.push("/auth");
+          router.push("/auth/login");
         },
         onError: (error) => {
           if (error instanceof AxiosError) {
             setLoading(false);
             toast.error(error.response?.data.message);
+          } else {
+            setLoading(false);
+            toast.error(`${error}`);
           }
         },
       }
@@ -66,8 +69,10 @@ const ForgotPassword = () => {
       >
         <Card>
           <CardBody>
-            <Flex justifyContent="center" alignItems="center">
-              <Paragraph weight="w600">Recover Password</Paragraph>
+            <Flex justifyContent="center">
+              <Paragraph weight="w600" size="pLarge">
+                RECOVER PASSWORD
+              </Paragraph>
             </Flex>
             <form onSubmit={handleSubmit}>
               <div className="mt-30">

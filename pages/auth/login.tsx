@@ -3,9 +3,19 @@ import Link from "next/link";
 import router from "next/router";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { Button, Flex, Input, SmallText } from "truparse-lodre";
+import {
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  Grid,
+  Input,
+  Paragraph,
+  SmallText,
+} from "truparse-lodre";
 import SvgEyeClose from "truparse-lodre/lib/icons/EyeClose";
 import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
+import AuthLayout from "../../components/authLayout";
 import AuthContext from "../../context/user";
 import { IResponse } from "../../interfaces/response";
 import { ILogin, IUser } from "../../interfaces/user";
@@ -40,6 +50,9 @@ const Login = () => {
           if (error instanceof AxiosError) {
             setLoading(false);
             toast.error(error.response?.data.message);
+          } else {
+            setLoading(false);
+            toast.error(`${error}`);
           }
         },
       }
@@ -52,45 +65,67 @@ const Login = () => {
   );
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mt-30">
-        <Input
-          placeholder="Email Address"
-          type="email"
-          name="email"
-          onChange={handleChange}
-        />
-        <Input
-          placeholder="Password"
-          type={showPassword ? "text" : "password"}
-          trailing={
-            showPassword ? (
-              <SvgEyeOpen onClick={passwordVisibility} />
-            ) : (
-              <SvgEyeClose onClick={passwordVisibility} />
-            )
-          }
-          name="password"
-          onChange={handleChange}
-        />
-        <Button
-          fluid
-          variant="block"
-          className="mt-40 mb-20"
-          disabled={isLoading || loading}
-          loading={isLoading || loading}
-        >
-          {loading ? "" : "Login"}
-        </Button>
-        <Flex justifyContent="center">
-          <Link href="/auth/forgotPassword">
-            <a>
-              <SmallText weight="w600">Forgot Password?</SmallText>
-            </a>
-          </Link>
-        </Flex>
-      </div>
-    </form>
+    <AuthLayout>
+      <Grid xl="400px" lg="400px" md="400px" sm="1fr" justifyContent="center">
+        <Card>
+          <CardBody>
+            <Flex justifyContent="center">
+              <Paragraph weight="w600" size="pLarge">
+                LOGIN
+              </Paragraph>
+            </Flex>
+
+            <form onSubmit={handleSubmit}>
+              <div className="mt-30">
+                <Input
+                  placeholder="Email Address"
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                />
+                <Input
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
+                  trailing={
+                    showPassword ? (
+                      <SvgEyeOpen onClick={passwordVisibility} />
+                    ) : (
+                      <SvgEyeClose onClick={passwordVisibility} />
+                    )
+                  }
+                  name="password"
+                  onChange={handleChange}
+                />
+                <Button
+                  fluid
+                  variant="block"
+                  className="mt-40 mb-20"
+                  disabled={isLoading || loading}
+                  loading={isLoading || loading}
+                >
+                  {loading ? "" : "Login"}
+                </Button>
+                <Flex justifyContent="center">
+                  <Link href="/auth/forgotPassword">
+                    <a>
+                      <SmallText weight="w600">Forgot Password?</SmallText>
+                    </a>
+                  </Link>
+                </Flex>
+                <Flex justifyContent="center" className="mt-10">
+                  <SmallText weight="w600">
+                    Don't have an account?{" "}
+                    <Link href="/auth/register">
+                      <a> Sign Up</a>
+                    </Link>
+                  </SmallText>
+                </Flex>
+              </div>
+            </form>
+          </CardBody>
+        </Card>
+      </Grid>
+    </AuthLayout>
   );
 };
 
