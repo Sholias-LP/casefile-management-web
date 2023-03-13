@@ -164,7 +164,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                           <SmallText weight="w700">Client</SmallText>
                         </Th>
                         <Th>
-                          <SmallText weight="w700">Transacation No.</SmallText>
+                          <SmallText weight="w700">Transacation ID</SmallText>
                         </Th>
                         <Th>
                           <SmallText weight="w700">Transaction Type</SmallText>
