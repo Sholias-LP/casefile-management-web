@@ -116,7 +116,7 @@ textarea:focus {
 }
 
 .cardHover:hover {
-  box-shadow: 4px 25px 25px 0px rgba(255,	250,	235, 0.6);
+  box-shadow: 4px 25px 25px 0px rgba(255, 250, 235, 0.6);
 }
 
 .notificationButton {
@@ -152,49 +152,83 @@ textarea:focus {
   text-align: center;
 }
 
+.formContainer {
+  padding: 0 3rem;
+}
+
+@media only screen and (min-width: 769px) {
+  .formContainer {
+    padding: 0 0;
+  }
+}
+
 .main {
-gap: 0 !important
+  gap: 0 !important;
+}
+
+/* @media only screen and (min-width: 769px) {
+  .main {
+    display: grid;
+    grid-template-columns: 0px 1fr !important;
+  }
+} */
+
+.authLayout {
+  background-color: white;
 }
 
 .authLayout section {
-    padding: 0 !important;
-    border-bottom: 0 !important;
-    display: none;
+  padding: 0 !important;
+  border-bottom: 0 !important;
+  display: none;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 769px) {
   .authLayout section {
     display: block;
   }
 }
 
-
 .rightSection {
   background-color: #ffc20e !important;
   height: 100vh;
-  padding: 15rem 2rem;
+  padding: 15rem 8rem 15rem 4rem;
   display: none;
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: 769px) {
   .rightSection {
     display: block;
   }
 }
 
 .rightSection .homeText {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 600;
   color: #ffffff;
 }
 
+.rightSection .homeSubText {
+  margin-top: 40px;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.rightSection .nameLogoContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
 .leftSection {
-  margin: 4rem 1.5rem;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }
 
-@media only screen and (min-width: 992px) {
-  .leftSection {
-    margin: auto 0px;
-  }
+.leftContainer {
+  max-width: 500px;
+  width: 100%;
 }
-

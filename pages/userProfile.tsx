@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react';
 import {
   Button,
   Card,
@@ -7,21 +7,20 @@ import {
   Grid,
   Heading,
   Input,
-} from "truparse-lodre";
-import AppLayout from "../components/appLayout";
-import AuthContext from "../context/user";
-import ProfileDetailIcon from "../components/assets/profile details.svg";
-import { useUpdateUser } from "./api/mutations/user";
-import useForm from "../utils/useForm";
-import { IUpdateUser, IUser } from "../interfaces/user";
-import { AxiosResponse, AxiosError } from "axios";
-import toast from "react-hot-toast";
-import { IResponse } from "../interfaces/response";
+} from 'truparse-lodre';
+import AppLayout from '../components/appLayout';
+import AuthContext from '../context/user';
+import ProfileDetailIcon from '../components/assets/profile details.svg';
+import { useUpdateUser } from './api/mutations/user';
+import useForm from '../utils/useForm';
+import { IUpdateUser, IUser } from '../interfaces/user';
+import { AxiosResponse, AxiosError } from 'axios';
+import toast from 'react-hot-toast';
+import { IResponse } from '../interfaces/response';
 
 const UserProfile = () => {
   const { currentUser, updateCurrentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState<boolean>(false);
-  console.log(currentUser._id);
 
   const { mutate } = useUpdateUser();
 
@@ -64,7 +63,7 @@ const UserProfile = () => {
             alignItems="center"
           >
             <Flex justifyContent="center">
-              <ProfileDetailIcon style={{ width: "30px", height: "30px" }} />
+              <ProfileDetailIcon style={{ width: '30px', height: '30px' }} />
             </Flex>
             <Flex justifyContent="center">
               <Heading size="hSmall" weight="w700" className="mb-30">

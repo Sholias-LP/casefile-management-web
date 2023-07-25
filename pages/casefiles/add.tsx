@@ -1,7 +1,7 @@
-import { AxiosResponse, AxiosError } from "axios";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { AxiosResponse, AxiosError } from 'axios';
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   Badge,
   Button,
@@ -14,36 +14,38 @@ import {
   Paragraph,
   SelectField,
   SmallText,
-} from "truparse-lodre";
-import { X } from "truparse-lodre/lib/icons";
-import AppLayout from "../../components/appLayout";
+} from 'truparse-lodre';
+import { X } from 'truparse-lodre/lib/icons';
+import AppLayout from '../../components/appLayout';
 import {
   ICasefile,
   ICasefilesResponse,
   ICourtSitting,
   IDeposit,
   IExpenses,
-} from "../../interfaces/casefiles";
-import { IResponse, ISelect } from "../../interfaces/response";
-import { ICasefileTypes } from "../../interfaces/user";
-import useForm from "../../utils/useForm";
-import { useAddCasefile } from "../api/mutations/casefiles";
-import { useGetResourceTypes } from "../api/queries/users";
+} from '../../interfaces/casefiles';
+import { IResponse, ISelect } from '../../interfaces/response';
+import { ICasefileTypes } from '../../interfaces/user';
+import useForm from '../../utils/useForm';
+import { useAddCasefile } from '../api/mutations/casefiles';
+import { useGetResourceTypes } from '../api/queries/users';
+import AuthContext from '../../context/user';
 
 const AddCasefile = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [caseType, setCaseType] = useState<string>("");
+  const [caseType, setCaseType] = useState<string>('');
   const [deposits, setDeposits] = useState<IDeposit[]>([]);
-  const [deposit, setDeposit] = useState<string>("");
+  const [deposit, setDeposit] = useState<string>('');
   const [expense, setExpenses] = useState<IExpenses[]>([]);
   const [courtSittings, setCourtSitting] = useState<ICourtSitting[]>([]);
-  const [expensesNote, setExpensesNote] = useState<string>("");
-  const [courtNote, setCourtNote] = useState<string>("");
-  const [expensesAmount, setExpensesAmount] = useState<string>("");
-  const [courtDate, setCourtDate] = useState<string>("");
-  const [brief, setBrief] = useState<string>("");
-  const [letterOfEngagement, setLetterOfEngagement] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
+  const [expensesNote, setExpensesNote] = useState<string>('');
+  const [courtNote, setCourtNote] = useState<string>('');
+  const [expensesAmount, setExpensesAmount] = useState<string>('');
+  const [courtDate, setCourtDate] = useState<string>('');
+  const [brief, setBrief] = useState<string>('');
+  const [letterOfEngagement, setLetterOfEngagement] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const { currentUser } = useContext(AuthContext);
 
   const { mutate } = useAddCasefile();
   const router = useRouter();
@@ -76,7 +78,7 @@ const AddCasefile = () => {
           const { data } = response;
           setLoading(false);
           toast.success(data.message!);
-          router.push("/casefiles");
+          router.push('/casefiles');
         },
         onError: (error) => {
           if (error instanceof AxiosError) {
@@ -102,8 +104,8 @@ const AddCasefile = () => {
         <Card className="mb-20">
           <CardBody>
             <SmallText weight="w600" className="mb-20">
-              Client Details{" "}
-              <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+              Client Details{' '}
+              <span style={{ color: 'red', fontSize: '8px' }}>(required)</span>
             </SmallText>
             <Grid xl="1fr 1fr">
               <div className="mt-10">
@@ -120,8 +122,10 @@ const AddCasefile = () => {
             <Grid xl="1fr 1fr">
               <div className="mt-10">
                 <SmallText weight="w500">
-                  Suit No.{" "}
-                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                  Suit No.{' '}
+                  <span style={{ color: 'red', fontSize: '8px' }}>
+                    (optional)
+                  </span>
                 </SmallText>
                 <Input
                   placeholder="FHC/KD/CS/500/2022"
@@ -136,8 +140,10 @@ const AddCasefile = () => {
               <div>
                 <div className="mb-10">
                   <SmallText weight="w500">
-                    Gender{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+                    Gender{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
+                      (required)
+                    </span>
                   </SmallText>
                 </div>
                 <SelectField
@@ -145,12 +151,12 @@ const AddCasefile = () => {
                   placeholder="Select Gender"
                   options={[
                     {
-                      text: "Male",
-                      value: "male",
+                      text: 'Male',
+                      value: 'male',
                     },
                     {
-                      text: "Female",
-                      value: "female",
+                      text: 'Female',
+                      value: 'female',
                     },
                   ]}
                   borderRadius="4px"
@@ -161,8 +167,10 @@ const AddCasefile = () => {
             <Grid xl="1fr 1fr">
               <div>
                 <SmallText weight="w500">
-                  Occupation{" "}
-                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                  Occupation{' '}
+                  <span style={{ color: 'red', fontSize: '8px' }}>
+                    (optional)
+                  </span>
                 </SmallText>
                 <Input
                   placeholder=""
@@ -177,13 +185,13 @@ const AddCasefile = () => {
         </Card>
         <Card className="mb-20">
           <CardBody>
-            <SmallText weight="w600">Case Details</SmallText>
+            <SmallText weight="w600">etails</SmallText>
             <Grid xl="1fr 1fr">
               <div className="mb-15 mt-10">
                 <div className="mb-10">
                   <SmallText weight="w500">
-                    Case Type{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>
+                    Case Type{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
                       (required)
                     </span>
                   </SmallText>
@@ -198,30 +206,35 @@ const AddCasefile = () => {
                 />
               </div>
             </Grid>
-            <Grid xl="1fr 1fr">
-              <div>
-                <SmallText weight="w500">
-                  Service Fee{"   "}
-                  (&#8358;) &nbsp;
-                  <span style={{ color: "red", fontSize: "8px" }}>
-                    (required)
-                  </span>
-                </SmallText>
-                <Input
-                  placeholder="e.g. 5000000"
-                  type="number"
-                  className="mt-10"
-                  name="serviceFee"
-                  onChange={handleChange}
-                />
-              </div>
-            </Grid>
+            <>
+              {currentUser.role === 'partner' && (
+                <Grid xl="1fr 1fr">
+                  <div>
+                    <SmallText weight="w500">
+                      Service Fee (&#8358;) &nbsp;
+                      <span style={{ color: 'red', fontSize: '8px' }}>
+                        (required)
+                      </span>
+                    </SmallText>
+                    <Input
+                      placeholder="e.g. 5000000"
+                      type="number"
+                      className="mt-10"
+                      name="serviceFee"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Grid>
+              )}
+            </>
             <Grid xl="1fr 1fr" className="mb-10">
               <div>
                 <div>
                   <SmallText weight="w500">
-                    Brief{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                    Brief{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
+                      (optional)
+                    </span>
                   </SmallText>
                 </div>
 
@@ -238,9 +251,11 @@ const AddCasefile = () => {
               <div>
                 <div>
                   <SmallText weight="w500">
-                    Letter of Engagement{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
-                  </SmallText>{" "}
+                    Letter of Engagement{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
+                      (optional)
+                    </span>
+                  </SmallText>{' '}
                 </div>
 
                 <textarea
@@ -258,8 +273,10 @@ const AddCasefile = () => {
           <CardBody>
             <div className="mb-10">
               <SmallText weight="w600">
-                Court Sitting{" "}
-                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                Court Sitting{' '}
+                <span style={{ color: 'red', fontSize: '8px' }}>
+                  (optional)
+                </span>
               </SmallText>
             </div>
 
@@ -298,13 +315,13 @@ const AddCasefile = () => {
                         note: courtNote,
                       },
                     ]);
-                    setCourtDate("");
-                    setCourtNote("");
+                    setCourtDate('');
+                    setCourtNote('');
                   }}
                   disabled={
                     courtSittings.length === 3 ||
-                    courtDate === "" ||
-                    courtNote === ""
+                    courtDate === '' ||
+                    courtNote === ''
                   }
                 >
                   Add Court Sitting
@@ -330,7 +347,7 @@ const AddCasefile = () => {
                         <Flex justifyContent="space-between" className="mb-10">
                           <SmallText weight="w500">Date: {el.date}</SmallText>
                           <X
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             width={14}
                             height={14}
                             onClick={() =>
@@ -357,8 +374,10 @@ const AddCasefile = () => {
           <CardBody>
             <div className="mb-10">
               <SmallText weight="w600">
-                Expenses{" "}
-                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                Expenses{' '}
+                <span style={{ color: 'red', fontSize: '8px' }}>
+                  (optional)
+                </span>
               </SmallText>
             </div>
 
@@ -392,13 +411,13 @@ const AddCasefile = () => {
                         note: expensesNote,
                       },
                     ]);
-                    setExpensesAmount("");
-                    setExpensesNote("");
+                    setExpensesAmount('');
+                    setExpensesNote('');
                   }}
                   disabled={
                     expense.length === 3 ||
-                    expensesNote === "" ||
-                    expensesAmount === ""
+                    expensesNote === '' ||
+                    expensesAmount === ''
                   }
                 >
                   Add Expenses
@@ -426,7 +445,7 @@ const AddCasefile = () => {
                             Amount: &#8358;{el.amount}
                           </SmallText>
                           <X
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             width={14}
                             height={14}
                             onClick={() =>
@@ -454,8 +473,10 @@ const AddCasefile = () => {
           <CardBody>
             <div className="mb-10">
               <SmallText weight="w600">
-                Deposit{" "}
-                <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                Deposit{' '}
+                <span style={{ color: 'red', fontSize: '8px' }}>
+                  (optional)
+                </span>
               </SmallText>
             </div>
             <Grid xl="1fr 1fr">
@@ -474,9 +495,9 @@ const AddCasefile = () => {
                   size="small"
                   onClick={() => {
                     setDeposits([...deposits, { amount: Number(deposit) }]);
-                    setDeposit("");
+                    setDeposit('');
                   }}
-                  disabled={deposits.length === 5 || deposit === ""}
+                  disabled={deposits.length === 5 || deposit === ''}
                 >
                   Add Deposit
                 </Button>
@@ -496,7 +517,7 @@ const AddCasefile = () => {
                       <Badge
                         fillColor="primary"
                         key={index}
-                        borderColor={"cream"}
+                        borderColor={'cream'}
                         color="dark"
                       >
                         <Flex justifyContent="space-between">
@@ -504,7 +525,7 @@ const AddCasefile = () => {
                             &#8358;{el.amount}
                           </SmallText>
                           <X
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             width={14}
                             height={14}
                             onClick={() =>

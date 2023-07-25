@@ -1,7 +1,7 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { AxiosError, AxiosResponse } from 'axios';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   Badge,
   Button,
@@ -13,30 +13,32 @@ import {
   Paragraph,
   SelectField,
   SmallText,
-} from "truparse-lodre";
-import { X } from "truparse-lodre/lib/icons";
-import AppLayout from "../../components/appLayout";
-import { IDeposit, IExpenses } from "../../interfaces/casefiles";
-import { IResponse, ISelect } from "../../interfaces/response";
+} from 'truparse-lodre';
+import { X } from 'truparse-lodre/lib/icons';
+import AppLayout from '../../components/appLayout';
+import { IDeposit, IExpenses } from '../../interfaces/casefiles';
+import { IResponse, ISelect } from '../../interfaces/response';
 import {
   ITransaction,
   ITransactionsResponse,
-} from "../../interfaces/transactions";
-import { ITransactionTypes } from "../../interfaces/user";
-import useForm from "../../utils/useForm";
-import { useAddTransactions } from "../api/mutations/transactions";
-import { useGetResourceTypes } from "../api/queries/users";
+} from '../../interfaces/transactions';
+import { ITransactionTypes } from '../../interfaces/user';
+import useForm from '../../utils/useForm';
+import { useAddTransactions } from '../api/mutations/transactions';
+import { useGetResourceTypes } from '../api/queries/users';
+import AuthContext from '../../context/user';
 
 const AddTransactions = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [transaction, setTransaction] = useState<string>("");
+  const [transaction, setTransaction] = useState<string>('');
   const [deposits, setDeposits] = useState<IDeposit[]>([]);
-  const [deposit, setDeposit] = useState<string>("");
+  const [deposit, setDeposit] = useState<string>('');
   const [expense, setExpenses] = useState<IExpenses[]>([]);
-  const [expensesNote, setExpensesNote] = useState<string>("");
-  const [expensesAmount, setExpensesAmount] = useState<string>("");
-  const [transactionSummary, setTransactionSummary] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
+  const [expensesNote, setExpensesNote] = useState<string>('');
+  const [expensesAmount, setExpensesAmount] = useState<string>('');
+  const [transactionSummary, setTransactionSummary] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const { currentUser } = useContext(AuthContext);
 
   const { mutate } = useAddTransactions();
   const router = useRouter();
@@ -67,7 +69,7 @@ const AddTransactions = () => {
           const { data } = response;
           setLoading(false);
           toast.success(data.message!);
-          router.push("/transactions");
+          router.push('/transactions');
         },
         onError: (error) => {
           if (error instanceof AxiosError) {
@@ -93,8 +95,8 @@ const AddTransactions = () => {
         <Card className="mb-20">
           <CardBody>
             <SmallText weight="w600" className="mb-20">
-              Client Details{" "}
-              <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+              Client Details{' '}
+              <span style={{ color: 'red', fontSize: '8px' }}>(required)</span>
             </SmallText>
             <Grid xl="1fr 1fr">
               <div className="mt-10">
@@ -112,8 +114,10 @@ const AddTransactions = () => {
               <div>
                 <div className="mb-10">
                   <SmallText weight="w500">
-                    Gender{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
+                    Gender{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
+                      (required)
+                    </span>
                   </SmallText>
                 </div>
                 <SelectField
@@ -121,12 +125,12 @@ const AddTransactions = () => {
                   placeholder="Select Gender"
                   options={[
                     {
-                      text: "Male",
-                      value: "male",
+                      text: 'Male',
+                      value: 'male',
                     },
                     {
-                      text: "Female",
-                      value: "female",
+                      text: 'Female',
+                      value: 'female',
                     },
                   ]}
                   borderRadius="4px"
@@ -137,8 +141,10 @@ const AddTransactions = () => {
             <Grid xl="1fr 1fr">
               <div>
                 <SmallText weight="w500">
-                  Occupation{" "}
-                  <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
+                  Occupation{' '}
+                  <span style={{ color: 'red', fontSize: '8px' }}>
+                    (optional)
+                  </span>
                 </SmallText>
                 <Input
                   placeholder=""
@@ -158,8 +164,8 @@ const AddTransactions = () => {
               <div className="mb-15 mt-10">
                 <div className="mb-10">
                   <SmallText weight="w500">
-                    Transaction Type{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>
+                    Transaction Type{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
                       (required)
                     </span>
                   </SmallText>
@@ -174,30 +180,36 @@ const AddTransactions = () => {
                 />
               </div>
             </Grid>
-            <Grid xl="1fr 1fr" className="mb-10">
-              <div>
-                <SmallText weight="w500">
-                  Service Fee (&#8358;) &nbsp;
-                  <span style={{ color: "red", fontSize: "8px" }}>
-                    (required)
-                  </span>
-                </SmallText>
-                <Input
-                  placeholder="e.g. 5000000"
-                  type="number"
-                  className="mt-10"
-                  name="serviceFee"
-                  onChange={handleChange}
-                />
-              </div>
-            </Grid>
+            <>
+              {currentUser.role === 'partner' && (
+                <Grid xl="1fr 1fr">
+                  <div>
+                    <SmallText weight="w500">
+                      Service Fee (&#8358;) &nbsp;
+                      <span style={{ color: 'red', fontSize: '8px' }}>
+                        (required)
+                      </span>
+                    </SmallText>
+                    <Input
+                      placeholder="e.g. 5000000"
+                      type="number"
+                      className="mt-10"
+                      name="serviceFee"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Grid>
+              )}
+            </>
             <Grid xl="1fr 1fr">
               <div>
                 <div>
                   <SmallText weight="w500">
-                    Transaction Summary{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(required)</span>
-                    </SmallText>
+                    Transaction Summary{' '}
+                    <span style={{ color: 'red', fontSize: '8px' }}>
+                      (required)
+                    </span>
+                  </SmallText>
                 </div>
                 <textarea
                   placeholder="Lawyer's understanding / summary of the client's needs"
@@ -214,9 +226,11 @@ const AddTransactions = () => {
           <CardBody>
             <div className="mb-10">
               <SmallText weight="w600">
-                Expenses{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
-                </SmallText>
+                Expenses{' '}
+                <span style={{ color: 'red', fontSize: '8px' }}>
+                  (optional)
+                </span>
+              </SmallText>
             </div>
 
             <Grid xl="1fr 1fr">
@@ -248,13 +262,13 @@ const AddTransactions = () => {
                         note: expensesNote,
                       },
                     ]);
-                    setExpensesAmount("");
-                    setExpensesNote("");
+                    setExpensesAmount('');
+                    setExpensesNote('');
                   }}
                   disabled={
                     expense.length === 3 ||
-                    expensesNote === "" ||
-                    expensesAmount === ""
+                    expensesNote === '' ||
+                    expensesAmount === ''
                   }
                 >
                   Add Expenses
@@ -282,7 +296,7 @@ const AddTransactions = () => {
                             Amount: &#8358;{el.amount}
                           </SmallText>
                           <X
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             width={14}
                             height={14}
                             onClick={() =>
@@ -310,9 +324,11 @@ const AddTransactions = () => {
           <CardBody>
             <div className="mb-10">
               <SmallText weight="w600">
-                Deposit{" "}
-                    <span style={{ color: "red", fontSize: "8px" }}>(optional)</span>
-                </SmallText>
+                Deposit{' '}
+                <span style={{ color: 'red', fontSize: '8px' }}>
+                  (optional)
+                </span>
+              </SmallText>
             </div>
             <Grid xl="1fr 1fr">
               <div>
@@ -329,9 +345,9 @@ const AddTransactions = () => {
                   size="small"
                   onClick={() => {
                     setDeposits([...deposits, { amount: Number(deposit) }]);
-                    setDeposit("");
+                    setDeposit('');
                   }}
-                  disabled={deposits.length === 5 || deposit === ""}
+                  disabled={deposits.length === 5 || deposit === ''}
                 >
                   Add Deposit
                 </Button>
@@ -351,7 +367,7 @@ const AddTransactions = () => {
                       <Badge
                         fillColor="primary"
                         key={index}
-                        borderColor={"cream"}
+                        borderColor={'cream'}
                         color="dark"
                       >
                         <Flex justifyContent="space-between">
@@ -359,7 +375,7 @@ const AddTransactions = () => {
                             &#8358;{el.amount}
                           </SmallText>
                           <X
-                            style={{ cursor: "pointer" }}
+                            style={{ cursor: 'pointer' }}
                             width={14}
                             height={14}
                             onClick={() =>

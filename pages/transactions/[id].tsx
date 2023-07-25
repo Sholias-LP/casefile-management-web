@@ -1,8 +1,8 @@
-import { AxiosError, AxiosResponse } from "axios";
-import moment from "moment";
-import { useRouter } from "next/router";
-import React, { FC, useContext, useEffect, useState } from "react";
-import toast, { LoaderIcon } from "react-hot-toast";
+import { AxiosError, AxiosResponse } from 'axios';
+import moment from 'moment';
+import { useRouter } from 'next/router';
+import React, { FC, useContext, useEffect, useState } from 'react';
+import toast, { LoaderIcon } from 'react-hot-toast';
 import {
   Badge,
   Button,
@@ -15,37 +15,37 @@ import {
   Paragraph,
   SelectField,
   SmallText,
-} from "truparse-lodre";
-import { X } from "truparse-lodre/lib/icons";
-import SvgEyeOpen from "truparse-lodre/lib/icons/EyeOpen";
-import AppLayout from "../../components/appLayout";
-import Menu from "../../components/menu";
-import AuthContext from "../../context/user";
-import { IDeposit, IExpenses } from "../../interfaces/casefiles";
-import { IResponse, ISelect } from "../../interfaces/response";
+} from 'truparse-lodre';
+import { X } from 'truparse-lodre/lib/icons';
+import SvgEyeOpen from 'truparse-lodre/lib/icons/EyeOpen';
+import AppLayout from '../../components/appLayout';
+import Menu from '../../components/menu';
+import AuthContext from '../../context/user';
+import { IDeposit, IExpenses } from '../../interfaces/casefiles';
+import { IResponse, ISelect } from '../../interfaces/response';
 import {
   ITransaction,
   ITransactionsResponse,
-} from "../../interfaces/transactions";
-import { ITransactionTypes } from "../../interfaces/user";
-import useForm from "../../utils/useForm";
+} from '../../interfaces/transactions';
+import { ITransactionTypes } from '../../interfaces/user';
+import useForm from '../../utils/useForm';
 import {
   useApproveTransactionExpense,
   useDeclineTransactionExpense,
   useDeleteTransactions,
   useUpdateTransactions,
-} from "../api/mutations/transactions";
+} from '../api/mutations/transactions';
 import {
   useGetATransaction,
   useGetClientBalance,
   useGetTotalDeposit,
   useGetTotalExpenses,
-} from "../api/queries/transactions";
-import { useGetResourceTypes } from "../api/queries/users";
-import DeleteModal from "./deleteModal";
-import PendingIcon from "../../components/assets/pending.svg";
-import DeclineIcon from "../../components/assets/decline.svg";
-import ApprovedIcon from "../../components/assets/approved.svg";
+} from '../api/queries/transactions';
+import { useGetResourceTypes } from '../api/queries/users';
+import DeleteModal from './deleteModal';
+import PendingIcon from '../../components/assets/pending.svg';
+import DeclineIcon from '../../components/assets/decline.svg';
+import ApprovedIcon from '../../components/assets/approved.svg';
 
 type IProps = {
   id: string;
@@ -75,7 +75,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
   const [edit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [toggleModal, setToggleModal] = useState<boolean>(false);
-  const [transaction, setTransaction] = useState<string>("");
+  const [transaction, setTransaction] = useState<string>('');
   const [editDeposit, setEditDeposit] = useState<IDeposit[]>(
     transactions?.deposit!
   );
@@ -83,11 +83,11 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
     transactions?.expenses!
   );
   const [addDeposit, setAddDeposit] = useState<boolean>(false);
-  const [deposit, setDeposit] = useState<string>("");
-  const [expensesNote, setExpensesNote] = useState<string>("");
-  const [expensesAmount, setExpensesAmount] = useState<string>("");
+  const [deposit, setDeposit] = useState<string>('');
+  const [expensesNote, setExpensesNote] = useState<string>('');
+  const [expensesAmount, setExpensesAmount] = useState<string>('');
   const [addExpenses, setAddExpenses] = useState<boolean>(false);
-  const [transactionSummary, setTransactionSummary] = useState<string>("");
+  const [transactionSummary, setTransactionSummary] = useState<string>('');
   const { mutate, isLoading } = useDeleteTransactions();
   const router = useRouter();
   const editTransactions = useUpdateTransactions();
@@ -132,7 +132,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
         const { data } = res;
         setLoading(false);
         toast.success(data.message!);
-        router.push("/transactions");
+        router.push('/transactions');
       },
       onError: (error) => {
         if (error instanceof AxiosError) {
@@ -178,7 +178,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
 
   const approveTransactionExpenses = async (expenseId: string) => {
     ApproveExpenses(
-      { transactionId: id, expenseId: expenseId, action: "approved" },
+      { transactionId: id, expenseId: expenseId, action: 'approved' },
       {
         onSuccess: async (res: AxiosResponse<IResponse>) => {
           const { data } = res;
@@ -198,7 +198,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
 
   const declineTransactionExpenses = async (expenseId: string) => {
     DeclineExpenses(
-      { transactionId: id, expenseId: expenseId, action: "declined" },
+      { transactionId: id, expenseId: expenseId, action: 'declined' },
       {
         onSuccess: async (res: AxiosResponse<IResponse>) => {
           const { data } = res;
@@ -320,19 +320,25 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                     />
                   </div>
                 </Grid>
-                <Grid xl="1fr 1fr">
-                  <div>
-                    <SmallText weight="w500">Service Fee (&#8358;)</SmallText>
-                    <Input
-                      placeholder="e.g. 5000000"
-                      type="number"
-                      className="mt-10"
-                      name="serviceFee"
-                      onChange={handleChange}
-                      defaultValue={transactions?.service_fee}
-                    />
-                  </div>
-                </Grid>
+                <>
+                  {currentUser.role === 'partner' && (
+                    <Grid xl="1fr 1fr">
+                      <div>
+                        <SmallText weight="w500">
+                          Service Fee (&#8358;)
+                        </SmallText>
+                        <Input
+                          placeholder="e.g. 5000000"
+                          type="number"
+                          className="mt-10"
+                          name="serviceFee"
+                          onChange={handleChange}
+                          defaultValue={transactions?.service_fee}
+                        />
+                      </div>
+                    </Grid>
+                  )}
+                </>
               </CardBody>
             </Card>
             <Card className="mb-20 mt-20">
@@ -363,8 +369,8 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                   )
                                 }
                                 disabled={
-                                  item.status === "pending" ||
-                                  item.status === "approved"
+                                  item.status === 'pending' ||
+                                  item.status === 'approved'
                                 }
                               />
                               <SmallText weight="w500">Note</SmallText>
@@ -378,8 +384,8 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                   handleExpenseNoteChange(index, e.target.value)
                                 }
                                 disabled={
-                                  item.status === "pending" ||
-                                  item.status === "approved"
+                                  item.status === 'pending' ||
+                                  item.status === 'approved'
                                 }
                               />
                             </CardBody>
@@ -423,12 +429,12 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                   note: expensesNote,
                                 },
                               ]),
-                              setExpensesAmount(""),
-                              setExpensesNote(""))
+                              setExpensesAmount(''),
+                              setExpensesNote(''))
                             : setAddExpenses(true);
                         }}
                         type="button"
-                        disabled={expensesAmount === "" || expensesNote === ""}
+                        disabled={expensesAmount === '' || expensesNote === ''}
                       >
                         Add Expenses
                       </Button>
@@ -468,7 +474,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                 Amount: &#8358;{el.amount.toLocaleString()}
                               </SmallText>
                               <X
-                                style={{ cursor: "pointer" }}
+                                style={{ cursor: 'pointer' }}
                                 width={14}
                                 height={14}
                                 onClick={() =>
@@ -548,10 +554,10 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               ...editDeposit,
                               { amount: Number(deposit) },
                             ]),
-                              setDeposit("");
+                              setDeposit('');
                           }}
                           type="button"
-                          disabled={deposit === ""}
+                          disabled={deposit === ''}
                         >
                           Add Deposit
                         </Button>
@@ -582,7 +588,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                             <Badge
                               fillColor="primary"
                               key={index}
-                              borderColor={"cream"}
+                              borderColor={'cream'}
                               color="dark"
                             >
                               <Flex justifyContent="space-between">
@@ -590,7 +596,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                   &#8358;{el.amount}
                                 </SmallText>
                                 <X
-                                  style={{ cursor: "pointer" }}
+                                  style={{ cursor: 'pointer' }}
                                   width={14}
                                   height={14}
                                   onClick={() =>
@@ -695,53 +701,59 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                           <Flex>
                             <Paragraph weight="w500">Date: </Paragraph>
                             <Paragraph>
-                              {moment(transactions?.createdAt).format("LL")}
+                              {moment(transactions?.createdAt).format('LL')}
                             </Paragraph>
                           </Flex>
                         </CardBody>
                       </Card>
-                      <Card bgColor="cream" className="h-100">
-                        <CardBody>
-                          <Flex>
-                            <Paragraph weight="w600">Service Fee:</Paragraph>
-                            <Paragraph weight="w500">
-                              &#8358;
-                              {transactions?.service_fee.toLocaleString()}
-                            </Paragraph>
-                          </Flex>
-                        </CardBody>
-                        <Divider />
-                        <CardBody className="h-100">
-                          <Paragraph weight="w500">Total Deposit</Paragraph>
-                          <>
-                            {transactions?.deposit.map(
-                              (item: IDeposit, index: number) => (
-                                <li key={index}>
-                                  <SmallText>
-                                    &#8358;{item.amount.toLocaleString()}
-                                  </SmallText>
-                                </li>
-                              )
-                            )}
-                          </>
-                          <Flex
-                            justifyContent="end"
-                            className="mb-10 mt-15"
-                            alignItems="center"
-                          >
-                            <SmallText weight="w600">
-                              Total Deposit = &#8358;
-                              {clientDeposit.data?.data.data.toLocaleString()}
-                            </SmallText>
-                          </Flex>
-                          <Flex justifyContent="end" alignItems="center">
-                            <SmallText weight="w600">
-                              Balance = &#8358;
-                              {clientBalance.data?.data.data.toLocaleString()}
-                            </SmallText>
-                          </Flex>
-                        </CardBody>
-                      </Card>
+                      <>
+                        {currentUser.role === 'partner' && (
+                          <Card bgColor="cream" className="h-100">
+                            <CardBody>
+                              <Flex>
+                                <Paragraph weight="w600">
+                                  Service Fee:
+                                </Paragraph>
+                                <Paragraph weight="w500">
+                                  &#8358;
+                                  {transactions?.service_fee.toLocaleString()}
+                                </Paragraph>
+                              </Flex>
+                            </CardBody>
+                            <Divider />
+                            <CardBody className="h-100">
+                              <Paragraph weight="w500">Total Deposit</Paragraph>
+                              <>
+                                {transactions?.deposit.map(
+                                  (item: IDeposit, index: number) => (
+                                    <li key={index}>
+                                      <SmallText>
+                                        &#8358;{item.amount.toLocaleString()}
+                                      </SmallText>
+                                    </li>
+                                  )
+                                )}
+                              </>
+                              <Flex
+                                justifyContent="end"
+                                className="mb-10 mt-15"
+                                alignItems="center"
+                              >
+                                <SmallText weight="w600">
+                                  Total Deposit = &#8358;
+                                  {clientDeposit.data?.data.data.toLocaleString()}
+                                </SmallText>
+                              </Flex>
+                              <Flex justifyContent="end" alignItems="center">
+                                <SmallText weight="w600">
+                                  Balance = &#8358;
+                                  {clientBalance.data?.data.data.toLocaleString()}
+                                </SmallText>
+                              </Flex>
+                            </CardBody>
+                          </Card>
+                        )}
+                      </>
                     </Grid>
 
                     <Grid
@@ -800,7 +812,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                         </Flex>
                                       </div>
                                       <div>
-                                        {item.status === "pending" ? (
+                                        {item.status === 'pending' ? (
                                           <Badge
                                             borderColor="primary"
                                             color="dark"
@@ -814,29 +826,29 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                             </SmallText>
                                           </Badge>
                                         ) : (
-                                          ""
+                                          ''
                                         )}
                                       </div>
                                     </Flex>
                                     <div>
-                                      {currentUser.role === "partner" ? (
+                                      {currentUser.role === 'partner' ? (
                                         <Flex alignItems="center">
                                           <div
                                             className={
-                                              item.status === "approved"
-                                                ? "emptystateIcon"
-                                                : "checkIcon"
+                                              item.status === 'approved'
+                                                ? 'emptystateIcon'
+                                                : 'checkIcon'
                                             }
                                           >
                                             <div>
-                                              {item.status === "approved" ? (
+                                              {item.status === 'approved' ? (
                                                 <ApprovedIcon
                                                   style={{
-                                                    width: "20px",
-                                                    height: "20px",
+                                                    width: '20px',
+                                                    height: '20px',
                                                   }}
                                                 />
-                                              ) : item.status === "pending" ? (
+                                              ) : item.status === 'pending' ? (
                                                 <ApprovedIcon
                                                   onClick={() => {
                                                     approveTransactionExpenses(
@@ -844,25 +856,25 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                                     );
                                                   }}
                                                   style={{
-                                                    width: "20px",
-                                                    height: "20px",
+                                                    width: '20px',
+                                                    height: '20px',
                                                   }}
                                                 />
                                               ) : (
-                                                ""
+                                                ''
                                               )}
                                             </div>
                                           </div>
-                                          <div className={"deleteIcon"}>
+                                          <div className={'deleteIcon'}>
                                             <div>
-                                              {item.status === "declined" ? (
+                                              {item.status === 'declined' ? (
                                                 <DeclineIcon
                                                   style={{
-                                                    width: "15px",
-                                                    height: "15px",
+                                                    width: '15px',
+                                                    height: '15px',
                                                   }}
                                                 />
-                                              ) : item.status === "pending" ? (
+                                              ) : item.status === 'pending' ? (
                                                 <DeclineIcon
                                                   onClick={() => {
                                                     declineTransactionExpenses(
@@ -870,38 +882,38 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                                     );
                                                   }}
                                                   style={{
-                                                    width: "15px",
-                                                    height: "15px",
+                                                    width: '15px',
+                                                    height: '15px',
                                                   }}
                                                 />
                                               ) : (
-                                                ""
+                                                ''
                                               )}
                                             </div>
                                           </div>
                                         </Flex>
                                       ) : (
                                         <div>
-                                          {item.status === "approved" ? (
+                                          {item.status === 'approved' ? (
                                             <div className="checkIcon">
                                               <ApprovedIcon
                                                 style={{
-                                                  width: "20px",
-                                                  height: "20px",
+                                                  width: '20px',
+                                                  height: '20px',
                                                 }}
                                               />
                                             </div>
-                                          ) : item.status === "declined" ? (
+                                          ) : item.status === 'declined' ? (
                                             <div className="deleteIcon">
                                               <DeclineIcon
                                                 style={{
-                                                  width: "15px",
-                                                  height: "15px",
+                                                  width: '15px',
+                                                  height: '15px',
                                                 }}
                                               />
                                             </div>
                                           ) : (
-                                            ""
+                                            ''
                                           )}
                                         </div>
                                       )}
@@ -909,9 +921,9 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                                   </Flex>
                                 </div>
                                 {index != transactions.expenses.length - 1 ? (
-                                  <hr style={{ borderTop: "dashed 1px" }} />
+                                  <hr style={{ borderTop: 'dashed 1px' }} />
                                 ) : (
-                                  ""
+                                  ''
                                 )}
                               </div>
                             )
@@ -945,7 +957,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
               <Card className="h-100 mt-20">
                 <CardBody className="h-100">
                   <Flex justifyContent="center">
-                    <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                    <LoaderIcon style={{ width: '50px', height: '50px' }} />
                   </Flex>
                 </CardBody>
               </Card>
