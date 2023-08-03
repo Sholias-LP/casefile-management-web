@@ -29,7 +29,7 @@ const AuthLayout: FC<IProps> = ({ children }) => {
                   width={50}
                   height={50}
                 />
-                <h4 style={{ color: 'white', fontSize: '30px' }}>Zentro.</h4>
+                <h4 style={{ color: 'white', fontSize: '30px' }}>Zentra</h4>
               </div>
               <div className="homeText">
                 Empower Your Legal Team with Zentro
