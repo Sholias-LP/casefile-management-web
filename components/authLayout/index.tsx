@@ -32,7 +32,7 @@ const AuthLayout: FC<IProps> = ({ children }) => {
                 <h4 style={{ color: 'white', fontSize: '30px' }}>Zentra</h4>
               </div>
               <div className="homeText">
-                Empower Your Legal Team with Zentro
+                Empower Your Legal Team with Zentra
               </div>
               <div className="homeSubText">
                 Unleash the Potential of Smart Casefile Management
