@@ -7,15 +7,17 @@ import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import { GlobalStyles } from 'truparse-lodre';
 import { AuthProviderContainer } from '../context/user';
 import '../styles/globals.css';
+import getConfig from 'next/config';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [queryClient] = useState(() => new QueryClient());
+  const { publicRuntimeConfig } = getConfig();
 
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <HighlightInit
-          projectId={'1jdkoe52'}
+          projectId={publicRuntimeConfig.highlightProjectID}
           tracingOrigins
           networkRecording={{
             enabled: true,

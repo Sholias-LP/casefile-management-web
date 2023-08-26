@@ -1,4 +1,4 @@
-const withTM = require("next-transpile-modules")(["truparse-lodre"]);
+const withTM = require('next-transpile-modules')(['truparse-lodre']);
 
 /** @type {import('next').NextConfig} */
 module.exports = withTM({
@@ -10,7 +10,7 @@ module.exports = withTM({
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: [{ loader: "@svgr/webpack", options: { icon: true } }],
+      use: [{ loader: '@svgr/webpack', options: { icon: true } }],
     });
     return config;
   },
@@ -18,5 +18,6 @@ module.exports = withTM({
   publicRuntimeConfig: {
     // Will be available on both server and client
     backendUrl: process.env.NEXT_PUBLIC_BASE_URL,
+    highlightProjectID: process.env.HIGHLIGHT_PROJECT_ID,
   },
 });
