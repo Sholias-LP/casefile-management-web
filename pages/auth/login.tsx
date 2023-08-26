@@ -18,6 +18,7 @@ import SvgEyeOpen from 'truparse-lodre/lib/icons/EyeOpen';
 import AuthContext from '../../context/user';
 import { IResponse } from '../../interfaces/response';
 import { ILogin, IUser } from '../../interfaces/user';
+import { H } from '@highlight-run/next/client';
 import useForm from '../../utils/useForm';
 import { useLogin } from '../api/mutations/user';
 import AuthLayout from '../../components/authLayout';
@@ -40,6 +41,11 @@ const Login = () => {
       {
         onSuccess: async (response: AxiosResponse<IResponse<IUser>>) => {
           const { data } = response;
+          H.identify(`${data.data.first_name} ${data.data.last_name}`, {
+            id: data.data._id,
+            email: data.data.email,
+            role: data.data.role,
+          });
           setLoading(false);
           toast.success(data.message!);
           setAuthAndCache(data.data.token);
