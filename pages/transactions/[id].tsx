@@ -637,7 +637,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                     Save
                   </Button>
                   <>
-                    {currentUser.role !== 'partner' && (
+                    {currentUser.role === 'partner' && (
                       <DeleteModal
                         toggleModal={toggleModal}
                         setToggleModal={setToggleModal}
@@ -950,7 +950,7 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                   <Button onClick={() => setIsEdit(true)}>Edit</Button>
 
                   <>
-                    {currentUser.role !== 'partner' && (
+                    {currentUser.role === 'partner' && (
                       <DeleteModal
                         toggleModal={toggleModal}
                         setToggleModal={setToggleModal}

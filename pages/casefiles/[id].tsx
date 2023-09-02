@@ -870,7 +870,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                   Save
                 </Button>
                 <>
-                  {currentUser.role !== 'partner' && (
+                  {currentUser.role === 'partner' && (
                     <DeleteModal
                       toggleModal={toggleModal}
                       setToggleModal={setToggleModal}
@@ -1229,7 +1229,7 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 <Flex justifyContent="end" className="mt-20">
                   <Button onClick={() => setIsEdit(true)}>Edit</Button>
                   <>
-                    {currentUser.role !== 'partner' && (
+                    {currentUser.role === 'partner' && (
                       <DeleteModal
                         toggleModal={toggleModal}
                         setToggleModal={setToggleModal}
