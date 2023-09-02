@@ -1,6 +1,6 @@
-import { AxiosError, AxiosResponse } from "axios";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { AxiosError, AxiosResponse } from 'axios';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   Button,
   Card,
@@ -10,13 +10,14 @@ import {
   Heading,
   Input,
   SmallText,
-} from "truparse-lodre";
-import AppLayout from "../components/appLayout";
-import { IResponse } from "../interfaces/response";
-import { IResetpassword } from "../interfaces/user";
-import useForm from "../utils/useForm";
-import { useResetPassword } from "./api/mutations/user";
-import ChangePasswordIcon from "../components/assets/change password.svg";
+} from 'truparse-lodre';
+import AppLayout from '../components/appLayout';
+import { IResponse } from '../interfaces/response';
+import { IResetpassword } from '../interfaces/user';
+import useForm from '../utils/useForm';
+import { useResetPassword } from './api/mutations/user';
+import ChangePasswordIcon from '../components/assets/change password.svg';
+import BackNavigation from '../components/backNavigation';
 
 const ChangePassword = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,6 +49,9 @@ const ChangePassword = () => {
 
   return (
     <AppLayout>
+      <Flex className="mb-20">
+        <BackNavigation backTo="/" />
+      </Flex>
       <Card>
         <CardBody className="px-50 py-50">
           <Grid
@@ -59,7 +63,7 @@ const ChangePassword = () => {
             alignItems="center"
           >
             <Flex justifyContent="center">
-              <ChangePasswordIcon style={{ width: "30px", height: "30px" }} />
+              <ChangePasswordIcon style={{ width: '30px', height: '30px' }} />
             </Flex>
             <Flex justifyContent="center">
               <Heading size="hSmall" weight="w700" className="mb-30">
@@ -89,7 +93,7 @@ const ChangePassword = () => {
                 disabled={loading || isLoading}
                 loading={loading || isLoading}
               >
-                {loading ? "" : "Save Changes"}
+                {loading ? '' : 'Save Changes'}
               </Button>
             </form>
           </Grid>

@@ -27,6 +27,7 @@ import useForm from '../../utils/useForm';
 import { useAddTransactions } from '../api/mutations/transactions';
 import { useGetResourceTypes } from '../api/queries/users';
 import AuthContext from '../../context/user';
+import BackNavigation from '../../components/backNavigation';
 
 const AddTransactions = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -89,10 +90,9 @@ const AddTransactions = () => {
   return (
     <AppLayout>
       <form onSubmit={handleSubmit}>
-        <Paragraph weight="w600" className="mb-20">
-          Add a Transaction
-        </Paragraph>
-        <Card className="mb-20">
+        <BackNavigation label="Add a Transaction" />
+
+        <Card className="mb-20 mt-20">
           <CardBody>
             <SmallText weight="w600" className="mb-20">
               Client Details{' '}
@@ -274,10 +274,10 @@ const AddTransactions = () => {
                   Add Expenses
                 </Button>
               </div>
-              <div>
-                <SmallText weight="w500">Preview</SmallText>
+              {expense.length > 0 ? (
+                <div>
+                  <SmallText weight="w500">Preview</SmallText>
 
-                {expense.length > 0 ? (
                   <Grid
                     xl="repeat(2, auto)"
                     lg="repeat(2, auto)"
@@ -312,10 +312,10 @@ const AddTransactions = () => {
                       </Card>
                     ))}
                   </Grid>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Grid>
           </CardBody>
         </Card>
@@ -352,10 +352,10 @@ const AddTransactions = () => {
                   Add Deposit
                 </Button>
               </div>
-              <div>
-                <SmallText weight="w500">Preview</SmallText>
+              {deposits.length > 0 ? (
+                <div>
+                  <SmallText weight="w500">Preview</SmallText>
 
-                {deposits.length > 0 ? (
                   <Grid
                     xl="repeat(5, auto)"
                     lg="repeat(5, auto)"
@@ -390,10 +390,10 @@ const AddTransactions = () => {
                       </Badge>
                     ))}
                   </Grid>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Grid>
           </CardBody>
         </Card>

@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
-import { LoaderIcon } from "react-hot-toast";
+import { useRouter } from 'next/router';
+import React from 'react';
+import { LoaderIcon } from 'react-hot-toast';
 import {
   Button,
   Card,
@@ -8,13 +8,14 @@ import {
   Flex,
   Paragraph,
   SmallText,
-} from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
-import CaseFilesTable from "../../components/casefileTable";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import { ICasefilesResponse } from "../../interfaces/casefiles";
-import { useGetCaseFiles } from "../api/queries/caseFiles";
-import { Overview } from "truparse-lodre/lib/icons";
+} from 'truparse-lodre';
+import AppLayout from '../../components/appLayout';
+import CaseFilesTable from '../../components/casefileTable';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { ICasefilesResponse } from '../../interfaces/casefiles';
+import { useGetCaseFiles } from '../api/queries/caseFiles';
+import { Overview } from 'truparse-lodre/lib/icons';
+import BackNavigation from '../../components/backNavigation';
 
 const CaseFiles = () => {
   const router = useRouter();
@@ -23,10 +24,10 @@ const CaseFiles = () => {
 
   return (
     <AppLayout>
-      <Paragraph weight="w600">Case files</Paragraph>
+      <BackNavigation label="Casefiles" backTo="/" />
 
       <Flex justifyContent="end">
-        <Button onClick={() => router.push("/casefiles/add")}>
+        <Button onClick={() => router.push('/casefiles/add')}>
           Add A Casefile
         </Button>
       </Flex>
@@ -55,7 +56,7 @@ const CaseFiles = () => {
                 <Card className="h-100">
                   <CardBody className="h-100">
                     <Flex justifyContent="center">
-                      <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                      <LoaderIcon style={{ width: '50px', height: '50px' }} />
                     </Flex>
                   </CardBody>
                 </Card>

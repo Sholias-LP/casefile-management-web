@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import moment from 'moment';
 import { useRouter } from 'next/router';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import {
   Badge,
@@ -17,9 +17,10 @@ import {
   SmallText,
 } from 'truparse-lodre';
 import { X } from 'truparse-lodre/lib/icons';
-import SvgEyeOpen from 'truparse-lodre/lib/icons/EyeOpen';
 import AppLayout from '../../components/appLayout';
-import Menu from '../../components/menu';
+import ApprovedIcon from '../../components/assets/approved.svg';
+import DeclineIcon from '../../components/assets/decline.svg';
+import BackNavigation from '../../components/backNavigation';
 import AuthContext from '../../context/user';
 import { IDeposit, IExpenses } from '../../interfaces/casefiles';
 import { IResponse, ISelect } from '../../interfaces/response';
@@ -43,9 +44,6 @@ import {
 } from '../api/queries/transactions';
 import { useGetResourceTypes } from '../api/queries/users';
 import DeleteModal from './deleteModal';
-import PendingIcon from '../../components/assets/pending.svg';
-import DeclineIcon from '../../components/assets/decline.svg';
-import ApprovedIcon from '../../components/assets/approved.svg';
 
 type IProps = {
   id: string;
@@ -238,7 +236,14 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
 
   return (
     <AppLayout>
-      <Paragraph weight="w500">Transaction Details</Paragraph>
+      {edit ? (
+        <BackNavigation
+          label="Edit Transaction"
+          setStep={() => setIsEdit(false)}
+        />
+      ) : (
+        <BackNavigation label="Transaction Details" />
+      )}
       <>
         {edit ? (
           <form onSubmit={handleSubmit}>
@@ -631,13 +636,17 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                   >
                     Save
                   </Button>
-                  <DeleteModal
-                    toggleModal={toggleModal}
-                    setToggleModal={setToggleModal}
-                    isloading={isLoading}
-                    loading={loading}
-                    submit={submit}
-                  />
+                  <>
+                    {currentUser.role !== 'partner' && (
+                      <DeleteModal
+                        toggleModal={toggleModal}
+                        setToggleModal={setToggleModal}
+                        isloading={isLoading}
+                        loading={loading}
+                        submit={submit}
+                      />
+                    )}
+                  </>
                 </Flex>
               )}
             </Flex>
@@ -665,10 +674,6 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                               <Paragraph weight="w500">
                                 {transactions?.status}
                               </Paragraph>
-                            </Flex>
-                            <Flex gap={0.4}>
-                              <SvgEyeOpen />
-                              <SmallText>{transactions?.views}</SmallText>
                             </Flex>
                           </Flex>
                         </CardBody>
@@ -944,13 +949,17 @@ const TransactionDetails: FC<IProps> = ({ id }) => {
                 <Flex className="mt-20" justifyContent="end">
                   <Button onClick={() => setIsEdit(true)}>Edit</Button>
 
-                  <DeleteModal
-                    toggleModal={toggleModal}
-                    setToggleModal={setToggleModal}
-                    isloading={isLoading}
-                    loading={loading}
-                    submit={submit}
-                  />
+                  <>
+                    {currentUser.role !== 'partner' && (
+                      <DeleteModal
+                        toggleModal={toggleModal}
+                        setToggleModal={setToggleModal}
+                        isloading={isLoading}
+                        loading={loading}
+                        submit={submit}
+                      />
+                    )}
+                  </>
                 </Flex>
               </>
             ) : (

@@ -17,6 +17,7 @@ import { IUpdateUser, IUser } from '../interfaces/user';
 import { AxiosResponse, AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { IResponse } from '../interfaces/response';
+import BackNavigation from '../components/backNavigation';
 
 const UserProfile = () => {
   const { currentUser, updateCurrentUser } = useContext(AuthContext);
@@ -52,6 +53,9 @@ const UserProfile = () => {
 
   return (
     <AppLayout>
+      <Flex className="mb-20">
+        <BackNavigation backTo="/" />
+      </Flex>
       <Card>
         <CardBody className="px-50 py-50">
           <Grid

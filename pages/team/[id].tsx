@@ -1,23 +1,15 @@
-import Link from "next/link";
-import React, { FC } from "react";
-import { LoaderIcon } from "react-hot-toast";
-import { Table, Tbody, Th, Thead, Tr } from "react-super-responsive-table";
-import {
-  Card,
-  CardBody,
-  Flex,
-  Grid,
-  Paragraph,
-  SmallText,
-} from "truparse-lodre";
-import { Overview } from "truparse-lodre/lib/icons";
-import AppLayout from "../../components/appLayout";
-import { ICasefilesResponse } from "../../interfaces/casefiles";
-import { ITransactionsResponse } from "../../interfaces/transactions";
-import { useGetUserResources } from "../api/queries/users";
-import TeamIcon from "../../components/assets/notification.svg";
-import CaseFilesTable from "../../components/casefileTable";
-import TransactionTable from "../../components/transactionTable";
+import { FC } from 'react';
+import { LoaderIcon } from 'react-hot-toast';
+import { Table, Tbody, Th, Thead, Tr } from 'react-super-responsive-table';
+import { Card, CardBody, Flex, Paragraph, SmallText } from 'truparse-lodre';
+import AppLayout from '../../components/appLayout';
+import TeamIcon from '../../components/assets/notification.svg';
+import BackNavigation from '../../components/backNavigation';
+import CaseFilesTable from '../../components/casefileTable';
+import TransactionTable from '../../components/transactionTable';
+import { ICasefilesResponse } from '../../interfaces/casefiles';
+import { ITransactionsResponse } from '../../interfaces/transactions';
+import { useGetUserResources } from '../api/queries/users';
 
 type IProps = {
   id: string;
@@ -41,12 +33,15 @@ const TeamDetails: FC<IProps> = ({ id }) => {
 
   return (
     <AppLayout>
+      <Flex className="mb-20">
+        <BackNavigation />
+      </Flex>
       {data?.data.data.casefiles.length === 0 &&
       data?.data.data.transactions.length === 0 ? (
         <Card className="h-100">
           <CardBody className="h-100">
             <Flex justifyContent="center" className="pb-30 emptystateIcon">
-              <TeamIcon style={{ width: "100px", height: "100px" }} />
+              <TeamIcon style={{ width: '100px', height: '100px' }} />
             </Flex>
 
             <Flex justifyContent="center" className="mb-20">
@@ -66,7 +61,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                 <Card className="h-100">
                   <CardBody className="h-100">
                     <Flex justifyContent="center">
-                      <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                      <LoaderIcon style={{ width: '50px', height: '50px' }} />
                     </Flex>
                   </CardBody>
                 </Card>
@@ -80,7 +75,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                           className="pb-30 emptystateIcon"
                         >
                           <TeamIcon
-                            style={{ width: "100px", height: "100px" }}
+                            style={{ width: '100px', height: '100px' }}
                           />
                         </Flex>
 
@@ -135,7 +130,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
               <Card className="h-100">
                 <CardBody className="h-100">
                   <Flex justifyContent="center">
-                    <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                    <LoaderIcon style={{ width: '50px', height: '50px' }} />
                   </Flex>
                 </CardBody>
               </Card>
@@ -148,7 +143,7 @@ const TeamDetails: FC<IProps> = ({ id }) => {
                         justifyContent="center"
                         className="pb-30 emptystateIcon"
                       >
-                        <TeamIcon style={{ width: "100px", height: "100px" }} />
+                        <TeamIcon style={{ width: '100px', height: '100px' }} />
                       </Flex>
 
                       <Flex justifyContent="center" className="mb-20">

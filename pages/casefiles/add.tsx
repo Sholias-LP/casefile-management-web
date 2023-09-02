@@ -30,6 +30,7 @@ import useForm from '../../utils/useForm';
 import { useAddCasefile } from '../api/mutations/casefiles';
 import { useGetResourceTypes } from '../api/queries/users';
 import AuthContext from '../../context/user';
+import BackNavigation from '../../components/backNavigation';
 
 const AddCasefile = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -98,10 +99,8 @@ const AddCasefile = () => {
   return (
     <AppLayout>
       <form onSubmit={handleSubmit}>
-        <Paragraph weight="w600" className="mb-20">
-          Add a Case file
-        </Paragraph>
-        <Card className="mb-20">
+        <BackNavigation label="Add a Casefile" />
+        <Card className="mb-20 mt-20">
           <CardBody>
             <SmallText weight="w600" className="mb-20">
               Client Details{' '}
@@ -327,10 +326,10 @@ const AddCasefile = () => {
                   Add Court Sitting
                 </Button>
               </div>
-              <div>
-                <SmallText weight="w500">Preview</SmallText>
+              {courtSittings.length > 0 ? (
+                <div>
+                  <SmallText weight="w500">Preview</SmallText>
 
-                {courtSittings.length > 0 ? (
                   <Grid
                     xl="repeat(2, auto)"
                     lg="repeat(2, auto)"
@@ -363,10 +362,10 @@ const AddCasefile = () => {
                       </Card>
                     ))}
                   </Grid>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Grid>
           </CardBody>
         </Card>
@@ -423,10 +422,10 @@ const AddCasefile = () => {
                   Add Expenses
                 </Button>
               </div>
-              <div>
-                <SmallText weight="w500">Preview</SmallText>
+              {expense.length > 0 ? (
+                <div>
+                  <SmallText weight="w500">Preview</SmallText>
 
-                {expense.length > 0 ? (
                   <Grid
                     xl="repeat(2, auto)"
                     lg="repeat(2, auto)"
@@ -461,10 +460,10 @@ const AddCasefile = () => {
                       </Card>
                     ))}
                   </Grid>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Grid>
           </CardBody>
         </Card>
@@ -502,10 +501,10 @@ const AddCasefile = () => {
                   Add Deposit
                 </Button>
               </div>
-              <div>
-                <SmallText weight="w500">Preview</SmallText>
+              {deposits.length > 0 ? (
+                <div>
+                  <SmallText weight="w500">Preview</SmallText>
 
-                {deposits.length > 0 ? (
                   <Grid
                     xl="repeat(5, auto)"
                     lg="repeat(5, auto)"
@@ -540,10 +539,10 @@ const AddCasefile = () => {
                       </Badge>
                     ))}
                   </Grid>
-                ) : (
-                  <></>
-                )}
-              </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </Grid>
           </CardBody>
         </Card>

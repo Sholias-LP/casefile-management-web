@@ -1,12 +1,13 @@
-import React from "react";
-import { LoaderIcon } from "react-hot-toast";
-import { Card, CardBody, Flex, Paragraph, SmallText } from "truparse-lodre";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import AppLayout from "../../components/appLayout";
-import UsersTable from "../../components/usersTable";
-import { IUser } from "../../interfaces/user";
-import { useGetUsers } from "../api/queries/users";
-import TeamIcon from "../../components/assets/notification.svg";
+import React from 'react';
+import { LoaderIcon } from 'react-hot-toast';
+import { Card, CardBody, Flex, Paragraph, SmallText } from 'truparse-lodre';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import AppLayout from '../../components/appLayout';
+import UsersTable from '../../components/usersTable';
+import { IUser } from '../../interfaces/user';
+import { useGetUsers } from '../api/queries/users';
+import TeamIcon from '../../components/assets/notification.svg';
+import BackNavigation from '../../components/backNavigation';
 
 const Team = () => {
   const { data, isLoading } = useGetUsers();
@@ -14,9 +15,9 @@ const Team = () => {
 
   return (
     <AppLayout>
-      <Paragraph weight="w600" className="mb-20">
-        Members
-      </Paragraph>
+      <Flex className="mb-20">
+        <BackNavigation label="Members" backTo="/" />
+      </Flex>
 
       <Table>
         <Thead>
@@ -43,7 +44,7 @@ const Team = () => {
                 <Card className="h-100">
                   <CardBody className="h-100">
                     <Flex justifyContent="center">
-                      <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                      <LoaderIcon style={{ width: '50px', height: '50px' }} />
                     </Flex>
                   </CardBody>
                 </Card>
@@ -62,7 +63,7 @@ const Team = () => {
                       justifyContent="center"
                       className="pb-30 emptystateIcon"
                     >
-                      <TeamIcon style={{ width: "100px", height: "100px" }} />
+                      <TeamIcon style={{ width: '100px', height: '100px' }} />
                     </Flex>
 
                     <Flex justifyContent="center" className="mb-20">

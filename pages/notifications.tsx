@@ -1,9 +1,9 @@
-import { AxiosError, AxiosResponse } from "axios";
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en.json";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import toast, { LoaderIcon } from "react-hot-toast";
+import { AxiosError, AxiosResponse } from 'axios';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import toast, { LoaderIcon } from 'react-hot-toast';
 import {
   Card,
   CardBody,
@@ -11,22 +11,23 @@ import {
   Grid,
   Paragraph,
   SmallText,
-} from "truparse-lodre";
-import AppLayout from "../components/appLayout";
-import NotificationIcon from "../components/assets/notification.svg";
-import NotificationMenu from "../components/notificationMenu";
-import { ICasefilesResponse } from "../interfaces/casefiles";
-import { IResponse } from "../interfaces/response";
-import { ITransactionsResponse } from "../interfaces/transactions";
-import { INotificationResponse } from "../interfaces/user";
+} from 'truparse-lodre';
+import AppLayout from '../components/appLayout';
+import NotificationIcon from '../components/assets/notification.svg';
+import NotificationMenu from '../components/notificationMenu';
+import { ICasefilesResponse } from '../interfaces/casefiles';
+import { IResponse } from '../interfaces/response';
+import { ITransactionsResponse } from '../interfaces/transactions';
+import { INotificationResponse } from '../interfaces/user';
 import {
   useReadNotifications,
   useUnReadNotifications,
-} from "./api/mutations/notification";
-import { useGetCaseFiles } from "./api/queries/caseFiles";
-import { useGetNofications } from "./api/queries/notification";
-import { useGetTransactions } from "./api/queries/transactions";
-import { DeleteNotification } from "./api/services/notifications";
+} from './api/mutations/notification';
+import { useGetCaseFiles } from './api/queries/caseFiles';
+import { useGetNofications } from './api/queries/notification';
+import { useGetTransactions } from './api/queries/transactions';
+import { DeleteNotification } from './api/services/notifications';
+import BackNavigation from '../components/backNavigation';
 
 const Notifications = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const Notifications = () => {
   const { mutate: unReadNotification } = useUnReadNotifications();
   const { data: notificationData, refetch, isLoading } = useGetNofications();
   const [notificationsData, setNotificationData] = useState<string[]>([]);
-  const [clickedItem, setItem] = useState<string>("");
+  const [clickedItem, setItem] = useState<string>('');
   const [checkedId, setcheckedId] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isHovering, setIsHovering] = useState<number>(-1);
@@ -51,7 +52,7 @@ const Notifications = () => {
 
   TimeAgo.setDefaultLocale(en.locale);
   TimeAgo.addLocale(en);
-  const timeAgo = new TimeAgo("en-US");
+  const timeAgo = new TimeAgo('en-US');
 
   useEffect(() => {
     if (clickedItem) {
@@ -144,11 +145,14 @@ const Notifications = () => {
 
   return (
     <AppLayout>
+      <Flex className="mb-20">
+        <BackNavigation label="Notifications" backTo="/" />
+      </Flex>
       {isLoading ? (
         <Card className="h-100">
           <CardBody className="h-100">
             <Flex justifyContent="center">
-              <LoaderIcon style={{ width: "100px", height: "100px" }} />
+              <LoaderIcon style={{ width: '100px', height: '100px' }} />
             </Flex>
           </CardBody>
         </Card>
@@ -183,7 +187,7 @@ const Notifications = () => {
                       </button>
                     </Flex>
                     <NotificationMenu>
-                      <ul style={{ cursor: "pointer" }}>
+                      <ul style={{ cursor: 'pointer' }}>
                         <li>
                           <SmallText onClick={submitReadNotification}>
                             Mark as Read
@@ -198,8 +202,8 @@ const Notifications = () => {
                     </NotificationMenu>
                   </Grid>
                 ) : (
-                  <div style={{ alignItems: "center", display: "flex" }}>
-                    <label style={{ fontSize: "12px", marginLeft: "5px" }}>
+                  <div style={{ alignItems: 'center', display: 'flex' }}>
+                    <label style={{ fontSize: '12px', marginLeft: '5px' }}>
                       Select All
                     </label>
                   </div>
@@ -214,14 +218,14 @@ const Notifications = () => {
                   <>
                     <Card
                       className="mb-5"
-                      bgColor={item.status === "read" ? "light" : "cream"}
+                      bgColor={item.status === 'read' ? 'light' : 'cream'}
                       key={index}
                       onMouseEnter={() => handleMouseEnter(index)}
                       onMouseLeave={handleMouseLeave}
                       style={{
                         borderLeft:
-                          isHovering === index ? "4px solid #fffaeb" : "",
-                        transition: "all 1.5sec ease-in-out",
+                          isHovering === index ? '4px solid #fffaeb' : '',
+                        transition: 'all 1.5sec ease-in-out',
                       }}
                     >
                       <Grid
@@ -245,7 +249,7 @@ const Notifications = () => {
                         </CardBody>
                         <CardBody
                           onClick={() => setItem(item.resourceId)}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: 'pointer' }}
                         >
                           <Grid
                             xl="1fr auto"
@@ -259,7 +263,7 @@ const Notifications = () => {
                                 onClick={() =>
                                   router.push(`/team/${item.userId}`)
                                 }
-                                weight={"w600"}
+                                weight={'w600'}
                               >
                                 {item.user}
                               </SmallText>
@@ -280,7 +284,7 @@ const Notifications = () => {
                 <CardBody className="h-100 pt-50 pb-50">
                   <Flex justifyContent="center">
                     <NotificationIcon
-                      style={{ width: "100px", height: "100px" }}
+                      style={{ width: '100px', height: '100px' }}
                     />
                   </Flex>
                   <Flex justifyContent="center">

@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import React, { useContext, useEffect } from "react";
-import { LoaderIcon } from "react-hot-toast";
+import { useRouter } from 'next/router';
+import React, { useContext, useEffect } from 'react';
+import { LoaderIcon } from 'react-hot-toast';
 import {
   Button,
   Card,
@@ -8,13 +8,14 @@ import {
   Flex,
   Paragraph,
   SmallText,
-} from "truparse-lodre";
-import AppLayout from "../../components/appLayout";
-import TransactionTable from "../../components/transactionTable";
-import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import { ITransactionsResponse } from "../../interfaces/transactions";
-import { useGetTransactions } from "../api/queries/transactions";
-import Overview from "truparse-lodre/lib/icons/Overview";
+} from 'truparse-lodre';
+import AppLayout from '../../components/appLayout';
+import TransactionTable from '../../components/transactionTable';
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
+import { ITransactionsResponse } from '../../interfaces/transactions';
+import { useGetTransactions } from '../api/queries/transactions';
+import Overview from 'truparse-lodre/lib/icons/Overview';
+import BackNavigation from '../../components/backNavigation';
 
 const Transactions = () => {
   const { data, isLoading } = useGetTransactions();
@@ -23,9 +24,10 @@ const Transactions = () => {
 
   return (
     <AppLayout>
-      <Paragraph weight="w600">Transactions</Paragraph>
+      <BackNavigation label="Transactions" backTo="/" />
+
       <Flex justifyContent="end">
-        <Button onClick={() => router.push("/transactions/add")}>
+        <Button onClick={() => router.push('/transactions/add')}>
           Add A Transaction
         </Button>
       </Flex>
@@ -54,7 +56,7 @@ const Transactions = () => {
                 <Card className="h-100">
                   <CardBody className="h-100">
                     <Flex justifyContent="center">
-                      <LoaderIcon style={{ width: "50px", height: "50px" }} />
+                      <LoaderIcon style={{ width: '50px', height: '50px' }} />
                     </Flex>
                   </CardBody>
                 </Card>

@@ -19,7 +19,8 @@ import {
 import { X } from 'truparse-lodre/lib/icons';
 import SvgEyeOpen from 'truparse-lodre/lib/icons/EyeOpen';
 import AppLayout from '../../components/appLayout';
-import Menu from '../../components/menu';
+import ApprovedIcon from '../../components/assets/approved.svg';
+import DeclineIcon from '../../components/assets/decline.svg';
 import AuthContext from '../../context/user';
 import {
   ICasefile,
@@ -39,15 +40,13 @@ import {
 } from '../api/mutations/casefiles';
 import {
   useGetACasefile,
+  useGetCasefileTotalDeposit,
   useGetCasefilesClientBalance,
   useGetCasefilesTotalExpenses,
-  useGetCasefileTotalDeposit,
 } from '../api/queries/caseFiles';
 import { useGetResourceTypes } from '../api/queries/users';
 import DeleteModal from './deleteModal';
-import PendingIcon from '../../components/assets/pending.svg';
-import DeclineIcon from '../../components/assets/decline.svg';
-import ApprovedIcon from '../../components/assets/approved.svg';
+import BackNavigation from '../../components/backNavigation';
 
 type IProps = {
   id: string;
@@ -282,11 +281,16 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
     }
   }, [caseFile?.case_type]);
 
-  console.log(caseType);
-
   return (
     <AppLayout>
-      <Paragraph weight="w500">Case Details</Paragraph>
+      {edit ? (
+        <BackNavigation
+          label="Edit Casefile"
+          setStep={() => setIsEdit(false)}
+        />
+      ) : (
+        <BackNavigation label="Case Details" />
+      )}
       <>
         {edit ? (
           <form onSubmit={handleSubmit}>
@@ -865,13 +869,17 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 >
                   Save
                 </Button>
-                <DeleteModal
-                  toggleModal={toggleModal}
-                  setToggleModal={setToggleModal}
-                  isloading={isLoading}
-                  loading={loading}
-                  submit={submit}
-                />
+                <>
+                  {currentUser.role !== 'partner' && (
+                    <DeleteModal
+                      toggleModal={toggleModal}
+                      setToggleModal={setToggleModal}
+                      isloading={isLoading}
+                      loading={loading}
+                      submit={submit}
+                    />
+                  )}
+                </>
               </Flex>
             )}
           </form>
@@ -896,10 +904,6 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                               <Paragraph weight="w500">
                                 {caseFile?.status}
                               </Paragraph>
-                            </Flex>
-                            <Flex gap={0.4}>
-                              <SvgEyeOpen />
-                              <SmallText>{caseFile?.views}</SmallText>
                             </Flex>
                           </Flex>
                         </CardBody>
@@ -1224,14 +1228,17 @@ const CasefileDetails: FC<IProps> = ({ id }) => {
                 </Card>
                 <Flex justifyContent="end" className="mt-20">
                   <Button onClick={() => setIsEdit(true)}>Edit</Button>
-
-                  <DeleteModal
-                    toggleModal={toggleModal}
-                    setToggleModal={setToggleModal}
-                    isloading={isLoading}
-                    loading={loading}
-                    submit={submit}
-                  />
+                  <>
+                    {currentUser.role !== 'partner' && (
+                      <DeleteModal
+                        toggleModal={toggleModal}
+                        setToggleModal={setToggleModal}
+                        isloading={isLoading}
+                        loading={loading}
+                        submit={submit}
+                      />
+                    )}
+                  </>
                 </Flex>
               </>
             ) : (
